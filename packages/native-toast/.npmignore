@@ -1,0 +1,16 @@
+# Source
+src/
+tsconfig.json
+tsup.config.ts
+.eslintrc.json
+.prettierrc
+.prettierignore
+
+# Config
+.turbo/
+coverage/
+*.log
+
+# IDE
+.vscode/
+.idea/
