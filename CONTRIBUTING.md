@@ -11,7 +11,7 @@ Obrigado por interesse em contribuir! Este guia vai te ajudar a começar.
 
 ```bash
 # Clone o repositório
-git clone https://github.com/your-org/native-toast.git
+git clone https://github.com/joao-tambue/Blip-toast.git
 
 # Entre no diretório
 cd native-toast
