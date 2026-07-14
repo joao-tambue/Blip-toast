@@ -1,0 +1,9 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "native-toast": ["../../packages/native-toast/src"]
+    }
+  }
+}
