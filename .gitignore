@@ -42,3 +42,6 @@ web-build/
 
 # Turbo
 .turbo/
+
+# Reference copies
+goey-toast/
