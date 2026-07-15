@@ -1,126 +1,366 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
-import type { Toast } from '../core/types';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  Easing,
+} from 'react-native';
+import type { Toast, ToastPhase } from '../core/types';
+import { animationPresets } from '../core/presets';
+import { DefaultIcon, SuccessIcon, ErrorIcon, WarningIcon, InfoIcon, SpinnerIcon } from '../icons';
+import { ProgressBar } from './ProgressBar';
 
 export interface ToastItemProps {
   toast: Toast;
   onDismiss: (id: string) => void;
+  theme?: 'light' | 'dark';
 }
 
-export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss }) => {
-  const { options } = toast;
+const PHASE_ICON_MAP: Record<Exclude<ToastPhase, 'loading'>, React.FC<{ size?: number; color?: string }>> = {
+  default: DefaultIcon,
+  success: SuccessIcon,
+  error: ErrorIcon,
+  warning: WarningIcon,
+  info: InfoIcon,
+};
 
-  const variantStyles = {
-    default: styles.default,
-    success: styles.success,
-    error: styles.error,
-    warning: styles.warning,
-    info: styles.info,
+const PHASE_COLOR_MAP: Record<ToastPhase, string> = {
+  loading: '#555',
+  default: '#555',
+  success: '#4CAF50',
+  error: '#E53935',
+  warning: '#C49000',
+  info: '#1E88E5',
+};
+
+const PHASE_BG_MAP: Record<ToastPhase, string> = {
+  loading: '#f5f5f5',
+  default: '#f5f5f5',
+  success: '#E8F5E9',
+  error: '#FFEBEE',
+  warning: '#FFF8E1',
+  info: '#E3F2FD',
+};
+
+const DARK_PHASE_BG_MAP: Record<ToastPhase, string> = {
+  loading: '#1a1a1a',
+  default: '#1a1a1a',
+  success: '#1b5e20',
+  error: '#b71c1c',
+  warning: '#4a3800',
+  info: '#0d47a1',
+};
+
+const PHASE_PROGRESS_MAP: Record<ToastPhase, string> = {
+  loading: '#1E88E5',
+  default: '#999',
+  success: '#4CAF50',
+  error: '#E53935',
+  warning: '#C49000',
+  info: '#1E88E5',
+};
+
+const DEFAULT_DISPLAY_DURATION = 4000;
+
+export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 'light' }) => {
+  const { options } = toast;
+  const [phase, setPhase] = useState<ToastPhase>(options.variant || 'default');
+  const [title, setTitle] = useState(options.title || '');
+  const [description, setDescription] = useState(options.description);
+  const [action, setAction] = useState(options.action);
+  const [isDismissing, setIsDismissing] = useState(false);
+
+  const expandAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.95)).current;
+  const shakeAnim = useRef(new Animated.Value(0)).current;
+
+  // Resolve preset
+  const presetConfig = options.preset ? animationPresets[options.preset] : undefined;
+  const useSpring = options.spring ?? presetConfig?.spring ?? true;
+  const bounceVal = options.bounce ?? presetConfig?.bounce ?? 0.4;
+
+  // Theme colors
+  const isDark = theme === 'dark';
+  const fillColor = options.fillColor || (isDark ? '#1a1a1a' : '#ffffff');
+  const bgColor = isDark ? DARK_PHASE_BG_MAP[phase] : PHASE_BG_MAP[phase];
+  const iconColor = isDark
+    ? (phase === 'default' || phase === 'loading' ? '#ccc' : PHASE_COLOR_MAP[phase])
+    : PHASE_COLOR_MAP[phase];
+
+  // Timestamp
+  const createdAtRef = useRef(new Date());
+  const timestampStr = useMemo(
+    () => createdAtRef.current.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }),
+    [],
+  );
+
+  const hasDescription = Boolean(description);
+  const hasAction = Boolean(action);
+  const shouldExpand = hasDescription || hasAction;
+
+  // Entry animation
+  useEffect(() => {
+    Animated.parallel([
+      Animated.spring(fadeAnim, {
+        toValue: 1,
+        tension: 200,
+        friction: 20,
+        useNativeDriver: true,
+      }),
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        tension: 200,
+        friction: 20,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Landing squish animation
+    if (useSpring) {
+      const squishAnim = new Animated.Value(0);
+      Animated.sequence([
+        Animated.timing(squishAnim, {
+          toValue: 1,
+          duration: 100,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true,
+        }),
+        Animated.spring(squishAnim, {
+          toValue: 0,
+          tension: 200 + bounceVal * 400,
+          friction: 10 + bounceVal * 5,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }
+  }, [fadeAnim, scaleAnim, useSpring, bounceVal]);
+
+  // Expand animation
+  useEffect(() => {
+    if (shouldExpand && !isDismissing) {
+      Animated.spring(expandAnim, {
+        toValue: 1,
+        tension: 200 + bounceVal * 400,
+        friction: 10 + bounceVal * 5,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [shouldExpand, isDismissing, expandAnim, bounceVal]);
+
+  // Error shake animation
+  useEffect(() => {
+    if (phase === 'error' && !isDismissing) {
+      Animated.sequence([
+        Animated.timing(shakeAnim, {
+          toValue: 10,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeAnim, {
+          toValue: -10,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeAnim, {
+          toValue: 6,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeAnim, {
+          toValue: -6,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeAnim, {
+          toValue: 0,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }
+  }, [phase, isDismissing, shakeAnim]);
+
+  // Auto dismiss
+  useEffect(() => {
+    const duration = options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION;
+    if (duration === Infinity) return;
+
+    const timer = setTimeout(() => {
+      handleDismiss();
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleDismiss = () => {
+    setIsDismissing(true);
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 0.95,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onDismiss(toast.id);
+    });
+  };
+
+  const handleActionPress = () => {
+    if (action?.successLabel) {
+      setPhase('success');
+      setTitle(action.successLabel);
+      setAction(undefined);
+      setDescription(undefined);
+    }
+    action?.onPress();
+  };
+
+  const renderIcon = () => {
+    if (options.icon) {
+      return options.icon;
+    }
+
+    if (phase === 'loading') {
+      return <SpinnerIcon size={18} color={iconColor} />;
+    }
+
+    const IconComponent = PHASE_ICON_MAP[phase];
+    return <IconComponent size={18} color={iconColor} />;
   };
 
   return (
-    <Animated.View style={[styles.container, variantStyles[options.variant || 'default']]}>
-      <TouchableOpacity
-        style={styles.content}
-        onPress={() => {
-          options.onPress?.();
-          if (options.dismissible) {
-            onDismiss(toast.id);
-          }
-        }}
-        activeOpacity={0.8}
-      >
-        {options.icon && <View style={styles.icon}>{options.icon}</View>}
-        <View style={styles.textContainer}>
-          {options.title && <Text style={styles.title}>{options.title}</Text>}
-          {options.description && (
-            <Text style={styles.description}>{options.description}</Text>
+    <Animated.View
+      style={[
+        styles.wrapper,
+        {
+          opacity: fadeAnim,
+          transform: [
+            { scale: scaleAnim },
+            { translateX: shakeAnim },
+          ],
+          backgroundColor: fillColor,
+          borderColor: options.borderColor || 'transparent',
+          borderWidth: options.borderWidth || 0,
+        },
+      ]}
+      accessible={true}
+      accessibilityRole={phase === 'error' || phase === 'warning' ? 'alert' : 'text'}
+    >
+      <View style={[styles.content, { backgroundColor: bgColor, borderRadius: 20 }]}>
+        <View style={styles.header}>
+          <View style={styles.iconWrapper}>
+            {renderIcon()}
+          </View>
+          <Text style={[styles.title, { color: iconColor }]} numberOfLines={1}>
+            {title}
+          </Text>
+          {options.showTimestamp !== false && (
+            <Text style={styles.timestamp}>{timestampStr}</Text>
           )}
         </View>
-        {options.action && (
-          <TouchableOpacity onPress={options.action.onPress} style={styles.actionButton}>
-            <Text style={styles.actionText}>{options.action.label}</Text>
-          </TouchableOpacity>
-        )}
-        {options.dismissible && (
-          <TouchableOpacity
-            onPress={() => onDismiss(toast.id)}
-            style={styles.dismissButton}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+
+        {shouldExpand && (
+          <Animated.View
+            style={[
+              styles.body,
+              {
+                opacity: expandAnim,
+              },
+            ]}
           >
-            <Text style={styles.dismissText}>✕</Text>
-          </TouchableOpacity>
+            {description && (
+              <Text style={styles.description}>{description}</Text>
+            )}
+            {action && (
+              <TouchableOpacity
+                style={[styles.actionButton, { backgroundColor: `${iconColor}20` }]}
+                onPress={handleActionPress}
+              >
+                <Text style={[styles.actionText, { color: iconColor }]}>
+                  {action.label}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </Animated.View>
         )}
-      </TouchableOpacity>
+
+        {options.showProgress !== false && (
+          <ProgressBar
+            duration={options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION}
+            color={PHASE_PROGRESS_MAP[phase]}
+            style={styles.progressBar}
+          />
+        )}
+      </View>
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     marginHorizontal: 16,
     marginVertical: 4,
-    borderRadius: 12,
+    borderRadius: 24,
+    overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowRadius: 12,
+    elevation: 6,
   },
   content: {
+    padding: 12,
+    paddingHorizontal: 16,
+  },
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    gap: 8,
   },
-  icon: {
-    marginRight: 12,
-  },
-  textContainer: {
-    flex: 1,
+  iconWrapper: {
+    width: 18,
+    height: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#fff',
+    fontSize: 13,
+    fontWeight: '700',
+    flex: 1,
+  },
+  timestamp: {
+    fontSize: 11,
+    color: '#999',
+    marginLeft: 'auto',
+  },
+  body: {
+    marginTop: 8,
   },
   description: {
-    fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.9)',
-    marginTop: 2,
+    fontSize: 13,
+    color: '#444',
+    lineHeight: 18,
   },
   actionButton: {
-    marginLeft: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 6,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 999,
+    alignItems: 'center',
   },
   actionText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: 14,
+    fontSize: 13,
+    fontWeight: '700',
   },
-  dismissButton: {
-    marginLeft: 8,
-    padding: 4,
-  },
-  dismissText: {
-    color: 'rgba(255, 255, 255, 0.7)',
-    fontSize: 16,
-  },
-  default: {
-    backgroundColor: '#333',
-  },
-  success: {
-    backgroundColor: '#10b981',
-  },
-  error: {
-    backgroundColor: '#ef4444',
-  },
-  warning: {
-    backgroundColor: '#f59e0b',
-  },
-  info: {
-    backgroundColor: '#3b82f6',
+  progressBar: {
+    marginTop: 8,
   },
 });
