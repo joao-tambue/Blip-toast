@@ -1,6 +1,8 @@
 import { useRef, useEffect } from 'react';
 import { Animated } from 'react-native';
 
+export { MorphAnimation } from './MorphAnimation';
+
 export function useSlideIn(duration = 300) {
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(-20)).current;
