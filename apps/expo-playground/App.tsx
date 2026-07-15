@@ -70,7 +70,7 @@ export default function App() {
           color="#ef4444"
         />
       </View>
-      <ToastContainer position="bottom" />
+      <ToastContainer position="top" />
     </SafeAreaView>
   );
 }
