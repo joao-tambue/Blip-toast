@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Button, SafeAreaView, StatusBar } from 'react-native';
-import toast, { ToastContainer } from 'native-toast';
+import toast, { ToastContainer } from 'blip-toast';
 
 export default function App() {
   const showToast = () => {

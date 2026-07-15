@@ -1,4 +1,4 @@
-# 007: Integração do Design goey-toast
+# 007: Design System do Toast
 
 ## Status
 
@@ -6,7 +6,7 @@ Aceita
 
 ## Contexto
 
-A biblioteca precisava de um design visual mais elaborado e polido. O goey-toast (biblioteca React.js) oferece:
+A biblioteca precisava de um design visual elaborado e polido com:
 - Animações de morphing com spring physics
 - Ícones SVG por variante
 - Barras de progresso
@@ -14,13 +14,11 @@ A biblioteca precisava de um design visual mais elaborado e polido. O goey-toast
 - Promises toast
 - Timestamps
 
-A decisão era como trazer esses padrões para o React Native.
-
 ## Decisão
 
-Adotar os padrões de design do goey-toast como inspiração principal, adaptando-os para as restrições do React Native.
+Implementar um design system completo para toasts com suporte a múltiplas fases, animações suaves e customização completa.
 
-### Padrões Adotados
+### Componentes do Design
 
 1. **Ícones SVG por Variante**
    - Cada variante (success, error, warning, info) tem seu ícone SVG
@@ -62,18 +60,13 @@ Adotar os padrões de design do goey-toast como inspiração principal, adaptand
    - Status bar height diferente iOS/Android
    - Bottom offset adaptativo
 
-### Referência
-
-- goey-toast: https://github.com/nicedoc/goey-toast
-- Cópia local em `goey-toast/` para referência
-
 ## Consequências
 
 ### Positivas
 - Design profissional e consistente
 - UX rica com animações suaves
-- API familiar para usuários do goey-toast
 - Tema escuro nativo
+- Customização completa
 
 ### Negativas
 - Dependência de react-native-svg

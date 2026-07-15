@@ -6,7 +6,7 @@ Aceita
 
 ## Contexto
 
-Os ícones do goey-toast usam SVG para renderização vetorial de alta qualidade. No React Native, a biblioteca padrão para SVG é react-native-svg.
+Os ícones da biblioteca usam SVG para renderização vetorial de alta qualidade. No React Native, a biblioteca padrão para SVG é react-native-svg.
 
 ## Decisão
 

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "native-toast": ["../../packages/native-toast/src"]
+      "blip-toast": ["../../packages/blip-toast/src"]
     }
   }
 }

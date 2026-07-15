@@ -32,11 +32,11 @@ Utilizar **pnpm workspaces** com **Turborepo** como gerenciador de builds.
 ### Estrutura
 
 ```
-native-toast/
+blip-toast/
 ├── apps/
 │   └── expo-playground/    # App de teste
 ├── packages/
-│   └── native-toast/       # Biblioteca principal
+│   └── blip-toast/       # Biblioteca principal
 ├── turbo.json
 ├── pnpm-workspace.yaml
 └── package.json

@@ -5,7 +5,7 @@
 
 > Modern Toast Notifications for React Native
 
-Blip Toast is a modern, performant, and highly customizable toast notification library for React Native. Inspired by Sonner, React Hot Toast, and Gooey Toast, it provides smooth animations and excellent developer experience.
+Blip Toast is a modern, performant, and highly customizable toast notification library for React Native.
 
 ## Features
 
@@ -23,19 +23,19 @@ Blip Toast is a modern, performant, and highly customizable toast notification l
 
 ```bash
 # Using npm
-npm install native-toast
+npm install blip-toast
 
 # Using yarn
-yarn add native-toast
+yarn add blip-toast
 
 # Using pnpm
-pnpm add native-toast
+pnpm add blip-toast
 ```
 
 ## Quick Start
 
 ```tsx
-import toast, { ToastContainer } from 'native-toast';
+import toast, { ToastContainer } from 'blip-toast';
 
 function App() {
   return (
@@ -119,7 +119,7 @@ toast.dismissAll(); // Dismiss all toasts
 ### useToasts
 
 ```tsx
-import { useToasts } from 'native-toast';
+import { useToasts } from 'blip-toast';
 
 function ToastList() {
   const toasts = useToasts();
@@ -148,11 +148,9 @@ Blip Toast is built with a modular architecture:
 
 - [ ] React Native Reanimated support
 - [ ] React Native Gesture Handler integration
-- [ ] Promise-based toasts
 - [ ] Queue management system
 - [ ] Headless API
 - [ ] Dynamic Island mode (iOS)
-- [ ] Morphing toasts
 - [ ] Custom themes
 - [ ] Stack traces
 

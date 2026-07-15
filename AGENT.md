@@ -3,7 +3,7 @@ Você é um arquiteto sênior de bibliotecas React Native open-source.
 Crie a estrutura inicial de uma biblioteca chamada "Blip-toast".
 
 Objetivo:
-Construir uma biblioteca moderna de Toast Notifications para React Native inspirada em Sonner, React Hot Toast e Gooey Toast, com foco em performance, animações fluidas e excelente Developer Experience.
+Construir uma biblioteca moderna de Toast Notifications para React Native com foco em performance, animações fluidas e excelente Developer Experience.
 
 Requisitos:
 
@@ -11,7 +11,7 @@ Requisitos:
 * TurboRepo configurado
 * TypeScript em todos os pacotes
 * Pasta apps/expo-playground para testes
-* Pasta packages/native-toast contendo a biblioteca
+* Pasta packages/blip-toast contendo a biblioteca
 * Configurar tsup para build da biblioteca
 * Configurar ESLint e Prettier
 * Configurar Husky e lint-staged
@@ -24,12 +24,12 @@ Requisitos:
 
 Estrutura desejada:
 
-native-toast/
+blip-toast/
 ├── apps/
 │   └── expo-playground/
 │
 ├── packages/
-│   └── native-toast/
+│   └── blip-toast/
 │       ├── src/
 │       │   ├── core/
 │       │   ├── components/
@@ -64,6 +64,5 @@ Siga boas práticas de bibliotecas React Native modernas e prepare a arquitetura
 * Queue Management
 * Headless API
 * Dynamic Island Mode
-* Morphing Toasts
 
 Explique todas as decisões arquiteturais tomadas dentro de uma pasta docs/ onde dentro dessa pasta estarás a criar arquivos das decisões tomadas.

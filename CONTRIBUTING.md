@@ -14,7 +14,7 @@ Obrigado por interesse em contribuir! Este guia vai te ajudar a começar.
 git clone https://github.com/joao-tambue/Blip-toast.git
 
 # Entre no diretório
-cd native-toast
+cd blip-toast
 
 # Instale as dependências
 pnpm install
@@ -26,11 +26,11 @@ pnpm dev
 ## Estrutura
 
 ```
-native-toast/
+blip-toast/
 ├── apps/
 │   └── expo-playground/    # App de teste
 ├── packages/
-│   └── native-toast/       # Biblioteca principal
+│   └── blip-toast/       # Biblioteca principal
 └── docs/                   # Documentação
 ```
 
@@ -96,9 +96,9 @@ chore: update dependencies
 
 ### Componentes
 
-- Componentes ficam em `packages/native-toast/src/components`
-- Hooks ficam em `packages/native-toast/src/hooks`
-- Utilitários ficam em `packages/native-toast/src/utils`
+- Componentes ficam em `packages/blip-toast/src/components`
+- Hooks ficam em `packages/blip-toast/src/hooks`
+- Utilitários ficam em `packages/blip-toast/src/utils`
 
 ### Testes
 

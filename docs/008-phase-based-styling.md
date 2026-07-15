@@ -6,7 +6,7 @@ Aceita
 
 ## Contexto
 
-O goey-toast usa um sistema onde toasts têm "fases" (loading, default, success, error, warning, info) e cada fase define automaticamente cores, ícones e comportamento. Isso precisa ser adaptado para React Native.
+A biblioteca utiliza um sistema onde toasts têm "fases" (loading, default, success, error, warning, info) e cada fase define automaticamente cores, ícones e comportamento.
 
 ## Decisão
 

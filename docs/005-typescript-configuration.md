@@ -22,7 +22,7 @@ Utilizar **tsconfig.json compartilhado** com configurações específicas por pa
 /
 ├── tsconfig.base.json          # Configuração base
 ├── packages/
-│   └── native-toast/
+│   └── blip-toast/
 │       └── tsconfig.json       # Estende base
 └── apps/
     └── expo-playground/

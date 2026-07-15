@@ -1,5 +1,5 @@
 {
-  "name": "native-toast",
+  "name": "blip-toast",
   "version": "0.1.0",
   "description": "Modern Toast Notifications for React Native",
   "main": "dist/index.js",
@@ -42,7 +42,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/joao-tambueg/Blip-toast.git",
-    "directory": "packages/native-toast"
+    "directory": "packages/blip-toast"
   },
   "bugs": {
     "url": "https://github.com/joao-tambueg/Blip-toast/issues"
