@@ -292,7 +292,7 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
           </Animated.View>
         )}
 
-        {options.showProgress !== false && (
+        {options.showProgress === true && (
           <ProgressBar
             duration={options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION}
             color={PHASE_PROGRESS_MAP[phase]}
