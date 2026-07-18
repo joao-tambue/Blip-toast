@@ -139,13 +139,9 @@ function buildAnchorStyle(position: string, offset: number): AnchorStyle {
   }
 
   if (isLeft) {
-    style.alignItems = 'flex-start';
     style.paddingLeft = offset;
   } else if (isRight) {
-    style.alignItems = 'flex-end';
     style.paddingRight = offset;
-  } else {
-    style.alignItems = 'center';
   }
 
   return style;
@@ -156,7 +152,6 @@ interface AnchorStyle {
   bottom?: number;
   left?: number;
   right?: number;
-  alignItems?: 'flex-start' | 'flex-end' | 'center';
   paddingLeft?: number;
   paddingRight?: number;
 }
