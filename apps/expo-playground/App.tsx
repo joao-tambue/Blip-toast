@@ -53,6 +53,17 @@ export default function App() {
     });
   };
 
+  const showLoadingToast = () => {
+    toast.promise(
+      new Promise((resolve) => setTimeout(resolve, 2500)),
+      {
+        loading: 'Loading data...',
+        success: 'Data loaded successfully!',
+        error: 'Failed to load data',
+      },
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -64,6 +75,7 @@ export default function App() {
         <Button title="Info Toast" onPress={showInfoToast} />
         <Button title="Dismissible Toast" onPress={showDismissibleToast} />
         <Button title="Action Toast" onPress={showActionToast} />
+        <Button title="Loading Toast" onPress={showLoadingToast} />
         <Button
           title="Dismiss All"
           onPress={() => toast.dismissAll()}

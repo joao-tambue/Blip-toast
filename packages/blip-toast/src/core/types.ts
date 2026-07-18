@@ -37,7 +37,7 @@ export interface ToastOptions {
   title?: string;
   description?: string;
   duration?: number;
-  variant?: ToastType;
+  variant?: ToastPhase;
   position?: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   dismissible?: boolean;
   swipeToDismiss?: boolean;
