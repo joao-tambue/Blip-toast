@@ -72,6 +72,22 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
   const [action, setAction] = useState(options.action);
   const [isDismissing, setIsDismissing] = useState(false);
 
+  useEffect(() => {
+    setPhase(options.variant || 'default');
+  }, [options.variant]);
+
+  useEffect(() => {
+    setTitle(options.title || '');
+  }, [options.title]);
+
+  useEffect(() => {
+    setDescription(options.description);
+  }, [options.description]);
+
+  useEffect(() => {
+    setAction(options.action);
+  }, [options.action]);
+
   const expandAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;

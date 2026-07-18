@@ -90,7 +90,7 @@ class ToastManager {
     // Create loading toast
     const toast = this.create(data.loading, {
       id,
-      variant: 'info',
+      variant: 'loading',
       duration: Infinity,
       fillColor: data.fillColor,
       borderColor: data.borderColor,
