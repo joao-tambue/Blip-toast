@@ -38,19 +38,19 @@ const PHASE_COLOR_MAP: Record<ToastPhase, string> = {
 const PHASE_BG_MAP: Record<ToastPhase, string> = {
   loading: '#f5f5f5',
   default: '#f5f5f5',
-  success: '#E8F5E9',
-  error: '#FFEBEE',
-  warning: '#FFF8E1',
-  info: '#E3F2FD',
+  success: '#f5f5f5',
+  error: '#f5f5f5',
+  warning: '#f5f5f5',
+  info: '#f5f5f5',
 };
 
 const DARK_PHASE_BG_MAP: Record<ToastPhase, string> = {
   loading: '#1a1a1a',
   default: '#1a1a1a',
-  success: '#1b5e20',
-  error: '#b71c1c',
-  warning: '#4a3800',
-  info: '#0d47a1',
+  success: '#1a1a1a',
+  error: '#1a1a1a',
+  warning: '#1a1a1a',
+  info: '#1a1a1a',
 };
 
 const PHASE_PROGRESS_MAP: Record<ToastPhase, string> = {
@@ -307,7 +307,6 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
 const styles = StyleSheet.create({
   wrapper: {
     marginHorizontal: 16,
-    marginVertical: 4,
     borderRadius: 24,
     overflow: 'hidden',
     shadowColor: '#000',
