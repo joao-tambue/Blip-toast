@@ -160,4 +160,4 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 
 ## License
 
-MIT © [Your Name](https://github.com/your-name)
+MIT © [João Tambue](https://github.com/joao-tambue)

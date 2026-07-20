@@ -1,5 +1,5 @@
 {
-  "name": "blip-toast",
+  "name": "blip-toast-monorepo",
   "private": true,
   "description": "Modern Toast Notifications for React Native",
   "workspaces": [
