@@ -9,7 +9,7 @@ export default defineConfig({
   treeshake: true,
   splitting: false,
   minify: false,
-  external: ['react', 'react-native'],
+  external: ['react', 'react-native', 'react-native-svg'],
   esbuildOptions(options) {
     options.jsx = 'automatic';
   },

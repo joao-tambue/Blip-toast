@@ -1,5 +1,5 @@
 export const generateId = (): string => {
-  return `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  return `toast-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 };
 
 export const clamp = (value: number, min: number, max: number): number => {

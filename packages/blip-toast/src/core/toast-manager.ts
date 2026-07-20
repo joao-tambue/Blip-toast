@@ -1,8 +1,5 @@
 import type { ToastOptions, Toast, PromiseToastData } from './types';
-
-const generateId = (): string => {
-  return `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-};
+import { generateId } from '../utils';
 
 type ToastListener = (toasts: Toast[]) => void;
 
