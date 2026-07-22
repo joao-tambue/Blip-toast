@@ -14,23 +14,20 @@ Obrigado por interesse em contribuir! Este guia vai te ajudar a começar.
 git clone https://github.com/joao-tambue/Blip-toast.git
 
 # Entre no diretório
-cd blip-toast
+cd Blip-toast
 
 # Instale as dependências
 pnpm install
-
-# Inicie o dev server
-pnpm dev
 ```
 
 ## Estrutura
 
 ```
-blip-toast/
+Blip-toast/
 ├── apps/
 │   └── expo-playground/    # App de teste
 ├── packages/
-│   └── blip-toast/       # Biblioteca principal
+│   └── blip-toast/         # Biblioteca principal
 └── docs/                   # Documentação
 ```
 
@@ -53,18 +50,25 @@ pnpm typecheck
 
 # Format
 pnpm format
+
+# Testes
+pnpm test
+
+# Testes com cobertura
+pnpm test:coverage
 ```
 
 ### Criando uma Feature
 
-1. Crie uma branch
+1. Crie uma branch a partir da `main`
+
    ```bash
    git checkout -b feat/my-feature
    ```
 
 2. Faça suas mudanças
 3. Adicione testes
-4. Rode lint e typecheck
+4. Rode lint, typecheck e testes
 5. Crie um commit seguindo o padrão
 
 ### Commit Messages
@@ -76,7 +80,18 @@ feat: add new toast variant
 fix: resolve dismiss animation issue
 docs: update README
 chore: update dependencies
+test: add unit tests for toast-manager
 ```
+
+### Branches
+
+Siga a convenção de nomes:
+
+- `feat/*` - Nova funcionalidade
+- `fix/*` - Correção de bug
+- `docs/*` - Atualização de documentação
+- `chore/*` - Manutenção e dependências
+- `test/*` - Adição/correção de testes
 
 ### Pull Requests
 
@@ -84,6 +99,13 @@ chore: update dependencies
 2. Crie uma branch para sua feature
 3. Envie um PR com descrição clara
 4. Aguarde review
+
+## Hooks do Git
+
+O projeto usa Husky com lint-staged e commitlint:
+
+- **pre-commit**: `pnpm lint-staged` — roda ESLint + Prettier nos arquivos staged
+- **commit-msg**: `pnpm commitlint` — valida a mensagem do commit
 
 ## Código
 
@@ -103,9 +125,9 @@ chore: update dependencies
 ### Testes
 
 - Escreva testes para novas features
-- Mantenha cobertura alta
-- Teste em iOS e Android
+- Mantenha cobertura alta (mínimo: branches 70%, functions 80%, lines 80%, statements 80%)
+- Use React Native Testing Library para testes de componente
 
 ## Duvidas?
 
-Abra uma issue ou entre em contato pelo Discord.
+Abra uma [issue](https://github.com/joao-tambue/Blip-toast/issues).
