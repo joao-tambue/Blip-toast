@@ -174,7 +174,7 @@ jobs:
       - run: pnpm build
 ```
 
-### 3.2 Workflow de publicacao (opcional, para futuro)
+### 3.2 Workflow de publicacao
 
 **Arquivo:** `.github/workflows/publish.yml`
 
