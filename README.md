@@ -32,6 +32,16 @@ yarn add blip-toast
 pnpm add blip-toast
 ```
 
+### Peer Dependencies
+
+Make sure you have the following installed:
+
+```bash
+npm install react-native-svg
+```
+
+`react` and `react-native` are also required (usually already installed in your project).
+
 ## Quick Start
 
 ```tsx
@@ -40,10 +50,7 @@ import toast, { ToastContainer } from 'blip-toast';
 function App() {
   return (
     <>
-      <Button
-        title="Show Toast"
-        onPress={() => toast('Hello World!')}
-      />
+      <Button title="Show Toast" onPress={() => toast('Hello World!')} />
       <ToastContainer />
     </>
   );
@@ -89,6 +96,23 @@ toast('File deleted', {
 });
 ```
 
+### Promise Toast
+
+```tsx
+toast.promise(saveData(), {
+  loading: 'Saving...',
+  success: 'Data saved!',
+  error: 'Failed to save data',
+});
+```
+
+### Update Toast
+
+```tsx
+const t = toast('Loading...');
+toast.update(t.id, { variant: 'success', title: 'Done!' });
+```
+
 ### Dismiss Toasts
 
 ```tsx
@@ -100,19 +124,22 @@ toast.dismissAll(); // Dismiss all toasts
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | - | Toast message |
-| `description` | `string` | - | Additional description |
-| `variant` | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'` | Visual style |
-| `duration` | `number` | `4000` | Auto-dismiss duration (ms) |
-| `position` | `'top' \| 'bottom' \| 'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | `'bottom'` | Screen position |
-| `dismissible` | `boolean` | `true` | Can be dismissed by user |
-| `swipeToDismiss` | `boolean` | `true` | Swipe gesture to dismiss |
-| `onDismiss` | `() => void` | - | Callback on dismiss |
-| `onPress` | `() => void` | - | Callback on press |
-| `icon` | `ReactNode` | - | Custom icon |
-| `action` | `{ label: string; onPress: () => void }` | - | Action button |
+| Prop             | Type                                                                                | Default     | Description                |
+| ---------------- | ----------------------------------------------------------------------------------- | ----------- | -------------------------- |
+| `title`          | `string`                                                                            | -           | Toast message              |
+| `description`    | `string`                                                                            | -           | Additional description     |
+| `variant`        | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'`                          | `'default'` | Visual style               |
+| `duration`       | `number`                                                                            | `4000`      | Auto-dismiss duration (ms) |
+| `position`       | `'top' \| 'bottom' \| 'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | `'bottom'`  | Screen position            |
+| `dismissible`    | `boolean`                                                                           | `true`      | Can be dismissed by user   |
+| `swipeToDismiss` | `boolean`                                                                           | `true`      | Swipe gesture to dismiss   |
+| `onDismiss`      | `() => void`                                                                        | -           | Callback on dismiss        |
+| `onPress`        | `() => void`                                                                        | -           | Callback on press          |
+| `icon`           | `ReactNode`                                                                         | -           | Custom icon                |
+| `action`         | `{ label: string; onPress: () => void }`                                            | -           | Action button              |
+| `fillColor`      | `string`                                                                            | -           | Custom fill color          |
+| `borderColor`    | `string`                                                                            | -           | Custom border color        |
+| `classNames`     | `ToastClassNames`                                                                   | -           | Custom class names         |
 
 ## Hooks
 
@@ -123,10 +150,10 @@ import { useToasts } from 'blip-toast';
 
 function ToastList() {
   const toasts = useToasts();
-  
+
   return (
     <View>
-      {toasts.map(toast => (
+      {toasts.map((toast) => (
         <Text key={toast.id}>{toast.options.title}</Text>
       ))}
     </View>
@@ -134,15 +161,24 @@ function ToastList() {
 }
 ```
 
+## Animation Presets
+
+```tsx
+import { animationPresets } from 'blip-toast';
+
+// Available presets: smooth, bouncy, subtle, snappy
+```
+
 ## Architecture
 
 Blip Toast is built with a modular architecture:
 
 - **Core** - Toast manager and state management
-- **Components** - Pre-built UI components
-- **Hooks** - React hooks for state access
+- **Components** - Pre-built UI components (ToastContainer, ToastItem, ProgressBar)
+- **Hooks** - React hooks for state access (`useToasts`)
 - **Animations** - Animation utilities and presets
-- **Utils** - Helper functions
+- **Icons** - SVG icons for each variant
+- **Utils** - Helper functions (generateId, clamp, sleep)
 
 ## Roadmap
 

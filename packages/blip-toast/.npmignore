@@ -1,5 +1,4 @@
-# Source
-src/
+# Config
 tsconfig.json
 tsup.config.ts
 .eslintrc.json

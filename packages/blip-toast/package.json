@@ -20,6 +20,9 @@
     "./package.json": "./package.json"
   },
   "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -27,7 +30,8 @@
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "keywords": [
     "react-native",
@@ -40,14 +44,14 @@
   ],
   "author": "Blip Toast Contributors",
   "license": "MIT",
-  "homepage": "https://github.com/joao-tambueg/Blip-toast#readme",
+  "homepage": "https://github.com/joao-tambue/Blip-toast#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joao-tambueg/Blip-toast.git",
+    "url": "https://github.com/joao-tambue/Blip-toast.git",
     "directory": "packages/blip-toast"
   },
   "bugs": {
-    "url": "https://github.com/joao-tambueg/Blip-toast/issues"
+    "url": "https://github.com/joao-tambue/Blip-toast/issues"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
