@@ -33,6 +33,7 @@ O root e a lib usam o mesmo nome `"blip-toast"`. Isso causa confusao em ferramen
 ### 1.3 Corrigir `substr()` deprecated
 
 **Arquivos:**
+
 - `packages/blip-toast/src/utils/index.ts`
 - `packages/blip-toast/src/core/toast-manager.ts`
 
@@ -92,22 +93,22 @@ Ou usar **Vitest** para compatibilidade com tsup/esbuild (decidir qual).
 
 Prioridade maxima:
 
-| Modulo | Arquivo | O que testar |
-|--------|---------|--------------|
-| Core | `toast-manager.ts` | `create`, `dismiss`, `dismissAll`, `update`, `promise`, `maxToasts` |
-| Hooks | `use-toasts.ts` | Subscricao, snapshot atualizado, cleanup no unmount |
-| Utils | `utils/index.ts` | `generateId` (uniqueness), `clamp`, `sleep` |
-| Core | `presets.ts` | Presets retornam valores validos |
+| Modulo | Arquivo            | O que testar                                                        |
+| ------ | ------------------ | ------------------------------------------------------------------- |
+| Core   | `toast-manager.ts` | `create`, `dismiss`, `dismissAll`, `update`, `promise`, `maxToasts` |
+| Hooks  | `use-toasts.ts`    | Subscricao, snapshot atualizado, cleanup no unmount                 |
+| Utils  | `utils/index.ts`   | `generateId` (uniqueness), `clamp`, `sleep`                         |
+| Core   | `presets.ts`       | Presets retornam valores validos                                    |
 
 ### 2.3 Escrever testes de componente
 
 Prioridade media (React Native Testing Library):
 
-| Componente | Cenarios |
-|------------|----------|
-| `ToastItem` | Renderiza mensagem, variante correta, acao clicavel, dismiss |
-| `ToastContainer` | Renderiza lista, posicao, maximo visivel |
-| `ProgressBar` | Anima de 100 a 0, pausa |
+| Componente       | Cenarios                                                     |
+| ---------------- | ------------------------------------------------------------ |
+| `ToastItem`      | Renderiza mensagem, variante correta, acao clicavel, dismiss |
+| `ToastContainer` | Renderiza lista, posicao, maximo visivel                     |
+| `ProgressBar`    | Anima de 100 a 0, pausa                                      |
 
 ### 2.4 Adicionar script de teste
 
@@ -214,6 +215,7 @@ pnpm commitlint --edit $1
 ## 0.1.0 (YYYY-MM-DD)
 
 ### Features
+
 - Toast notifications com 5 variantes (default, success, error, warning, info)
 - Card stack layout com animacoes spring
 - 6 posicoes de posicionamento
