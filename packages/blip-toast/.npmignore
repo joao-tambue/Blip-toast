@@ -1,9 +1,13 @@
 # Config
 tsconfig.json
+tsconfig.test.json
 tsup.config.ts
 .eslintrc.json
 .prettierrc
 .prettierignore
+
+# Tests
+__tests__/
 
 # Config
 .turbo/
