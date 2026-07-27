@@ -10,6 +10,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -19,7 +21,6 @@ jobs:
         with:
           node-version: 18
           cache: pnpm
-          registry-url: https://registry.npmjs.org
 
       - run: pnpm install --frozen-lockfile
 
@@ -31,8 +32,12 @@ jobs:
 
       - run: pnpm build
 
-      - name: Publish to npm
+      - name: Create tarball
         working-directory: packages/blip-toast
-        run: pnpm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm pack
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/blip-toast/blip-toast-*.tgz
+          generate_release_notes: true

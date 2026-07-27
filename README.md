@@ -32,6 +32,22 @@ yarn add blip-toast
 pnpm add blip-toast
 ```
 
+### Install from GitHub
+
+```bash
+# Using npm
+npm install joao-tambue/Blip-toast#v0.1.0
+
+# Using yarn
+yarn add joao-tambue/Blip-toast#v0.1.0
+
+# Using pnpm
+pnpm add joao-tambue/Blip-toast#v0.1.0
+
+# Using bun
+bun add joao-tambue/Blip-toast#v0.1.0
+```
+
 ### Peer Dependencies
 
 Make sure you have the following installed:
