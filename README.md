@@ -3,21 +3,21 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-> Modern Toast Notifications for React Native
-
-Blip Toast is a modern, performant, and highly customizable toast notification library for React Native.
+Toast notifications for React Native.
 
 ## Features
 
-- 🎨 **Beautiful Animations** - Smooth transitions powered by React Native Animated API
-- 🎯 **Multiple Variants** - Default, success, error, warning, and info toasts
-- 📍 **Flexible Positioning** - Top, bottom, and corner positions
-- 👆 **Interactive** - Swipe to dismiss, action buttons, and press handlers
-- 🔧 **Highly Customizable** - Themes, durations, and custom content
-- 📱 **Cross-Platform** - Works on iOS, Android, and Web
-- ⚡ **Lightweight** - Minimal bundle size with tree-shaking support
-- 🎭 **Headless API** - Full control over toast rendering
-- 🔮 **Future-Ready** - Prepared for Reanimated, Gesture Handler, and more
+| Feature              | Description                                             |
+| -------------------- | ------------------------------------------------------- |
+| Beautiful Animations | Smooth transitions powered by React Native Animated API |
+| Multiple Variants    | Default, success, error, warning, and info toasts       |
+| Flexible Positioning | Top, bottom, and corner positions (6 positions)         |
+| Interactive          | Swipe to dismiss, action buttons, and press handlers    |
+| Highly Customizable  | Themes, durations, and custom content                   |
+| Cross-Platform       | Works on iOS, Android, and Web                          |
+| Lightweight          | Minimal bundle size with tree-shaking support           |
+| Headless API         | Full control over toast rendering                       |
+| Future-Ready         | Prepared for Reanimated, Gesture Handler, and more      |
 
 ## Installation
 
