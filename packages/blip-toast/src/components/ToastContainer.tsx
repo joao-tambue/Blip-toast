@@ -20,6 +20,8 @@ interface StackAnimValues {
 
 const SPRING_CONFIG = { tension: 180, friction: 22, useNativeDriver: true };
 
+const IS_WEB = Platform.OS === 'web';
+
 export const ToastContainer: React.FC<ToastContainerProps> = ({
   position = 'bottom-right',
   theme = 'system',
@@ -31,9 +33,8 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
   const systemColorScheme = useColorScheme();
   const animMap = useRef(new Map<string, StackAnimValues>());
 
-  const resolvedTheme = theme === 'system'
-    ? (systemColorScheme === 'dark' ? 'dark' : 'light')
-    : theme;
+  const resolvedTheme =
+    theme === 'system' ? (systemColorScheme === 'dark' ? 'dark' : 'light') : theme;
 
   const isTop = position.startsWith('top');
   const anchorStyle = buildAnchorStyle(position, offset);
@@ -65,7 +66,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
       animations.push(
         Animated.spring(anims.translateY, { toValue: targetY, ...SPRING_CONFIG }),
         Animated.spring(anims.scale, { toValue: targetScale, ...SPRING_CONFIG }),
-        Animated.spring(anims.opacity, { toValue: targetOpacity, ...SPRING_CONFIG }),
+        Animated.spring(anims.opacity, { toValue: targetOpacity, ...SPRING_CONFIG })
       );
     });
 
@@ -96,10 +97,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
               styles.toastAnchor,
               anchorStyle,
               {
-                transform: [
-                  { translateY: anims.translateY },
-                  { scale: anims.scale },
-                ],
+                transform: [{ translateY: anims.translateY }, { scale: anims.scale }],
                 opacity: anims.opacity,
                 zIndex: toasts.length - stackIndex,
                 elevation: toasts.length - stackIndex,
@@ -127,10 +125,7 @@ function buildAnchorStyle(position: string, offset: number): AnchorStyle {
   const isLeft = position.includes('left');
   const isRight = position.includes('right');
 
-  const style: AnchorStyle = {
-    left: 0,
-    right: 0,
-  };
+  const style: AnchorStyle = {};
 
   if (isTop) {
     style.top = statusBarHeight + offset;
@@ -139,9 +134,13 @@ function buildAnchorStyle(position: string, offset: number): AnchorStyle {
   }
 
   if (isLeft) {
-    style.paddingLeft = offset;
+    style.left = offset;
   } else if (isRight) {
-    style.paddingRight = offset;
+    style.right = offset;
+  } else {
+    style.left = 0;
+    style.right = 0;
+    style.alignItems = 'center';
   }
 
   return style;
@@ -152,13 +151,12 @@ interface AnchorStyle {
   bottom?: number;
   left?: number;
   right?: number;
-  paddingLeft?: number;
-  paddingRight?: number;
+  alignItems?: 'flex-start' | 'flex-end' | 'center';
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: (IS_WEB ? 'fixed' : 'absolute') as 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
