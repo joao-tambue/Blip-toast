@@ -1,0 +1,43 @@
+{
+  "name": "blip-toast-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Official documentation & playground for Blip Toast — modern toast notifications for React Native.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "og": "node scripts/generate-og.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
+    "blip-toast": "workspace:*",
+    "framer-motion": "^12.43.0",
+    "lucide-react": "^1.28.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native-svg": "^15.15.5",
+    "react-native-web": "^0.21.2",
+    "shiki": "^4.4.1"
+  },
+  "devDependencies": {
+    "@shikijs/core": "4.4.1",
+    "@shikijs/langs": "4.4.1",
+    "@shikijs/themes": "4.4.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "react-native": "0.81.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.3.0",
+    "vite": "^8.2.0"
+  }
+}
