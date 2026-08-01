@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { Trans, useTranslation } from 'react-i18next';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { InstallTabs } from '../ui/InstallTabs';
@@ -23,6 +24,8 @@ const item = {
 };
 
 export function Hero() {
+  const { t } = useTranslation();
+
   return (
     <section id="top" className="relative overflow-hidden pt-32 pb-20 sm:pt-36 lg:pt-40">
       {/* Background */}
@@ -38,8 +41,9 @@ export function Hero() {
         <motion.div variants={container} initial="hidden" animate="show">
           <motion.div variants={item}>
             <Badge>
-              v{site.version} · React Native &nbsp;
-              <span className="text-gradient font-semibold">MIT</span>
+              <Trans i18nKey="hero.badge" values={{ version: site.version }}>
+                <span className="text-gradient font-semibold">MIT</span>
+              </Trans>
             </Badge>
           </motion.div>
 
@@ -47,9 +51,10 @@ export function Hero() {
             variants={item}
             className="mt-6 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl"
           >
-            Toasts that don&apos;t <span className="text-gradient-animated">interrupt</span> — they{' '}
+            {t('hero.title1')} <span className="text-gradient-animated">{t('hero.interrupt')}</span>{' '}
+            {t('hero.title2')}{' '}
             <span className="relative whitespace-nowrap">
-              delight.
+              {t('hero.delight')}
               <svg
                 className="absolute -bottom-2 left-0 w-full"
                 viewBox="0 0 120 12"
@@ -77,19 +82,19 @@ export function Hero() {
             variants={item}
             className="mt-6 max-w-lg text-base leading-relaxed text-muted sm:text-lg"
           >
-            {site.description}
+            {t('hero.description')}
           </motion.p>
 
           <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-3">
             <a href="#docs">
               <Button size="lg">
-                Get started
+                {t('hero.getStarted')}
                 <ArrowUpRight className="size-5" />
               </Button>
             </a>
             <a href="#playground">
               <Button size="lg" variant="secondary">
-                Try the playground
+                {t('hero.tryPlayground')}
                 <ArrowDown className="size-4" />
               </Button>
             </a>

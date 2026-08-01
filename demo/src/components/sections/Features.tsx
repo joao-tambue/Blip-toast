@@ -10,102 +10,88 @@ import {
   Timer,
   Zap,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { SectionHeading } from '../ui/SectionHeading';
 import { Card } from '../ui/Card';
 
 const features = [
   {
+    key: 'variants',
     icon: Sparkles,
-    title: 'Five variants',
-    description:
-      'Default, success, error, warning and info — each with its own icon, tint and personality.',
     accent: 'text-sky',
     glow: 'group-hover:shadow-sky-500/30',
   },
   {
+    key: 'animations',
     icon: Zap,
-    title: 'Springy animations',
-    description:
-      'Smooth, physics-driven entrances and exits. Pick a preset — smooth, bouncy, subtle, snappy — or tune the spring yourself.',
     accent: 'text-violet',
     glow: 'group-hover:shadow-violet-500/30',
   },
   {
+    key: 'promise',
     icon: Timer,
-    title: 'Promise support',
-    description:
-      'toast.promise() morphs a loading toast into success or error the moment your async work settles.',
     accent: 'text-blue',
     glow: 'group-hover:shadow-blue-500/30',
   },
   {
+    key: 'positions',
     icon: Layers,
-    title: 'Six positions',
-    description:
-      'Anchored anywhere: top, bottom, or any of the four corners. Even per-toast with position overrides.',
     accent: 'text-sky',
     glow: 'group-hover:shadow-sky-500/30',
   },
   {
+    key: 'rich',
     icon: Clock3,
-    title: 'Rich by default',
-    description:
-      'Timestamps and an optional animated progress bar keep toasts informative without stealing focus.',
     accent: 'text-violet',
     glow: 'group-hover:shadow-violet-500/30',
   },
   {
+    key: 'headless',
     icon: Atom,
-    title: 'Headless API',
-    description:
-      'Prefer your own UI? useToasts() exposes the live list so you can render everything yourself.',
     accent: 'text-blue',
     glow: 'group-hover:shadow-blue-500/30',
   },
   {
+    key: 'customizable',
     icon: SwatchBook,
-    title: 'Fully customizable',
-    description:
-      'Class names, custom fills, borders, icons, action buttons — every pixel is yours to style.',
     accent: 'text-sky',
     glow: 'group-hover:shadow-sky-500/30',
   },
   {
+    key: 'themeAware',
     icon: Palette,
-    title: 'Theme aware',
-    description:
-      'Light, dark and system themes, with per-toast overrides. Follows the device, follows you.',
     accent: 'text-violet',
     glow: 'group-hover:shadow-violet-500/30',
   },
   {
+    key: 'typescript',
     icon: Accessibility,
-    title: 'TypeScript first',
-    description:
-      'Tiny, fully typed API with autocomplete for every option. No config, no providers, no ceremony.',
     accent: 'text-blue',
     glow: 'group-hover:shadow-blue-500/30',
   },
-];
+] as const;
 
 export function Features() {
+  const { t } = useTranslation();
+
   return (
     <section id="features" className="relative py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Features"
+          eyebrow={t('features.eyebrow')}
           title={
             <>
-              Small API, <span className="text-gradient">big impact</span>
+              {t('features.title')}{' '}
+              <span className="text-gradient">{t('features.titleAccent')}</span>
             </>
           }
-          description="Everything you need for delightful notifications — and nothing you don't. Zero providers, zero config, just toasts."
+          description={t('features.description')}
         />
 
         <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, i) => (
             <motion.div
-              key={feature.title}
+              key={feature.key}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
@@ -115,8 +101,12 @@ export function Features() {
                 <div className="flex size-11 items-center justify-center rounded-xl border border-line bg-night/60">
                   <feature.icon className={`size-5 ${feature.accent}`} />
                 </div>
-                <h3 className="mt-4 font-display text-lg font-bold text-ink">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{feature.description}</p>
+                <h3 className="mt-4 font-display text-lg font-bold text-ink">
+                  {t(`features.items.${feature.key}.title`)}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {t(`features.items.${feature.key}.description`)}
+                </p>
               </Card>
             </motion.div>
           ))}

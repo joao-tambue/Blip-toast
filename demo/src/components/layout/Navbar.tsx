@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../hooks/useTheme';
 import { navLinks, site } from '../../lib/site-config';
 import { cn } from '../../lib/cn';
 import { GithubIcon, NpmIcon } from '../ui/brand-icons';
 import { Button } from '../ui/Button';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -42,11 +45,11 @@ export function Navbar() {
       )}
     >
       <nav
-        aria-label="Main"
+        aria-label={t('nav.mainAria')}
         className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
       >
         {/* Logo */}
-        <a href="#top" className="group flex items-center gap-2.5" aria-label="Blip Toast home">
+        <a href="#top" className="group flex items-center gap-2.5" aria-label={t('nav.homeAria')}>
           <span className="relative">
             <img
               src="/blip-icon.png"
@@ -71,7 +74,7 @@ export function Navbar() {
                 href={link.href}
                 className="rounded-full px-3.5 py-2 text-sm font-medium text-muted transition-colors duration-150 hover:text-ink"
               >
-                {link.label}
+                {t(`nav.${link.key}`)}
               </a>
             </li>
           ))}
@@ -79,11 +82,12 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-1.5">
+          <LanguageSwitcher />
           <a
             href={site.npm}
             target="_blank"
             rel="noreferrer"
-            aria-label="View on npm"
+            aria-label={t('nav.npmAria')}
             className="flex size-9 items-center justify-center rounded-full text-muted transition-colors duration-150 hover:bg-surface hover:text-ink"
           >
             <NpmIcon size={18} />
@@ -92,7 +96,7 @@ export function Navbar() {
             href={site.repository}
             target="_blank"
             rel="noreferrer"
-            aria-label="View on GitHub"
+            aria-label={t('nav.githubAria')}
             className="flex size-9 items-center justify-center rounded-full text-muted transition-colors duration-150 hover:bg-surface hover:text-ink"
           >
             <GithubIcon size={19} />
@@ -101,7 +105,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={theme === 'dark' ? t('nav.lightAria') : t('nav.darkAria')}
             className="flex size-9 items-center justify-center rounded-full text-muted transition-colors duration-150 hover:bg-surface hover:text-ink cursor-pointer"
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -120,7 +124,7 @@ export function Navbar() {
 
           <a href="#docs" className="hidden sm:block">
             <Button size="sm" className="ml-1">
-              Get started
+              {t('nav.getStarted')}
               <ArrowUpRight className="size-4" />
             </Button>
           </a>
@@ -128,7 +132,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? t('nav.closeMenuAria') : t('nav.openMenuAria')}
             aria-expanded={open}
             className="flex size-9 items-center justify-center rounded-full text-ink transition-colors duration-150 hover:bg-surface md:hidden cursor-pointer"
           >
@@ -160,7 +164,7 @@ export function Navbar() {
                     onClick={() => setOpen(false)}
                     className="block rounded-xl px-4 py-3 text-base font-medium text-ink transition-colors hover:bg-surface"
                   >
-                    {link.label}
+                    {t(`nav.${link.key}`)}
                   </a>
                 </motion.li>
               ))}
@@ -171,7 +175,7 @@ export function Navbar() {
                 className="pt-2"
               >
                 <a href="#docs" onClick={() => setOpen(false)} className="block">
-                  <Button className="w-full">Get started</Button>
+                  <Button className="w-full">{t('nav.getStarted')}</Button>
                 </a>
               </motion.li>
             </ul>

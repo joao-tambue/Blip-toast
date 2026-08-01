@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles/globals.css';
+import './i18n';
 
 // Fallback shim: react-native-web's vendored Animated JS driver references
 // `global` (e.g. global.requestAnimationFrame). Vite rewrites the identifier

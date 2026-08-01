@@ -1,6 +1,7 @@
 import toast from 'blip-toast';
 import type { ToastContainerProps, ToastOptions } from 'blip-toast';
 import { Rocket } from 'lucide-react';
+import i18n from '../i18n';
 
 export type DemoPosition = NonNullable<ToastContainerProps['position']>;
 export type DemoTheme = NonNullable<ToastContainerProps['theme']>;
@@ -73,64 +74,64 @@ function optionsFor(
 export function fireToast(kind: ToastKind, config: DemoConfig): void {
   switch (kind) {
     case 'default':
-      toast('Hello from Blip Toast', optionsFor(config, 'default'));
+      toast(i18n.t('toast.hello'), optionsFor(config, 'default'));
       break;
     case 'success':
-      toast.success('Saved successfully', optionsFor(config, 'success'));
+      toast.success(i18n.t('toast.success'), optionsFor(config, 'success'));
       break;
     case 'error':
       toast.error(
-        'Something went wrong',
+        i18n.t('toast.error'),
         optionsFor(config, 'error', {
-          description: 'The request failed with status 500.',
+          description: i18n.t('toast.errorDesc'),
         })
       );
       break;
     case 'warning':
       toast.warning(
-        'Heads up',
+        i18n.t('toast.warning'),
         optionsFor(config, 'warning', {
-          description: 'Your free trial ends in 3 days.',
+          description: i18n.t('toast.warningDesc'),
         })
       );
       break;
     case 'info':
       toast.info(
-        'New version available',
+        i18n.t('toast.info'),
         optionsFor(config, 'info', {
-          description: 'Blip Toast 0.1.0 just shipped.',
+          description: i18n.t('toast.infoDesc'),
         })
       );
       break;
     case 'description':
       toast(
-        'Welcome back',
+        i18n.t('toast.welcomeBack'),
         optionsFor(config, 'default', {
-          description: 'Toasts can carry a description and an action button at once.',
+          description: i18n.t('toast.welcomeBackDesc'),
           action: {
-            label: 'Open',
-            successLabel: 'Opened',
-            onPress: () => toast.success('Welcome back!'),
+            label: i18n.t('toast.open'),
+            successLabel: i18n.t('toast.opened'),
+            onPress: () => toast.success(i18n.t('toast.welcomeBackToast')),
           },
         })
       );
       break;
     case 'action':
       toast(
-        'File deleted',
+        i18n.t('toast.fileDeleted'),
         optionsFor(config, 'default', {
-          description: 'You can undo this in the next few seconds.',
+          description: i18n.t('toast.fileDeletedDesc'),
           action: {
-            label: 'Undo',
-            successLabel: 'Restored',
-            onPress: () => toast.success('File restored'),
+            label: i18n.t('toast.undo'),
+            successLabel: i18n.t('toast.restored'),
+            onPress: () => toast.success(i18n.t('toast.fileRestored')),
           },
         })
       );
       break;
     case 'icon':
       toast(
-        'Build deployed',
+        i18n.t('toast.buildDeployed'),
         optionsFor(config, 'info', {
           icon: <Rocket size={18} color="#38BDF8" />,
         })
@@ -138,13 +139,13 @@ export function fireToast(kind: ToastKind, config: DemoConfig): void {
       break;
     case 'loading':
       toast.promise(wait(2200), {
-        loading: 'Loading your workspace…',
-        success: 'Workspace ready',
-        error: 'Failed to load',
+        loading: i18n.t('toast.loadingWorkspace'),
+        success: i18n.t('toast.workspaceReady'),
+        error: i18n.t('toast.failedToLoad'),
         description: {
-          loading: 'Fetching projects and tasks.',
-          success: 'Everything is up to date.',
-          error: 'Check your connection and retry.',
+          loading: i18n.t('toast.loadingDesc'),
+          success: i18n.t('toast.readyDesc'),
+          error: i18n.t('toast.retryDesc'),
         },
         showTimestamp: config.showTimestamp,
         showProgress: config.showProgress,
@@ -154,8 +155,8 @@ export function fireToast(kind: ToastKind, config: DemoConfig): void {
       });
       break;
     case 'custom':
-      toast('Fully customized', {
-        description: 'Custom fill, border, preset, timestamp and progress.',
+      toast(i18n.t('toast.fullyCustomized'), {
+        description: i18n.t('toast.customizedDesc'),
         preset: 'bouncy',
         fillColor: '#15162A',
         borderColor: '#8B5CF6',
@@ -166,18 +167,18 @@ export function fireToast(kind: ToastKind, config: DemoConfig): void {
       });
       break;
     case 'update': {
-      const t = toast('Uploading image…', {
+      const handle = toast(i18n.t('toast.uploading'), {
         ...optionsFor(config, 'info'),
         duration: 6000,
       });
       setTimeout(() => {
-        toast.update(t.id, {
-          title: 'Image uploaded',
+        toast.update(handle.id, {
+          title: i18n.t('toast.uploaded'),
           variant: 'success',
-          description: 'Ready to share.',
+          description: i18n.t('toast.uploadedDesc'),
         });
       }, 1400);
-      setTimeout(() => t.dismiss(), 4400);
+      setTimeout(() => handle.dismiss(), 4400);
       break;
     }
   }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { ApiRow } from '../../lib/toast-examples';
 
 interface ApiTableProps {
@@ -5,6 +6,8 @@ interface ApiTableProps {
 }
 
 export function ApiTable({ rows }: ApiTableProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="overflow-hidden rounded-xl border border-line bg-night/40">
       <div className="overflow-x-auto">
@@ -12,16 +15,16 @@ export function ApiTable({ rows }: ApiTableProps) {
           <thead>
             <tr className="border-b border-line bg-surface/50">
               <th className="px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-muted">
-                Name
+                {t('api.table.name')}
               </th>
               <th className="px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-muted">
-                Type
+                {t('api.table.type')}
               </th>
               <th className="px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-muted">
-                Default
+                {t('api.table.default')}
               </th>
               <th className="hidden px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-muted sm:table-cell">
-                Description
+                {t('api.table.description')}
               </th>
             </tr>
           </thead>
@@ -41,7 +44,7 @@ export function ApiTable({ rows }: ApiTableProps) {
                   {row.default}
                 </td>
                 <td className="hidden px-4 py-3 text-[13px] leading-relaxed text-muted sm:table-cell">
-                  {row.description}
+                  {t(row.descriptionKey)}
                 </td>
               </tr>
             ))}

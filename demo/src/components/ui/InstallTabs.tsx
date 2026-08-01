@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { installCommands } from '../../lib/site-config';
 import { Tabs } from '../ui/Tabs';
 import { CopyButton } from '../ui/CopyButton';
@@ -15,6 +16,7 @@ interface InstallTabsProps {
 
 export function InstallTabs({ className }: InstallTabsProps) {
   const [active, setActive] = useState<PkgManager>('npm');
+  const { t } = useTranslation();
   const command = installCommands[active];
 
   return (
@@ -26,13 +28,13 @@ export function InstallTabs({ className }: InstallTabsProps) {
     >
       <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-white/[0.03] px-3 py-2.5">
         <Tabs<PkgManager>
-          aria-label="Package manager"
+          aria-label={t('installTabs.packageManagerAria')}
           value={active}
           onChange={setActive}
           tabs={managers.map((m) => ({ value: m, label: m }))}
           variant="dark"
         />
-        <CopyButton text={command} label="Copy" />
+        <CopyButton text={command} label={t('installTabs.copy')} />
       </div>
       <div className="flex items-center gap-3 px-4 py-3.5">
         <span className="select-none text-sky" aria-hidden>

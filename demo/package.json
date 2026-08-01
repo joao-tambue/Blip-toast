@@ -20,9 +20,12 @@
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "blip-toast": "workspace:*",
     "framer-motion": "^12.43.0",
+    "i18next": "^26.3.6",
+    "i18next-browser-languagedetector": "^8.2.1",
     "lucide-react": "^1.28.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-i18next": "^17.0.11",
     "react-native-svg": "^15.15.5",
     "react-native-web": "^0.21.2",
     "shiki": "^4.4.1"

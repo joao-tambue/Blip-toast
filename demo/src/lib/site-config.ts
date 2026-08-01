@@ -15,11 +15,11 @@ export const site = {
 } as const;
 
 export const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'Playground', href: '#playground' },
-  { label: 'Docs', href: '#docs' },
-  { label: 'Quick start', href: '#quickstart' },
-  { label: 'API', href: '#api' },
+  { key: 'features', href: '#features' },
+  { key: 'playground', href: '#playground' },
+  { key: 'docs', href: '#docs' },
+  { key: 'quickstart', href: '#quickstart' },
+  { key: 'api', href: '#api' },
 ] as const;
 
 export const installCommands: Record<'npm' | 'pnpm' | 'yarn' | 'bun', string> = {

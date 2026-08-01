@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { SectionHeading } from '../ui/SectionHeading';
 import { CodeBlock } from '../ui/CodeBlock';
 import { useToastDemo } from '../demo/ToastDemoProvider';
@@ -6,33 +7,30 @@ import { SNIPPETS } from '../../lib/toast-examples';
 
 const pairs = [
   {
-    title: 'Rich colors',
-    description: 'Fill, border and accent — toasts that pop against any background.',
+    key: 'richColors',
     snippet: SNIPPETS.richColors,
     run: 'custom' as const,
   },
   {
-    title: 'Animation presets',
-    description: 'Four entrance feels, or a hand-tuned spring when you need it.',
+    key: 'presets',
     snippet: SNIPPETS.presets,
     run: 'custom' as const,
   },
   {
-    title: 'Style hooks',
-    description: 'Per-part classNames for wrapper, content, title, description and actions.',
+    key: 'styleHooks',
     snippet: SNIPPETS.classNames,
     run: 'default' as const,
   },
   {
-    title: 'Theming',
-    description: 'Light, dark or system — on the container or per toast.',
+    key: 'theming',
     snippet: SNIPPETS.theme,
     run: 'default' as const,
   },
-];
+] as const;
 
 export function Customization() {
   const { fire } = useToastDemo();
+  const { t } = useTranslation();
 
   return (
     <section id="customization" className="relative py-24">
@@ -42,19 +40,20 @@ export function Customization() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Customization"
+          eyebrow={t('customization.eyebrow')}
           title={
             <>
-              Your brand, <span className="text-gradient">your toasts</span>
+              {t('customization.title')}{' '}
+              <span className="text-gradient">{t('customization.titleAccent')}</span>
             </>
           }
-          description="Style every part without fighting the library. Plain options, no abstractions."
+          description={t('customization.description')}
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
           {pairs.map((pair, i) => (
             <motion.div
-              key={pair.title}
+              key={pair.key}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
@@ -62,15 +61,19 @@ export function Customization() {
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="font-display text-base font-bold text-ink">{pair.title}</h3>
-                  <p className="mt-1 text-[13px] leading-relaxed text-muted">{pair.description}</p>
+                  <h3 className="font-display text-base font-bold text-ink">
+                    {t(`customization.items.${pair.key}.title`)}
+                  </h3>
+                  <p className="mt-1 text-[13px] leading-relaxed text-muted">
+                    {t(`customization.items.${pair.key}.description`)}
+                  </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => fire(pair.run)}
                   className="mt-0.5 shrink-0 rounded-full border border-line bg-surface/60 px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-violet/50 hover:text-violet cursor-pointer"
                 >
-                  Run demo
+                  {t('customization.runDemo')}
                 </button>
               </div>
               <CodeBlock
