@@ -13,6 +13,7 @@ interface TabsProps<T extends string> {
   onChange: (value: T) => void;
   className?: string;
   'aria-label'?: string;
+  variant?: 'default' | 'dark';
 }
 
 export function Tabs<T extends string>({
@@ -21,15 +22,23 @@ export function Tabs<T extends string>({
   onChange,
   className,
   'aria-label': ariaLabel,
+  variant = 'default',
 }: TabsProps<T>) {
   const baseId = useId();
+
+  const containerClass =
+    variant === 'dark' ? 'border-white/10 bg-white/[0.06]' : 'border-line bg-surface/70';
+
+  const idleClass =
+    variant === 'dark' ? 'text-slate-400 hover:text-white' : 'text-muted hover:text-ink';
 
   return (
     <div
       role="tablist"
       aria-label={ariaLabel ?? 'Tabs'}
       className={cn(
-        'inline-flex items-center gap-1 rounded-full border border-line bg-surface/70 p-1 backdrop-blur',
+        'inline-flex items-center gap-1 rounded-full border p-1 backdrop-blur',
+        containerClass,
         className
       )}
     >
@@ -45,7 +54,7 @@ export function Tabs<T extends string>({
             onClick={() => onChange(tab.value)}
             className={cn(
               'relative rounded-full px-4 py-1.5 font-mono text-xs font-medium transition-colors duration-150 cursor-pointer',
-              selected ? 'text-white' : 'text-muted hover:text-ink'
+              selected ? 'text-white' : idleClass
             )}
           >
             {selected && (
