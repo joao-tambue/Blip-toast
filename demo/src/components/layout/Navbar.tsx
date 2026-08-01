@@ -82,7 +82,6 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-1.5">
-          <LanguageSwitcher />
           <a
             href={site.npm}
             target="_blank"
@@ -101,6 +100,8 @@ export function Navbar() {
           >
             <GithubIcon size={19} />
           </a>
+
+          <LanguageSwitcher />
 
           <button
             type="button"
