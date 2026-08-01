@@ -30,6 +30,7 @@ export function InstallTabs({ className }: InstallTabsProps) {
           value={active}
           onChange={setActive}
           tabs={managers.map((m) => ({ value: m, label: m }))}
+          variant="dark"
         />
         <CopyButton text={command} label="Copy" />
       </div>
@@ -37,12 +38,12 @@ export function InstallTabs({ className }: InstallTabsProps) {
         <span className="select-none text-sky" aria-hidden>
           $
         </span>
-        <code className="truncate font-mono text-sm text-ink sm:text-base">{command}</code>
+        <code className="truncate font-mono text-sm text-slate-300 sm:text-base">{command}</code>
         <motion.span
           key={active}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="ml-auto hidden shrink-0 rounded-md border border-line/80 bg-surface/50 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-muted sm:block"
+          className="ml-auto hidden shrink-0 rounded-md border border-white/10 bg-white/[0.06] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-400 sm:block"
         >
           {active}
         </motion.span>
