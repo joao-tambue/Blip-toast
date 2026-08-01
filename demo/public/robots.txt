@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://blip-toast.vercel.app/sitemap.xml

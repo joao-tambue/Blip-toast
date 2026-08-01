@@ -3,6 +3,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import en from './locales/en.json';
 import pt from './locales/pt.json';
+import { site } from '../lib/site-config';
 
 export const LANGUAGES = [
   { code: 'en', label: 'EN' },
@@ -45,14 +46,28 @@ declare module 'i18next' {
   }
 }
 
+const SITE_URL = site.url.replace(/\/$/, '');
+const LOCALES: Record<string, string> = { en: 'en_US', pt: 'pt_PT' };
+
+const setMeta = (selector: string, content: string) =>
+  document.querySelector(selector)?.setAttribute('content', content);
+
 const syncDocumentMeta = (lng: string) => {
   const base = lng.split('-')[0];
   document.documentElement.lang = base;
   document.title = i18n.t('meta.title');
   const description = i18n.t('meta.description');
-  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
-  document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);
-  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+  setMeta('meta[name="description"]', description);
+  setMeta('meta[property="og:title"]', document.title);
+  setMeta('meta[property="og:description"]', description);
+  setMeta('meta[property="og:url"]', `${SITE_URL}/`);
+  setMeta('meta[property="og:image"]', `${SITE_URL}/og-image.png`);
+  setMeta('meta[property="og:locale"]', LOCALES[base] ?? 'en_US');
+  setMeta('meta[property="og:locale:alternate"]', LOCALES[base === 'pt' ? 'en' : 'pt']);
+  setMeta('meta[name="twitter:title"]', document.title);
+  setMeta('meta[name="twitter:description"]', description);
+  setMeta('meta[name="twitter:image"]', `${SITE_URL}/og-image.png`);
+  document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${SITE_URL}/`);
 };
 
 i18n.on('languageChanged', syncDocumentMeta);

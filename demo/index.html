@@ -11,6 +11,12 @@
     />
     <meta name="author" content="João Tambue" />
     <meta name="keywords" content="react native, toast, notifications, snackbar, ui, animations" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://blip-toast.vercel.app/" />
+    <link rel="alternate" hreflang="en" href="https://blip-toast.vercel.app/?lang=en" />
+    <link rel="alternate" hreflang="pt" href="https://blip-toast.vercel.app/?lang=pt" />
+    <link rel="alternate" hreflang="x-default" href="https://blip-toast.vercel.app/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -20,18 +26,73 @@
       property="og:description"
       content="Lightweight, beautiful toasts for React Native. Promise support, spring animations, six positions, fully typed."
     />
-    <meta property="og:url" content="https://blip-toast.vercel.app" />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://blip-toast.vercel.app/" />
+    <meta property="og:image" content="https://blip-toast.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="pt_PT" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Blip Toast — Modern Toast Notifications for React Native" />
     <meta
       name="twitter:description"
       content="Lightweight, beautiful toasts for React Native. Promise support, spring animations, six positions, fully typed."
     />
-    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:image" content="https://blip-toast.vercel.app/og-image.png" />
+    <meta
+      name="twitter:image:alt"
+      content="Blip Toast — a violet-to-blue gradient banner with a floating toast card"
+    />
 
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://blip-toast.vercel.app/#website",
+            "url": "https://blip-toast.vercel.app/",
+            "name": "Blip Toast",
+            "description": "A lightweight, beautifully animated toast notification library for React Native.",
+            "publisher": { "@id": "https://blip-toast.vercel.app/#organization" },
+            "inLanguage": ["en", "pt"]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://blip-toast.vercel.app/#software",
+            "name": "Blip Toast",
+            "url": "https://blip-toast.vercel.app/",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "React Native",
+            "softwareVersion": "0.1.0",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "publisher": { "@id": "https://blip-toast.vercel.app/#organization" }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://blip-toast.vercel.app/#organization",
+            "name": "Blip Toast",
+            "url": "https://blip-toast.vercel.app/",
+            "sameAs": [
+              "https://github.com/joao-tambue/Blip-toast",
+              "https://www.npmjs.com/package/blip-toast"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

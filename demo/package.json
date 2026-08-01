@@ -6,9 +6,10 @@
   "description": "Official documentation & playground for Blip Toast — modern toast notifications for React Native.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && node scripts/generate-seo.mjs && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "seo": "node scripts/generate-seo.mjs",
     "og": "node scripts/generate-og.mjs"
   },
   "engines": {
