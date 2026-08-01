@@ -8,6 +8,12 @@ const svgStub = fileURLToPath(new URL('./src/lib/rn-svg-stub.tsx', import.meta.u
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  define: {
+    // react-native-web vendors React Native's Animated, whose JS driver
+    // references `global` for requestAnimationFrame/setTimeout. Browsers
+    // only have `globalThis`, so alias it at build time.
+    global: 'globalThis',
+  },
   resolve: {
     alias: {
       // blip-toast is a React Native library. On the web we render it
@@ -21,6 +27,12 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['react-native-web', 'shiki'],
+    // vite's `define` does not reach pre-bundled deps, so repeat it here.
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+    },
   },
   build: {
     target: 'es2020',

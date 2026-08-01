@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-  Easing,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing, Platform } from 'react-native';
 import type { Toast, ToastPhase } from '../core/types';
 import { animationPresets } from '../core/presets';
 import { DefaultIcon, SuccessIcon, ErrorIcon, WarningIcon, InfoIcon, SpinnerIcon } from '../icons';
@@ -18,7 +11,10 @@ export interface ToastItemProps {
   theme?: 'light' | 'dark';
 }
 
-const PHASE_ICON_MAP: Record<Exclude<ToastPhase, 'loading'>, React.FC<{ size?: number; color?: string }>> = {
+const PHASE_ICON_MAP: Record<
+  Exclude<ToastPhase, 'loading'>,
+  React.FC<{ size?: number; color?: string }>
+> = {
   default: DefaultIcon,
   success: SuccessIcon,
   error: ErrorIcon,
@@ -64,6 +60,9 @@ const PHASE_PROGRESS_MAP: Record<ToastPhase, string> = {
 
 const DEFAULT_DISPLAY_DURATION = 4000;
 
+const MAX_TOAST_WIDTH =
+  Platform.OS === 'web' ? ('min(380px, calc(100vw - 48px))' as unknown as number) : 380;
+
 export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 'light' }) => {
   const { options } = toast;
   const [phase, setPhase] = useState<ToastPhase>(options.variant || 'default');
@@ -103,14 +102,17 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
   const fillColor = options.fillColor || (isDark ? '#1a1a1a' : '#ffffff');
   const bgColor = isDark ? DARK_PHASE_BG_MAP[phase] : PHASE_BG_MAP[phase];
   const iconColor = isDark
-    ? (phase === 'default' || phase === 'loading' ? '#ccc' : PHASE_COLOR_MAP[phase])
+    ? phase === 'default' || phase === 'loading'
+      ? '#ccc'
+      : PHASE_COLOR_MAP[phase]
     : PHASE_COLOR_MAP[phase];
 
   // Timestamp
   const createdAtRef = useRef(new Date());
   const timestampStr = useMemo(
-    () => createdAtRef.current.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }),
-    [],
+    () =>
+      createdAtRef.current.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }),
+    []
   );
 
   const hasDescription = Boolean(description);
@@ -201,7 +203,8 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
 
   // Auto dismiss
   useEffect(() => {
-    const duration = options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION;
+    const duration =
+      options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION;
     if (duration === Infinity) return;
 
     const timer = setTimeout(() => {
@@ -258,10 +261,7 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
         styles.wrapper,
         {
           opacity: fadeAnim,
-          transform: [
-            { scale: scaleAnim },
-            { translateX: shakeAnim },
-          ],
+          transform: [{ scale: scaleAnim }, { translateX: shakeAnim }],
           backgroundColor: fillColor,
           borderColor: options.borderColor || 'transparent',
           borderWidth: options.borderWidth || 0,
@@ -272,15 +272,11 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
     >
       <View style={[styles.content, { backgroundColor: bgColor, borderRadius: 20 }]}>
         <View style={styles.header}>
-          <View style={styles.iconWrapper}>
-            {renderIcon()}
-          </View>
+          <View style={styles.iconWrapper}>{renderIcon()}</View>
           <Text style={[styles.title, { color: iconColor }]} numberOfLines={1}>
             {title}
           </Text>
-          {options.showTimestamp !== false && (
-            <Text style={styles.timestamp}>{timestampStr}</Text>
-          )}
+          {options.showTimestamp !== false && <Text style={styles.timestamp}>{timestampStr}</Text>}
         </View>
 
         {shouldExpand && (
@@ -292,17 +288,13 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
               },
             ]}
           >
-            {description && (
-              <Text style={styles.description}>{description}</Text>
-            )}
+            {description && <Text style={styles.description}>{description}</Text>}
             {action && (
               <TouchableOpacity
                 style={[styles.actionButton, { backgroundColor: `${iconColor}20` }]}
                 onPress={handleActionPress}
               >
-                <Text style={[styles.actionText, { color: iconColor }]}>
-                  {action.label}
-                </Text>
+                <Text style={[styles.actionText, { color: iconColor }]}>{action.label}</Text>
               </TouchableOpacity>
             )}
           </Animated.View>
@@ -310,7 +302,9 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
 
         {options.showProgress === true && (
           <ProgressBar
-            duration={options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION}
+            duration={
+              options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION
+            }
             color={PHASE_PROGRESS_MAP[phase]}
             style={styles.progressBar}
           />
@@ -322,9 +316,9 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginHorizontal: 16,
     borderRadius: 24,
     overflow: 'hidden',
+    maxWidth: MAX_TOAST_WIDTH,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
