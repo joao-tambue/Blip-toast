@@ -1,0 +1,299 @@
+{
+  "meta": {
+    "title": "Blip Toast — Notificações modernas para React Native",
+    "description": "Blip Toast é uma biblioteca de notificações (toasts) leve e bonita para React Native. Cinco variantes, animações com física, suporte a promessas e uma API pequena com TypeScript em primeiro lugar."
+  },
+  "nav": {
+    "features": "Funcionalidades",
+    "playground": "Playground",
+    "docs": "Docs",
+    "quickstart": "Início rápido",
+    "api": "API",
+    "getStarted": "Começar",
+    "mainAria": "Principal",
+    "homeAria": "Página inicial do Blip Toast",
+    "npmAria": "Ver no npm",
+    "githubAria": "Ver no GitHub",
+    "lightAria": "Mudar para o modo claro",
+    "darkAria": "Mudar para o modo escuro",
+    "closeMenuAria": "Fechar menu",
+    "openMenuAria": "Abrir menu",
+    "languageAria": "Mudar de idioma"
+  },
+  "hero": {
+    "badge": "v{{version}} · React Native & <0>MIT</0>",
+    "title1": "Toasts que não",
+    "interrupt": "interrompem",
+    "title2": "— eles",
+    "delight": "encantam.",
+    "description": "Uma biblioteca de notificações leve e com animações bonitas para React Native. Cinco variantes, suporte a promessas, seis posições e uma API pequena com TypeScript em primeiro lugar.",
+    "getStarted": "Começar",
+    "tryPlayground": "Experimentar o playground",
+    "clickCard": "Clica num card para lançar um toast",
+    "clickCardAria": "Lançar toast de {{title}}"
+  },
+  "features": {
+    "eyebrow": "Funcionalidades",
+    "title": "API pequena,",
+    "titleAccent": "grande impacto",
+    "description": "Tudo o que precisas para notificações encantadoras — e nada do que não precisas. Zero providers, zero configuração, só toasts.",
+    "items": {
+      "variants": {
+        "title": "Cinco variantes",
+        "description": "Default, success, error, warning e info — cada uma com o seu ícone, cor e personalidade."
+      },
+      "animations": {
+        "title": "Animações com física",
+        "description": "Entradas e saídas suaves, impulsionadas por física. Escolhe um preset — smooth, bouncy, subtle, snappy — ou afina a mola tu mesmo."
+      },
+      "promise": {
+        "title": "Suporte a promessas",
+        "description": "toast.promise() transforma um toast de loading em success ou error no momento em que o teu trabalho assíncrono termina."
+      },
+      "positions": {
+        "title": "Seis posições",
+        "description": "Ancorado em qualquer lado: topo, fundo, ou qualquer um dos quatro cantos. Até por toast com sobreposições de posição."
+      },
+      "rich": {
+        "title": "Rico por predefinição",
+        "description": "Carimbos de tempo e uma barra de progresso animada opcional mantêm os toasts informativos sem roubar o foco."
+      },
+      "headless": {
+        "title": "API headless",
+        "description": "Preferes a tua própria UI? useToasts() expõe a lista em direto para renderizares tudo à tua maneira."
+      },
+      "customizable": {
+        "title": "Totalmente personalizável",
+        "description": "Class names, fills personalizados, bordas, ícones, botões de ação — cada pixel é teu para estilizar."
+      },
+      "themeAware": {
+        "title": "Consciente do tema",
+        "description": "Temas claro, escuro e sistema, com sobreposições por toast. Segue o dispositivo, segue-te."
+      },
+      "typescript": {
+        "title": "TypeScript em primeiro lugar",
+        "description": "API pequena e totalmente tipada com autocompletar para cada opção. Sem configuração, sem providers, sem cerimónia."
+      }
+    }
+  },
+  "playground": {
+    "eyebrow": "Playground",
+    "title": "Conduz com",
+    "titleAccent": "controlos ao vivo",
+    "description": "Cada botão abaixo dispara uma notificação real do blip-toast. Afina posição, tema, duração e mais — o contentor atualiza instantaneamente.",
+    "triggers": "Triggers",
+    "triggersHintStart": "Os toasts aparecem na",
+    "configuredPosition": "posição configurada",
+    "triggersHintEnd": "— observa qualquer canto do ecrã.",
+    "controls": "Controlos",
+    "random": "Aleatório",
+    "position": "Posição",
+    "theme": "Tema",
+    "options": "Opções",
+    "duration": "Duração",
+    "maxVisible": "Máx. visíveis",
+    "toastDurationAria": "Duração do toast",
+    "triggerLabels": {
+      "default": "Default",
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info",
+      "loading": "Promessa",
+      "action": "Botão de ação",
+      "description": "Descrição",
+      "icon": "Ícone personalizado",
+      "custom": "Estilo personalizado",
+      "update": "Atualizar / descartar"
+    },
+    "positions": {
+      "top": "Topo",
+      "top-left": "Topo esquerda",
+      "top-right": "Topo direita",
+      "bottom": "Fundo",
+      "bottom-left": "Fundo esquerda",
+      "bottom-right": "Fundo direita"
+    },
+    "toggles": {
+      "richColors": "Cores ricas",
+      "richColorsHint": "Preenchimento + borda",
+      "timestamp": "Carimbo de tempo",
+      "progressBar": "Barra de progresso"
+    }
+  },
+  "installation": {
+    "eyebrow": "Instalação",
+    "title": "A funcionar em",
+    "titleAccent": "segundos",
+    "description": "Um comando, zero configuração, TypeScript incluído.",
+    "steps": {
+      "install": {
+        "title": "Instala o pacote",
+        "body": "Adiciona <0>blip-toast</0> ao teu projeto React Native com o teu gestor de pacotes favorito."
+      },
+      "peers": {
+        "title": "Adiciona dependências de pares",
+        "body": "A biblioteca não exige dependências de pares obrigatórias — só precisa de <0>react-native</0> e, se usares ícones embutidos, <1>react-native-svg</1>."
+      },
+      "mount": {
+        "title": "Monta uma vez, toasts em qualquer lugar",
+        "body": "Renderiza um único <0>&lt;ToastContainer /&gt;</0> na raiz e depois chama <1>toast(...)</1> a partir de qualquer sítio. Sem provider, sem contexto."
+      }
+    },
+    "noteStart": "Requer",
+    "noteMid": "se importares de",
+    "noteDirect": "diretamente.",
+    "seeApi": "Ver a referência da API"
+  },
+  "quickstart": {
+    "eyebrow": "Início rápido",
+    "title": "Copia, cola,",
+    "titleAccent": "corre",
+    "description": "Cada exemplo abaixo está ao vivo. Carrega em Run e vê o toast real aparecer no ecrã.",
+    "runThis": "Correr isto",
+    "examplesAria": "Exemplos",
+    "tabs": {
+      "basic": "Básico",
+      "variants": "Variantes",
+      "promise": "Promessa",
+      "action": "Ação",
+      "updateDismiss": "Atualizar / descartar",
+      "customIcon": "Ícone personalizado"
+    }
+  },
+  "api": {
+    "eyebrow": "Referência da API",
+    "title": "Tudo,",
+    "titleAccent": "documentado",
+    "description": "Uma superfície pequena e previsível. Se conheces o sonner, já conheces o Blip Toast.",
+    "containerProps": "props",
+    "toastOptions": "opções",
+    "toastMethods": "métodos",
+    "table": {
+      "name": "Nome",
+      "type": "Tipo",
+      "default": "Predefinição",
+      "description": "Descrição"
+    }
+  },
+  "customization": {
+    "eyebrow": "Personalização",
+    "title": "A tua marca,",
+    "titleAccent": "os teus toasts",
+    "description": "Estiliza cada parte sem lutar contra a biblioteca. Opções simples, sem abstrações.",
+    "runDemo": "Correr demo",
+    "items": {
+      "richColors": {
+        "title": "Cores ricas",
+        "description": "Preenchimento, borda e destaque — toasts que saltam à vista em qualquer fundo."
+      },
+      "presets": {
+        "title": "Presets de animação",
+        "description": "Quatro sensações de entrada, ou uma mola afinada à mão quando precisas."
+      },
+      "styleHooks": {
+        "title": "Style hooks",
+        "description": "ClassNames por parte para wrapper, conteúdo, título, descrição e ações."
+      },
+      "theming": {
+        "title": "Temas",
+        "description": "Claro, escuro ou sistema — no contentor ou por toast."
+      }
+    }
+  },
+  "footer": {
+    "resources": "Recursos",
+    "sections": "Secções",
+    "github": "GitHub",
+    "npm": "npm",
+    "license": "Licença (MIT)",
+    "changelog": "Changelog",
+    "copyright": "© {{year}} Blip Toast · Lançado sob a licença {{license}}.",
+    "crafted": "Feito com <heart></heart> por <author></author>"
+  },
+  "copy": {
+    "toClipboard": "Copiar para a área de transferência",
+    "copied": "Copiado"
+  },
+  "installTabs": {
+    "packageManagerAria": "Gestor de pacotes",
+    "copy": "Copiar"
+  },
+  "apiRows": {
+    "container": {
+      "position": "Onde os toasts ficam ancorados no ecrã.",
+      "theme": "Esquema de cores dos cards de toast. Segue o dispositivo quando \"system\".",
+      "gap": "Espaçamento vertical entre toasts empilhados.",
+      "offset": "Distância ao rebordo do ecrã (e à barra de estado no iOS).",
+      "maxVisible": "Quantos toasts estão visíveis antes de os mais antigos desaparecerem na pilha."
+    },
+    "options": {
+      "title": "A mensagem do toast. Também passada como primeiro argumento de toast().",
+      "description": "Linha secundária de texto abaixo do título.",
+      "variant": "Estilo visual e ícone. \"loading\" é definido automaticamente por toast.promise().",
+      "duration": "Tempo (ms) antes de o toast desaparecer sozinho. Usa Infinity para o fixar.",
+      "position": "Ancoragem por toast. Substitui a posição do contentor.",
+      "dismissible": "Se o toast pode ser descartado pelo utilizador.",
+      "swipeToDismiss": "Se um gesto de arrastar descarta o toast.",
+      "onDismiss": "Chamado quando o toast é descartado (por qualquer motivo).",
+      "onPress": "Chamado quando o card do toast é premido.",
+      "icon": "Ícone personalizado. Substitui o ícone da variante.",
+      "action": "Botão de ação dentro do toast. successLabel troca-o após um toque.",
+      "fillColor": "Cor de fundo personalizada do card.",
+      "border": "Borda personalizada para fazer os toasts saltar à vista (cores ricas).",
+      "preset": "Preset de animação para a entrada.",
+      "spring": "Controlo manual da mola quando precisas de afinar.",
+      "showTimestamp": "Mostra a hora em que o toast foi criado.",
+      "showProgress": "Mostra uma barra de progresso animada durante a duração.",
+      "classNames": "Style hooks para wrapper, conteúdo, título, descrição, ação…",
+      "theme": "Esquema de cores por toast."
+    },
+    "methods": {
+      "toast": "Mostra um toast default e devolve um handle com .dismiss() e .update().",
+      "success": "Mostra um toast de sucesso.",
+      "error": "Mostra um toast de erro.",
+      "warning": "Mostra um toast de aviso.",
+      "info": "Mostra um toast de informação.",
+      "promise": "Mostra loading → success/error automaticamente à medida que a promessa se resolve.",
+      "update": "Atualiza um toast ao vivo.",
+      "dismiss": "Descarta um toast específico, ou todos quando chamado sem id.",
+      "dismissAll": "Descarta todos os toasts de uma vez."
+    }
+  },
+  "toast": {
+    "hello": "Olá do Blip Toast",
+    "success": "Guardado com sucesso",
+    "error": "Algo correu mal",
+    "errorDesc": "O pedido falhou com o estado 500.",
+    "warning": "Atenção",
+    "warningDesc": "A tua avaliação gratuita termina dentro de 3 dias.",
+    "info": "Nova versão disponível",
+    "infoDesc": "Acabou de sair o Blip Toast 0.1.0.",
+    "welcomeBack": "Bem-vindo de volta",
+    "welcomeBackDesc": "Os toasts podem ter uma descrição e um botão de ação ao mesmo tempo.",
+    "open": "Abrir",
+    "opened": "Aberto",
+    "welcomeBackToast": "Bem-vindo de volta!",
+    "fileDeleted": "Ficheiro eliminado",
+    "fileDeletedDesc": "Podes anular isto nos próximos segundos.",
+    "undo": "Anular",
+    "restored": "Reposto",
+    "fileRestored": "Ficheiro reposto",
+    "buildDeployed": "Build implementada",
+    "loadingWorkspace": "A carregar o teu espaço de trabalho…",
+    "workspaceReady": "Espaço de trabalho pronto",
+    "failedToLoad": "Falha ao carregar",
+    "loadingDesc": "A buscar projetos e tarefas.",
+    "readyDesc": "Está tudo atualizado.",
+    "retryDesc": "Verifica a tua ligação e tenta novamente.",
+    "fullyCustomized": "Totalmente personalizado",
+    "customizedDesc": "Preenchimento, borda, preset, carimbo de tempo e progresso personalizados.",
+    "uploading": "A carregar imagem…",
+    "uploaded": "Imagem carregada",
+    "uploadedDesc": "Pronta a partilhar.",
+    "paymentReceived": "Pagamento recebido",
+    "cardPayment": "$128.00 · Visa terminada em 4242",
+    "savingChanges": "A guardar alterações…",
+    "filesSync": "Os ficheiros sincronizam-se automaticamente."
+  }
+}

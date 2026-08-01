@@ -1,22 +1,27 @@
 import { motion } from 'framer-motion';
 import type { ComponentType } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { GithubIcon, NpmIcon, type IconProps } from '../ui/brand-icons';
 import { site } from '../../lib/site-config';
 
+type FooterLinkKey = 'github' | 'npm' | 'license' | 'changelog';
+type FooterSectionKey = 'features' | 'playground' | 'docs' | 'api';
+
 interface FooterLink {
-  label: string;
+  key: FooterLinkKey;
   href: string;
   icon?: ComponentType<IconProps>;
 }
 
 const footerLinks: FooterLink[] = [
-  { label: 'GitHub', href: site.repository, icon: GithubIcon },
-  { label: 'npm', href: site.npm, icon: NpmIcon },
-  { label: 'License (MIT)', href: `${site.repository}/blob/main/LICENSE` },
-  { label: 'Changelog', href: `${site.repository}/blob/main/packages/blip-toast/CHANGELOG.md` },
+  { key: 'github', href: site.repository, icon: GithubIcon },
+  { key: 'npm', href: site.npm, icon: NpmIcon },
+  { key: 'license', href: `${site.repository}/blob/main/LICENSE` },
+  { key: 'changelog', href: `${site.repository}/blob/main/packages/blip-toast/CHANGELOG.md` },
 ];
 
 export function Footer() {
+  const { t } = useTranslation();
   const year = new Date().getFullYear();
 
   return (
@@ -26,7 +31,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
-            <a href="#top" className="flex items-center gap-2.5" aria-label="Blip Toast home">
+            <a href="#top" className="flex items-center gap-2.5" aria-label={t('nav.homeAria')}>
               <img
                 src="/blip-icon.png"
                 alt=""
@@ -38,17 +43,17 @@ export function Footer() {
                 Blip<span className="text-gradient">Toast</span>
               </span>
             </a>
-            <p className="mt-4 text-sm leading-relaxed text-muted">{site.description}</p>
+            <p className="mt-4 text-sm leading-relaxed text-muted">{t('meta.description')}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>
               <h3 className="text-xs font-semibold uppercase tracking-widest text-muted">
-                Resources
+                {t('footer.resources')}
               </h3>
               <ul className="mt-4 space-y-2.5">
                 {footerLinks.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.key}>
                     <a
                       href={link.href}
                       target={link.href.startsWith('http') ? '_blank' : undefined}
@@ -56,7 +61,7 @@ export function Footer() {
                       className="inline-flex items-center gap-2 text-sm text-muted transition-colors duration-150 hover:text-ink"
                     >
                       {link.icon && <link.icon size={14} />}
-                      {link.label}
+                      {t(`footer.${link.key}`)}
                     </a>
                   </li>
                 ))}
@@ -64,21 +69,23 @@ export function Footer() {
             </div>
             <div>
               <h3 className="text-xs font-semibold uppercase tracking-widest text-muted">
-                Sections
+                {t('footer.sections')}
               </h3>
               <ul className="mt-4 space-y-2.5">
-                {[
-                  ['Features', '#features'],
-                  ['Playground', '#playground'],
-                  ['Installation', '#docs'],
-                  ['API reference', '#api'],
-                ].map(([label, href]) => (
+                {(
+                  [
+                    ['features', '#features'],
+                    ['playground', '#playground'],
+                    ['docs', '#docs'],
+                    ['api', '#api'],
+                  ] as Array<[FooterSectionKey, string]>
+                ).map(([key, href]) => (
                   <li key={href}>
                     <a
                       href={href}
                       className="text-sm text-muted transition-colors duration-150 hover:text-ink"
                     >
-                      {label}
+                      {t(`nav.${key}`)}
                     </a>
                   </li>
                 ))}
@@ -93,19 +100,24 @@ export function Footer() {
           viewport={{ once: true }}
           className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-line/70 pt-6 text-xs text-muted sm:flex-row"
         >
+          <p>{t('footer.copyright', { year, license: site.license })}</p>
           <p>
-            © {year} Blip Toast · Released under the {site.license} License.
-          </p>
-          <p>
-            Crafted with <span className="text-gradient font-semibold">&#10084;</span> by{' '}
-            <a
-              href={site.author.github}
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium text-ink transition-colors hover:text-sky"
-            >
-              {site.author.name}
-            </a>
+            <Trans
+              i18nKey="footer.crafted"
+              components={{
+                heart: <span className="text-gradient font-semibold">&#10084;</span>,
+                author: (
+                  <a
+                    href={site.author.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-medium text-ink transition-colors hover:text-sky"
+                  >
+                    {site.author.name}
+                  </a>
+                ),
+              }}
+            />
           </p>
         </motion.div>
       </div>

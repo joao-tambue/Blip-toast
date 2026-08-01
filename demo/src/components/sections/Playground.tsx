@@ -12,6 +12,7 @@ import {
   TriangleAlert,
   Undo2,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ControlPanel } from '../ui/ControlPanel';
 import { useToastDemo } from '../demo/ToastDemoProvider';
@@ -20,26 +21,26 @@ import { cn } from '../../lib/cn';
 
 interface Trigger {
   kind: ToastKind;
-  label: string;
   icon: React.ComponentType<{ className?: string }>;
 }
 
 const triggers: Trigger[] = [
-  { kind: 'default', label: 'Default', icon: BellRing },
-  { kind: 'success', label: 'Success', icon: CheckCheck },
-  { kind: 'error', label: 'Error', icon: CircleAlert },
-  { kind: 'warning', label: 'Warning', icon: TriangleAlert },
-  { kind: 'info', label: 'Info', icon: Sparkle },
-  { kind: 'loading', label: 'Promise', icon: Loader2 },
-  { kind: 'action', label: 'Action button', icon: Undo2 },
-  { kind: 'description', label: 'Description', icon: MousePointerClick },
-  { kind: 'icon', label: 'Custom icon', icon: Rocket },
-  { kind: 'custom', label: 'Custom style', icon: CloudUpload },
-  { kind: 'update', label: 'Update / dismiss', icon: Pencil },
+  { kind: 'default', icon: BellRing },
+  { kind: 'success', icon: CheckCheck },
+  { kind: 'error', icon: CircleAlert },
+  { kind: 'warning', icon: TriangleAlert },
+  { kind: 'info', icon: Sparkle },
+  { kind: 'loading', icon: Loader2 },
+  { kind: 'action', icon: Undo2 },
+  { kind: 'description', icon: MousePointerClick },
+  { kind: 'icon', icon: Rocket },
+  { kind: 'custom', icon: CloudUpload },
+  { kind: 'update', icon: Pencil },
 ];
 
 export function Playground() {
   const { fire } = useToastDemo();
+  const { t } = useTranslation();
 
   return (
     <section id="playground" className="relative py-24">
@@ -49,23 +50,24 @@ export function Playground() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Playground"
+          eyebrow={t('playground.eyebrow')}
           title={
             <>
-              Drive it with <span className="text-gradient">live controls</span>
+              {t('playground.title')}{' '}
+              <span className="text-gradient">{t('playground.titleAccent')}</span>
             </>
           }
-          description="Every button below fires a real blip-toast notification. Tune position, theme, duration and more — the container updates instantly."
+          description={t('playground.description')}
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[1fr_360px]">
           {/* Trigger wall */}
           <div className="rounded-xl border border-line bg-night/50 p-5 backdrop-blur-sm">
-            <h3 className="font-display text-sm font-bold text-ink">Triggers</h3>
+            <h3 className="font-display text-sm font-bold text-ink">{t('playground.triggers')}</h3>
             <p className="mt-1 text-xs text-muted">
-              Toasts appear in the{' '}
-              <span className="font-semibold text-ink">configured position</span> — watch any corner
-              of the screen.
+              {t('playground.triggersHintStart')}{' '}
+              <span className="font-semibold text-ink">{t('playground.configuredPosition')}</span>{' '}
+              {t('playground.triggersHintEnd')}
             </p>
 
             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -90,7 +92,7 @@ export function Playground() {
                     <trigger.icon className="size-4 text-muted transition-colors group-hover:text-violet" />
                   </span>
                   <span className="text-xs font-medium text-muted transition-colors group-hover:text-ink">
-                    {trigger.label}
+                    {t(`playground.triggerLabels.${trigger.kind}`)}
                   </span>
                 </motion.button>
               ))}

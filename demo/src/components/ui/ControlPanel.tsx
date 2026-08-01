@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Dices } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useToastDemo } from '../demo/ToastDemoProvider';
 import type { DemoPosition, DemoTheme } from '../../lib/demo-actions';
 import { cn } from '../../lib/cn';
@@ -13,22 +14,22 @@ const POSITIONS: DemoPosition[] = [
   'bottom-right',
 ];
 
-const POSITION_LABELS: Record<DemoPosition, string> = {
-  top: 'Top',
-  'top-left': 'Top left',
-  'top-right': 'Top right',
-  bottom: 'Bottom',
-  'bottom-left': 'Bottom left',
-  'bottom-right': 'Bottom right',
-};
-
 type ToggleKey = 'richColors' | 'showTimestamp' | 'showProgress';
+type ToggleLabelKey =
+  | 'playground.toggles.richColors'
+  | 'playground.toggles.timestamp'
+  | 'playground.toggles.progressBar';
+type ToggleHintKey = 'playground.toggles.richColorsHint';
 
-const TOGGLES: Array<{ key: ToggleKey; label: string; hint?: string }> = [
-  { key: 'richColors', label: 'Rich colors', hint: 'Fill + border' },
-  { key: 'showTimestamp', label: 'Timestamp' },
-  { key: 'showProgress', label: 'Progress bar' },
-];
+const TOGGLES: Array<{ key: ToggleKey; labelKey: ToggleLabelKey; hintKey?: ToggleHintKey }> = [
+  {
+    key: 'richColors',
+    labelKey: 'playground.toggles.richColors',
+    hintKey: 'playground.toggles.richColorsHint',
+  },
+  { key: 'showTimestamp', labelKey: 'playground.toggles.timestamp' },
+  { key: 'showProgress', labelKey: 'playground.toggles.progressBar' },
+] as const;
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -38,25 +39,26 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export function ControlPanel() {
   const { config, updateConfig, fire } = useToastDemo();
+  const { t } = useTranslation();
 
   return (
     <div className="rounded-xl border border-line bg-night/50 p-5 backdrop-blur-sm">
       <div className="mb-5 flex items-center justify-between">
-        <h3 className="font-display text-sm font-bold text-ink">Controls</h3>
+        <h3 className="font-display text-sm font-bold text-ink">{t('playground.controls')}</h3>
         <button
           type="button"
           onClick={() => fire('default')}
           className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink transition-colors hover:border-violet/50 hover:text-violet cursor-pointer"
         >
           <Dices className="size-3.5" />
-          Random
+          {t('playground.random')}
         </button>
       </div>
 
       <div className="space-y-6">
         {/* Position */}
         <div>
-          <SectionLabel>Position</SectionLabel>
+          <SectionLabel>{t('playground.position')}</SectionLabel>
           <div className="grid grid-cols-2 gap-2">
             {POSITIONS.map((pos) => {
               const active = config.position === pos;
@@ -80,7 +82,7 @@ export function ControlPanel() {
                       transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                     />
                   )}
-                  <span className="pl-2">{POSITION_LABELS[pos]}</span>
+                  <span className="pl-2">{t(`playground.positions.${pos}`)}</span>
                 </button>
               );
             })}
@@ -89,7 +91,7 @@ export function ControlPanel() {
 
         {/* Theme */}
         <div>
-          <SectionLabel>Theme</SectionLabel>
+          <SectionLabel>{t('playground.theme')}</SectionLabel>
           <div className="inline-flex rounded-lg border border-line bg-surface/40 p-1">
             {(['dark', 'light'] as DemoTheme[]).map((t) => {
               const active = config.theme === t;
@@ -120,9 +122,9 @@ export function ControlPanel() {
 
         {/* Toggles */}
         <div>
-          <SectionLabel>Options</SectionLabel>
+          <SectionLabel>{t('playground.options')}</SectionLabel>
           <div className="space-y-2.5">
-            {TOGGLES.map(({ key, label, hint }) => {
+            {TOGGLES.map(({ key, labelKey, hintKey }) => {
               const checked = config[key];
               return (
                 <button
@@ -134,8 +136,8 @@ export function ControlPanel() {
                   className="flex w-full items-center justify-between gap-3 rounded-lg border border-line bg-surface/40 px-3.5 py-2.5 text-left transition-colors hover:border-violet/40 cursor-pointer"
                 >
                   <span>
-                    <span className="block text-[13px] font-medium text-ink">{label}</span>
-                    {hint && <span className="block text-[11px] text-muted">{hint}</span>}
+                    <span className="block text-[13px] font-medium text-ink">{t(labelKey)}</span>
+                    {hintKey && <span className="block text-[11px] text-muted">{t(hintKey)}</span>}
                   </span>
                   <span
                     className={cn(
@@ -159,7 +161,7 @@ export function ControlPanel() {
         {/* Duration */}
         <div>
           <div className="mb-3 flex items-center justify-between">
-            <SectionLabel>Duration</SectionLabel>
+            <SectionLabel>{t('playground.duration')}</SectionLabel>
             <span className="font-mono text-xs text-sky">{config.duration}ms</span>
           </div>
           <input
@@ -169,7 +171,7 @@ export function ControlPanel() {
             step={500}
             value={config.duration}
             onChange={(e) => updateConfig({ duration: Number(e.target.value) })}
-            aria-label="Toast duration"
+            aria-label={t('playground.toastDurationAria')}
             className="w-full cursor-pointer accent-violet"
           />
           <div className="mt-1 flex justify-between font-mono text-[10px] text-muted">
@@ -181,7 +183,7 @@ export function ControlPanel() {
         {/* Max visible */}
         <div>
           <div className="mb-3 flex items-center justify-between">
-            <SectionLabel>Max visible</SectionLabel>
+            <SectionLabel>{t('playground.maxVisible')}</SectionLabel>
             <span className="font-mono text-xs text-sky">{config.maxVisible}</span>
           </div>
           <div className="flex gap-1.5">

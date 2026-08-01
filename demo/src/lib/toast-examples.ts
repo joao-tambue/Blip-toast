@@ -1,6 +1,15 @@
 /* Code snippets and API reference data shown across the docs site.
    Every snippet uses the real `blip-toast` API (v0.1.0). */
 
+import type en from '../i18n/locales/en.json';
+
+type ApiRows = (typeof en)['apiRows'];
+
+export type ApiDescriptionKey =
+  | `apiRows.container.${keyof ApiRows['container']}`
+  | `apiRows.options.${keyof ApiRows['options']}`
+  | `apiRows.methods.${keyof ApiRows['methods']}`;
+
 export const SNIPPETS = {
   setup: {
     language: 'tsx',
@@ -182,7 +191,7 @@ export interface ApiRow {
   name: string;
   type: string;
   default: string;
-  description: string;
+  descriptionKey: ApiDescriptionKey;
 }
 
 export const CONTAINER_PROPS: ApiRow[] = [
@@ -190,31 +199,31 @@ export const CONTAINER_PROPS: ApiRow[] = [
     name: 'position',
     type: `'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'`,
     default: `'bottom-right'`,
-    description: 'Where toasts are anchored on the screen.',
+    descriptionKey: 'apiRows.container.position',
   },
   {
     name: 'theme',
     type: `'light' | 'dark' | 'system'`,
     default: `'system'`,
-    description: 'Color scheme of the toast cards. Follows the device when "system".',
+    descriptionKey: 'apiRows.container.theme',
   },
   {
     name: 'gap',
     type: 'number',
     default: '8',
-    description: 'Vertical spacing between stacked toasts.',
+    descriptionKey: 'apiRows.container.gap',
   },
   {
     name: 'offset',
     type: 'number',
     default: '24',
-    description: 'Distance from the screen edge (and status bar on iOS).',
+    descriptionKey: 'apiRows.container.offset',
   },
   {
     name: 'maxVisible',
     type: 'number',
     default: '3',
-    description: 'How many toasts are visible before older ones fade into the stack.',
+    descriptionKey: 'apiRows.container.maxVisible',
   },
 ];
 
@@ -223,115 +232,115 @@ export const TOAST_OPTIONS: ApiRow[] = [
     name: 'title',
     type: 'string',
     default: '—',
-    description: 'The toast message. Also passed as the first argument to toast().',
+    descriptionKey: 'apiRows.options.title',
   },
   {
     name: 'description',
     type: 'string',
     default: '—',
-    description: 'Secondary line of text below the title.',
+    descriptionKey: 'apiRows.options.description',
   },
   {
     name: 'variant',
     type: `'default' | 'success' | 'error' | 'warning' | 'info' | 'loading'`,
     default: `'default'`,
-    description: 'Visual style and icon. "loading" is set automatically by toast.promise().',
+    descriptionKey: 'apiRows.options.variant',
   },
   {
     name: 'duration',
     type: 'number',
     default: '4000',
-    description: 'Time (ms) before the toast auto-dismisses. Use Infinity to pin it.',
+    descriptionKey: 'apiRows.options.duration',
   },
   {
     name: 'position',
     type: `'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'`,
     default: `'bottom'`,
-    description: 'Per-toast anchor. Overrides the container position.',
+    descriptionKey: 'apiRows.options.position',
   },
   {
     name: 'dismissible',
     type: 'boolean',
     default: 'true',
-    description: 'Whether the toast can be dismissed by the user.',
+    descriptionKey: 'apiRows.options.dismissible',
   },
   {
     name: 'swipeToDismiss',
     type: 'boolean',
     default: 'true',
-    description: 'Whether a swipe gesture dismisses the toast.',
+    descriptionKey: 'apiRows.options.swipeToDismiss',
   },
   {
     name: 'onDismiss',
     type: '() => void',
     default: '—',
-    description: 'Called when the toast is dismissed (any reason).',
+    descriptionKey: 'apiRows.options.onDismiss',
   },
   {
     name: 'onPress',
     type: '() => void',
     default: '—',
-    description: 'Called when the toast card is pressed.',
+    descriptionKey: 'apiRows.options.onPress',
   },
   {
     name: 'icon',
     type: 'ReactNode',
     default: '—',
-    description: 'Custom icon. Replaces the variant icon.',
+    descriptionKey: 'apiRows.options.icon',
   },
   {
     name: 'action',
     type: '{ label: string; onPress: () => void; successLabel?: string }',
     default: '—',
-    description: 'Action button inside the toast. successLabel swaps it after a tap.',
+    descriptionKey: 'apiRows.options.action',
   },
   {
     name: 'fillColor',
     type: 'string',
     default: '—',
-    description: 'Custom card background color.',
+    descriptionKey: 'apiRows.options.fillColor',
   },
   {
     name: 'borderColor / borderWidth',
     type: 'string / number',
     default: '— / 0',
-    description: 'Custom border to make toasts pop (rich colors).',
+    descriptionKey: 'apiRows.options.border',
   },
   {
     name: 'preset',
     type: `'smooth' | 'bouncy' | 'subtle' | 'snappy'`,
     default: '—',
-    description: 'Animation preset for the entrance.',
+    descriptionKey: 'apiRows.options.preset',
   },
   {
     name: 'spring / bounce',
     type: 'boolean / number',
     default: 'true / 0.4',
-    description: 'Manual spring control when you need fine tuning.',
+    descriptionKey: 'apiRows.options.spring',
   },
   {
     name: 'showTimestamp',
     type: 'boolean',
     default: 'true',
-    description: 'Show the time the toast was created.',
+    descriptionKey: 'apiRows.options.showTimestamp',
   },
   {
     name: 'showProgress',
     type: 'boolean',
     default: 'false',
-    description: 'Show an animated progress bar for the duration.',
+    descriptionKey: 'apiRows.options.showProgress',
   },
   {
     name: 'classNames',
     type: 'ToastClassNames',
     default: '—',
-    description: 'Style hooks for wrapper, content, title, description, action…',
+    descriptionKey: 'apiRows.options.classNames',
   },
   {
     name: 'theme',
     type: `'light' | 'dark'`,
     default: '—',
-    description: 'Per-toast color scheme.',
+    descriptionKey: 'apiRows.options.theme',
   },
 ];
 
@@ -340,54 +349,54 @@ export const TOAST_METHODS: ApiRow[] = [
     name: 'toast(message, options)',
     type: 'Toast',
     default: '—',
-    description: 'Show a default toast and return a handle with .dismiss() and .update().',
+    descriptionKey: 'apiRows.methods.toast',
   },
   {
     name: 'toast.success(message, options)',
     type: 'Toast',
     default: '—',
-    description: 'Show a success toast.',
+    descriptionKey: 'apiRows.methods.success',
   },
   {
     name: 'toast.error(message, options)',
     type: 'Toast',
     default: '—',
-    description: 'Show an error toast.',
+    descriptionKey: 'apiRows.methods.error',
   },
   {
     name: 'toast.warning(message, options)',
     type: 'Toast',
     default: '—',
-    description: 'Show a warning toast.',
+    descriptionKey: 'apiRows.methods.warning',
   },
   {
     name: 'toast.info(message, options)',
     type: 'Toast',
     default: '—',
-    description: 'Show an info toast.',
+    descriptionKey: 'apiRows.methods.info',
   },
   {
     name: 'toast.promise(promise, data)',
     type: 'Toast',
     default: '—',
-    description: 'Show loading → success/error automatically as the promise settles.',
+    descriptionKey: 'apiRows.methods.promise',
   },
   {
     name: 'toast.update(id, options)',
     type: 'void',
     default: '—',
-    description: 'Update a live toast.',
+    descriptionKey: 'apiRows.methods.update',
   },
   {
     name: 'toast.dismiss(id?)',
     type: 'void',
     default: '—',
-    description: 'Dismiss a specific toast, or all toasts when called without an id.',
+    descriptionKey: 'apiRows.methods.dismiss',
   },
   {
     name: 'toast.dismissAll()',
     type: 'void',
     default: '—',
-    description: 'Dismiss every toast at once.',
+    descriptionKey: 'apiRows.methods.dismissAll',
   },
 ];

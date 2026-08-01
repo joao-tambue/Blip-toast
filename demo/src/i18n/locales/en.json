@@ -1,0 +1,299 @@
+{
+  "meta": {
+    "title": "Blip Toast — Modern Toast Notifications for React Native",
+    "description": "Blip Toast is a lightweight, beautiful toast notification library for React Native. Five variants, spring animations, promise support and a tiny TypeScript-first API."
+  },
+  "nav": {
+    "features": "Features",
+    "playground": "Playground",
+    "docs": "Docs",
+    "quickstart": "Quick start",
+    "api": "API",
+    "getStarted": "Get started",
+    "mainAria": "Main",
+    "homeAria": "Blip Toast home",
+    "npmAria": "View on npm",
+    "githubAria": "View on GitHub",
+    "lightAria": "Switch to light mode",
+    "darkAria": "Switch to dark mode",
+    "closeMenuAria": "Close menu",
+    "openMenuAria": "Open menu",
+    "languageAria": "Switch language"
+  },
+  "hero": {
+    "badge": "v{{version}} · React Native & <0>MIT</0>",
+    "title1": "Toasts that don't",
+    "interrupt": "interrupt",
+    "title2": "— they",
+    "delight": "delight.",
+    "description": "A lightweight, beautifully animated toast notification library for React Native. Five variants, promise support, six positions and a tiny TypeScript-first API.",
+    "getStarted": "Get started",
+    "tryPlayground": "Try the playground",
+    "clickCard": "Click a card to fire a real toast",
+    "clickCardAria": "Fire {{title}} toast"
+  },
+  "features": {
+    "eyebrow": "Features",
+    "title": "Small API,",
+    "titleAccent": "big impact",
+    "description": "Everything you need for delightful notifications — and nothing you don't. Zero providers, zero config, just toasts.",
+    "items": {
+      "variants": {
+        "title": "Five variants",
+        "description": "Default, success, error, warning and info — each with its own icon, tint and personality."
+      },
+      "animations": {
+        "title": "Springy animations",
+        "description": "Smooth, physics-driven entrances and exits. Pick a preset — smooth, bouncy, subtle, snappy — or tune the spring yourself."
+      },
+      "promise": {
+        "title": "Promise support",
+        "description": "toast.promise() morphs a loading toast into success or error the moment your async work settles."
+      },
+      "positions": {
+        "title": "Six positions",
+        "description": "Anchored anywhere: top, bottom, or any of the four corners. Even per-toast with position overrides."
+      },
+      "rich": {
+        "title": "Rich by default",
+        "description": "Timestamps and an optional animated progress bar keep toasts informative without stealing focus."
+      },
+      "headless": {
+        "title": "Headless API",
+        "description": "Prefer your own UI? useToasts() exposes the live list so you can render everything yourself."
+      },
+      "customizable": {
+        "title": "Fully customizable",
+        "description": "Class names, custom fills, borders, icons, action buttons — every pixel is yours to style."
+      },
+      "themeAware": {
+        "title": "Theme aware",
+        "description": "Light, dark and system themes, with per-toast overrides. Follows the device, follows you."
+      },
+      "typescript": {
+        "title": "TypeScript first",
+        "description": "Tiny, fully typed API with autocomplete for every option. No config, no providers, no ceremony."
+      }
+    }
+  },
+  "playground": {
+    "eyebrow": "Playground",
+    "title": "Drive it with",
+    "titleAccent": "live controls",
+    "description": "Every button below fires a real blip-toast notification. Tune position, theme, duration and more — the container updates instantly.",
+    "triggers": "Triggers",
+    "triggersHintStart": "Toasts appear in the",
+    "configuredPosition": "configured position",
+    "triggersHintEnd": "— watch any corner of the screen.",
+    "controls": "Controls",
+    "random": "Random",
+    "position": "Position",
+    "theme": "Theme",
+    "options": "Options",
+    "duration": "Duration",
+    "maxVisible": "Max visible",
+    "toastDurationAria": "Toast duration",
+    "triggerLabels": {
+      "default": "Default",
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info",
+      "loading": "Promise",
+      "action": "Action button",
+      "description": "Description",
+      "icon": "Custom icon",
+      "custom": "Custom style",
+      "update": "Update / dismiss"
+    },
+    "positions": {
+      "top": "Top",
+      "top-left": "Top left",
+      "top-right": "Top right",
+      "bottom": "Bottom",
+      "bottom-left": "Bottom left",
+      "bottom-right": "Bottom right"
+    },
+    "toggles": {
+      "richColors": "Rich colors",
+      "richColorsHint": "Fill + border",
+      "timestamp": "Timestamp",
+      "progressBar": "Progress bar"
+    }
+  },
+  "installation": {
+    "eyebrow": "Installation",
+    "title": "Up and running in",
+    "titleAccent": "seconds",
+    "description": "One command, zero configuration, TypeScript included.",
+    "steps": {
+      "install": {
+        "title": "Install the package",
+        "body": "Add <0>blip-toast</0> to your React Native project with your favourite package manager."
+      },
+      "peers": {
+        "title": "Add peer dependencies",
+        "body": "The library ships with zero required peers — it only needs <0>react-native</0> and, if you use built-in icons, <1>react-native-svg</1>."
+      },
+      "mount": {
+        "title": "Mount once, toast anywhere",
+        "body": "Render a single <0>&lt;ToastContainer /&gt;</0> at the root, then call <1>toast(...)</1> from anywhere. No provider, no context."
+      }
+    },
+    "noteStart": "Requires",
+    "noteMid": "if you import from",
+    "noteDirect": "directly.",
+    "seeApi": "See the API reference"
+  },
+  "quickstart": {
+    "eyebrow": "Quick start",
+    "title": "Copy, paste,",
+    "titleAccent": "run",
+    "description": "Every example below is live. Hit Run and watch the real toast appear on screen.",
+    "runThis": "Run this",
+    "examplesAria": "Examples",
+    "tabs": {
+      "basic": "Basic",
+      "variants": "Variants",
+      "promise": "Promise",
+      "action": "Action",
+      "updateDismiss": "Update / dismiss",
+      "customIcon": "Custom icon"
+    }
+  },
+  "api": {
+    "eyebrow": "API reference",
+    "title": "Everything,",
+    "titleAccent": "documented",
+    "description": "A tiny, predictable surface. If you know sonner, you already know Blip Toast.",
+    "containerProps": "props",
+    "toastOptions": "options",
+    "toastMethods": "methods",
+    "table": {
+      "name": "Name",
+      "type": "Type",
+      "default": "Default",
+      "description": "Description"
+    }
+  },
+  "customization": {
+    "eyebrow": "Customization",
+    "title": "Your brand,",
+    "titleAccent": "your toasts",
+    "description": "Style every part without fighting the library. Plain options, no abstractions.",
+    "runDemo": "Run demo",
+    "items": {
+      "richColors": {
+        "title": "Rich colors",
+        "description": "Fill, border and accent — toasts that pop against any background."
+      },
+      "presets": {
+        "title": "Animation presets",
+        "description": "Four entrance feels, or a hand-tuned spring when you need it."
+      },
+      "styleHooks": {
+        "title": "Style hooks",
+        "description": "Per-part classNames for wrapper, content, title, description and actions."
+      },
+      "theming": {
+        "title": "Theming",
+        "description": "Light, dark or system — on the container or per toast."
+      }
+    }
+  },
+  "footer": {
+    "resources": "Resources",
+    "sections": "Sections",
+    "github": "GitHub",
+    "npm": "npm",
+    "license": "License (MIT)",
+    "changelog": "Changelog",
+    "copyright": "© {{year}} Blip Toast · Released under the {{license}} License.",
+    "crafted": "Crafted with <heart></heart> by <author></author>"
+  },
+  "copy": {
+    "toClipboard": "Copy to clipboard",
+    "copied": "Copied"
+  },
+  "installTabs": {
+    "packageManagerAria": "Package manager",
+    "copy": "Copy"
+  },
+  "apiRows": {
+    "container": {
+      "position": "Where toasts are anchored on the screen.",
+      "theme": "Color scheme of the toast cards. Follows the device when \"system\".",
+      "gap": "Vertical spacing between stacked toasts.",
+      "offset": "Distance from the screen edge (and status bar on iOS).",
+      "maxVisible": "How many toasts are visible before older ones fade into the stack."
+    },
+    "options": {
+      "title": "The toast message. Also passed as the first argument to toast().",
+      "description": "Secondary line of text below the title.",
+      "variant": "Visual style and icon. \"loading\" is set automatically by toast.promise().",
+      "duration": "Time (ms) before the toast auto-dismisses. Use Infinity to pin it.",
+      "position": "Per-toast anchor. Overrides the container position.",
+      "dismissible": "Whether the toast can be dismissed by the user.",
+      "swipeToDismiss": "Whether a swipe gesture dismisses the toast.",
+      "onDismiss": "Called when the toast is dismissed (any reason).",
+      "onPress": "Called when the toast card is pressed.",
+      "icon": "Custom icon. Replaces the variant icon.",
+      "action": "Action button inside the toast. successLabel swaps it after a tap.",
+      "fillColor": "Custom card background color.",
+      "border": "Custom border to make toasts pop (rich colors).",
+      "preset": "Animation preset for the entrance.",
+      "spring": "Manual spring control when you need fine tuning.",
+      "showTimestamp": "Show the time the toast was created.",
+      "showProgress": "Show an animated progress bar for the duration.",
+      "classNames": "Style hooks for wrapper, content, title, description, action…",
+      "theme": "Per-toast color scheme."
+    },
+    "methods": {
+      "toast": "Show a default toast and return a handle with .dismiss() and .update().",
+      "success": "Show a success toast.",
+      "error": "Show an error toast.",
+      "warning": "Show a warning toast.",
+      "info": "Show an info toast.",
+      "promise": "Show loading → success/error automatically as the promise settles.",
+      "update": "Update a live toast.",
+      "dismiss": "Dismiss a specific toast, or all toasts when called without an id.",
+      "dismissAll": "Dismiss every toast at once."
+    }
+  },
+  "toast": {
+    "hello": "Hello from Blip Toast",
+    "success": "Saved successfully",
+    "error": "Something went wrong",
+    "errorDesc": "The request failed with status 500.",
+    "warning": "Heads up",
+    "warningDesc": "Your free trial ends in 3 days.",
+    "info": "New version available",
+    "infoDesc": "Blip Toast 0.1.0 just shipped.",
+    "welcomeBack": "Welcome back",
+    "welcomeBackDesc": "Toasts can carry a description and an action button at once.",
+    "open": "Open",
+    "opened": "Opened",
+    "welcomeBackToast": "Welcome back!",
+    "fileDeleted": "File deleted",
+    "fileDeletedDesc": "You can undo this in the next few seconds.",
+    "undo": "Undo",
+    "restored": "Restored",
+    "fileRestored": "File restored",
+    "buildDeployed": "Build deployed",
+    "loadingWorkspace": "Loading your workspace…",
+    "workspaceReady": "Workspace ready",
+    "failedToLoad": "Failed to load",
+    "loadingDesc": "Fetching projects and tasks.",
+    "readyDesc": "Everything is up to date.",
+    "retryDesc": "Check your connection and retry.",
+    "fullyCustomized": "Fully customized",
+    "customizedDesc": "Custom fill, border, preset, timestamp and progress.",
+    "uploading": "Uploading image…",
+    "uploaded": "Image uploaded",
+    "uploadedDesc": "Ready to share.",
+    "paymentReceived": "Payment received",
+    "cardPayment": "$128.00 · Visa ending 4242",
+    "savingChanges": "Saving changes…",
+    "filesSync": "Files sync automatically."
+  }
+}

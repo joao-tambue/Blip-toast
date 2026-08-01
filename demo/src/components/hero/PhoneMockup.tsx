@@ -1,16 +1,24 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight, BatteryFull, CheckCircle2, Info, Loader2, Signal, Wifi } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/cn';
 import { useToastDemo } from '../demo/ToastDemoProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+type CardLabelKey =
+  | 'playground.triggerLabels.success'
+  | 'playground.triggerLabels.info'
+  | 'playground.triggerLabels.loading';
+type CardTitleKey = 'toast.paymentReceived' | 'toast.info' | 'toast.savingChanges';
+type CardDescriptionKey = 'toast.cardPayment' | 'toast.infoDesc' | 'toast.filesSync';
+
 interface FloatingCard {
   kind: 'success' | 'info' | 'loading';
-  label: string;
-  title: string;
-  description: string;
+  labelKey: CardLabelKey;
+  titleKey: CardTitleKey;
+  descriptionKey: CardDescriptionKey;
   icon: ReactNode;
   positionClass: string;
   rotate: number;
@@ -23,9 +31,9 @@ interface FloatingCard {
 const CARDS: FloatingCard[] = [
   {
     kind: 'success',
-    label: 'Success',
-    title: 'Payment received',
-    description: '$128.00 · Visa ending 4242',
+    labelKey: 'playground.triggerLabels.success',
+    titleKey: 'toast.paymentReceived',
+    descriptionKey: 'toast.cardPayment',
     icon: <CheckCircle2 className="size-3 text-emerald-400" />,
     positionClass: '-top-9 -right-[64px]',
     rotate: -5,
@@ -36,9 +44,9 @@ const CARDS: FloatingCard[] = [
   },
   {
     kind: 'info',
-    label: 'Info',
-    title: 'New version available',
-    description: 'Blip Toast 0.1.0 just shipped.',
+    labelKey: 'playground.triggerLabels.info',
+    titleKey: 'toast.info',
+    descriptionKey: 'toast.infoDesc',
     icon: <Info className="size-3 text-sky-400" />,
     positionClass: 'top-40 -left-[84px]',
     rotate: 4,
@@ -49,9 +57,9 @@ const CARDS: FloatingCard[] = [
   },
   {
     kind: 'loading',
-    label: 'Promise',
-    title: 'Saving changes…',
-    description: 'Files sync automatically.',
+    labelKey: 'playground.triggerLabels.loading',
+    titleKey: 'toast.savingChanges',
+    descriptionKey: 'toast.filesSync',
     icon: <Loader2 className="size-3 animate-spin text-sky-400" />,
     positionClass: 'bottom-0 right-0',
     rotate: -2,
@@ -71,10 +79,12 @@ function FloatingToastCard({
   index: number;
   onFire: (kind: FloatingCard['kind']) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <motion.button
       type="button"
-      aria-label={`Fire ${card.title} toast`}
+      aria-label={t('hero.clickCardAria', { title: t(card.titleKey) })}
       onClick={() => onFire(card.kind)}
       initial={{ opacity: 0, x: card.fromX, y: card.fromY, rotate: card.fromRotate }}
       animate={{ opacity: 1, x: 0, y: 0, rotate: card.rotate }}
@@ -97,19 +107,19 @@ function FloatingToastCard({
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-[10px] font-semibold leading-tight text-white">
-              {card.title}
+              {t(card.titleKey)}
             </span>
-            <span className="mt-0.5 block text-[10px] text-white/60">{card.description}</span>
+            <span className="mt-0.5 block text-[10px] text-white/60">{t(card.descriptionKey)}</span>
           </span>
           <span className="flex size-6 shrink-0 items-center justify-center rounded-full text-white/30 transition-colors group-hover:text-white/70">
             <ArrowUpRight className="size-3.5" />
           </span>
         </div>
-        <div className="mt-2.5 h-0.5 overflow-hidden rounded-full bg-white/10">
+        {/* <div className="mt-2.5 h-0.5 overflow-hidden rounded-full bg-white/10">
           <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-violet to-blue" />
-        </div>
+        </div> */}
         <span className="absolute right-3 top-3 text-[7px] font-semibold uppercase tracking-widest text-white/25">
-          {card.label}
+          {t(card.labelKey)}
         </span>
       </div>
     </motion.button>
@@ -164,6 +174,7 @@ function PhoneFrame() {
 
 export function PhoneMockup() {
   const { fire } = useToastDemo();
+  const { t } = useTranslation();
 
   return (
     <div className="relative mx-auto w-fit scale-90 xl:scale-100">
@@ -184,8 +195,7 @@ export function PhoneMockup() {
         ))}
       </div>
       <p className="mt-24 text-center text-xs text-muted">
-        Click a card to fire a real toast{' '}
-        <span className="inline-block animate-bounce text-sky">↓</span>
+        {t('hero.clickCard')} <span className="inline-block animate-bounce text-sky">↓</span>
       </p>
     </div>
   );
