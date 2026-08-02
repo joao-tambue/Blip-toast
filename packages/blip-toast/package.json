@@ -9,7 +9,8 @@
   "files": [
     "dist",
     "src",
-    "scripts"
+    "scripts",
+    "public"
   ],
   "exports": {
     ".": {
