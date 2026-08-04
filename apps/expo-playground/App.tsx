@@ -54,14 +54,11 @@ export default function App() {
   };
 
   const showLoadingToast = () => {
-    toast.promise(
-      new Promise((resolve) => setTimeout(resolve, 2500)),
-      {
-        loading: 'Loading data...',
-        success: 'Data loaded successfully!',
-        error: 'Failed to load data',
-      },
-    );
+    toast.promise(new Promise((resolve) => setTimeout(resolve, 2500)), {
+      loading: 'Loading data...',
+      success: 'Data loaded successfully!',
+      error: 'Failed to load data',
+    });
   };
 
   return (
@@ -76,13 +73,9 @@ export default function App() {
         <Button title="Dismissible Toast" onPress={showDismissibleToast} />
         <Button title="Action Toast" onPress={showActionToast} />
         <Button title="Loading Toast" onPress={showLoadingToast} />
-        <Button
-          title="Dismiss All"
-          onPress={() => toast.dismissAll()}
-          color="#ef4444"
-        />
+        <Button title="Dismiss All" onPress={() => toast.dismissAll()} color="#ef4444" />
       </View>
-      <ToastContainer position="top" />
+      <ToastContainer position="top-left" />
     </SafeAreaView>
   );
 }
