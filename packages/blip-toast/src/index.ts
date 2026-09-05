@@ -15,12 +15,25 @@ export type {
   ToastUpdateOptions,
   AnimationPresetName,
   AnimationPreset,
+  ToastLayoutColors,
+  ToastStyleOverrides,
+  ToastSlots,
+  ToastIconSlotProps,
+  ToastActionSlotProps,
+  ToastProgressSlotProps,
+  ToastRenderProps,
+  ToastConfig,
 } from './core';
 
 // Components
 export { ToastContainer, ToastItem } from './components';
 export { ProgressBar } from './components/ProgressBar';
+export { defaultToastStyles, resolveToastColors } from './components';
 export type { ToastContainerProps, ToastItemProps } from './components';
+
+// Config
+export { ToastConfigProvider, useToastConfig } from './config';
+export type { ToastConfigProviderProps } from './config';
 
 // Hooks
 export { useToasts } from './hooks';

@@ -1,6 +1,3 @@
-/* Code snippets and API reference data shown across the docs site.
-   Every snippet uses the real `blip-toast` API (v0.1.0). */
-
 import type en from '../i18n/locales/en.json';
 
 type ApiRows = (typeof en)['apiRows'];
@@ -147,6 +144,63 @@ toast('Custom spring', {
   bounce: 0.6,
   timing: { displayDuration: 6000 },
 });`,
+  },
+
+  customLayout: {
+    language: 'tsx',
+    filename: 'custom-layout.tsx',
+    code: `import { View, Text, Pressable } from 'react-native';
+import { ToastContainer } from 'blip-toast';
+import type { ToastRenderProps } from 'blip-toast';
+
+// The built-in toast is a soft rounded card. This 'renderToast'
+// makes a squared "system ticket" instead, a totally different UI.
+// Blip still owns the stack animation, entrance/exit, auto-dismiss,
+// promise morphing, swipe and accessibility.
+function TicketToast({
+  phase, title, description, colors, icon,
+  action, timestamp, progressBar, runAction, dismiss,
+}: ToastRenderProps) {
+  return (
+    <View style={{ flexDirection: 'row', width: 360, borderRadius: 4,
+      backgroundColor: '#080911', borderWidth: 1, borderColor: colors.accent + '44' }}>
+      <View style={{ width: 3, backgroundColor: colors.accent }} />
+      <View style={{ flex: 1, padding: 12, gap: 7 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <View style={{ width: 22, height: 22, borderRadius: 3, alignItems: 'center',
+            justifyContent: 'center', backgroundColor: colors.accent + '1F' }}>
+            {icon}
+          </View>
+          <Text style={{ flex: 1, fontFamily: 'monospace', fontSize: 10,
+            letterSpacing: 2, color: colors.accent }}>
+            {phase.toUpperCase()}  ·  {timestamp}
+          </Text>
+          <Pressable onPress={dismiss} hitSlop={10}>
+            <Text style={{ fontFamily: 'monospace', color: '#5b6274' }}>✕</Text>
+          </Pressable>
+        </View>
+
+        <Text style={{ fontFamily: 'monospace', fontSize: 13, color: '#e7e9f2' }}>{title}</Text>
+        {description ? (
+          <Text style={{ fontFamily: 'monospace', fontSize: 12, color: '#878da3' }}>
+            {description}
+          </Text>
+        ) : null}
+        {action ? (
+          <Pressable onPress={runAction}>
+            <Text style={{ fontFamily: 'monospace', fontSize: 12, color: colors.accent }}>
+              [ {action.label.toUpperCase()} ]
+            </Text>
+          </Pressable>
+        ) : null}
+        {progressBar}
+      </View>
+    </View>
+  );
+}
+
+// Pass it to the container (or app-wide via <ToastConfigProvider>).
+<ToastContainer renderToast={TicketToast} />;`,
   },
 
   theme: {

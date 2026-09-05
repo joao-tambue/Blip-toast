@@ -1,69 +1,43 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing, Platform } from 'react-native';
-import type { Toast, ToastPhase } from '../core/types';
+import { View, Text, TouchableOpacity, Animated, Easing } from 'react-native';
+import type {
+  Toast,
+  ToastPhase,
+  ToastRenderProps,
+  ToastSlots,
+  ToastStyleOverrides,
+} from '../core/types';
 import { animationPresets } from '../core/presets';
-import { DefaultIcon, SuccessIcon, ErrorIcon, WarningIcon, InfoIcon, SpinnerIcon } from '../icons';
 import { ProgressBar } from './ProgressBar';
+import { defaultToastStyles } from './toast-styles';
+import {
+  PHASE_PROGRESS_MAP,
+  renderPhaseIcon,
+  resolveDisplayDuration,
+  resolveToastColors,
+} from './toast-presentation';
 
 export interface ToastItemProps {
   toast: Toast;
   onDismiss: (id: string) => void;
   theme?: 'light' | 'dark';
+  /** Per-slot style overrides merged over the built-in layout. */
+  styles?: ToastStyleOverrides;
+  /** Component overrides for individual pieces of the built-in layout. */
+  slots?: ToastSlots;
+  /** Full control over the inner card. The library still owns animations,
+   *  timing, gestures and accessibility. */
+  renderToast?: (props: ToastRenderProps) => React.ReactNode;
 }
 
-const PHASE_ICON_MAP: Record<
-  Exclude<ToastPhase, 'loading'>,
-  React.FC<{ size?: number; color?: string }>
-> = {
-  default: DefaultIcon,
-  success: SuccessIcon,
-  error: ErrorIcon,
-  warning: WarningIcon,
-  info: InfoIcon,
-};
-
-const PHASE_COLOR_MAP: Record<ToastPhase, string> = {
-  loading: '#555',
-  default: '#555',
-  success: '#4CAF50',
-  error: '#E53935',
-  warning: '#C49000',
-  info: '#1E88E5',
-};
-
-const PHASE_BG_MAP: Record<ToastPhase, string> = {
-  loading: '#f5f5f5',
-  default: '#f5f5f5',
-  success: '#f5f5f5',
-  error: '#f5f5f5',
-  warning: '#f5f5f5',
-  info: '#f5f5f5',
-};
-
-const DARK_PHASE_BG_MAP: Record<ToastPhase, string> = {
-  loading: '#1a1a1a',
-  default: '#1a1a1a',
-  success: '#1a1a1a',
-  error: '#1a1a1a',
-  warning: '#1a1a1a',
-  info: '#1a1a1a',
-};
-
-const PHASE_PROGRESS_MAP: Record<ToastPhase, string> = {
-  loading: '#1E88E5',
-  default: '#999',
-  success: '#4CAF50',
-  error: '#E53935',
-  warning: '#C49000',
-  info: '#1E88E5',
-};
-
-const DEFAULT_DISPLAY_DURATION = 4000;
-
-const MAX_TOAST_WIDTH =
-  Platform.OS === 'web' ? ('min(380px, calc(100vw - 48px))' as unknown as number) : 380;
-
-export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 'light' }) => {
+export const ToastItem: React.FC<ToastItemProps> = ({
+  toast,
+  onDismiss,
+  theme = 'light',
+  styles: styleOverrides,
+  slots,
+  renderToast,
+}) => {
   const { options } = toast;
   const [phase, setPhase] = useState<ToastPhase>(options.variant || 'default');
   const [title, setTitle] = useState(options.title || '');
@@ -99,13 +73,7 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
 
   // Theme colors
   const isDark = theme === 'dark';
-  const fillColor = options.fillColor || (isDark ? '#1a1a1a' : '#ffffff');
-  const bgColor = isDark ? DARK_PHASE_BG_MAP[phase] : PHASE_BG_MAP[phase];
-  const iconColor = isDark
-    ? phase === 'default' || phase === 'loading'
-      ? '#ccc'
-      : PHASE_COLOR_MAP[phase]
-    : PHASE_COLOR_MAP[phase];
+  const colors = resolveToastColors(phase, options, theme);
 
   // Timestamp
   const createdAtRef = useRef(new Date());
@@ -203,8 +171,7 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
 
   // Auto dismiss
   useEffect(() => {
-    const duration =
-      options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION;
+    const duration = resolveDisplayDuration(options);
     if (duration === Infinity) return;
 
     const timer = setTimeout(() => {
@@ -212,6 +179,7 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
     }, duration);
 
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDismiss = () => {
@@ -242,134 +210,157 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss, theme = 
     action?.onPress();
   };
 
-  const renderIcon = () => {
-    if (options.icon) {
-      return options.icon;
-    }
+  const showProgress = options.showProgress === true;
+  const progressDuration = resolveDisplayDuration(options);
 
-    if (phase === 'loading') {
-      return <SpinnerIcon size={18} color={iconColor} />;
+  const iconNode = useMemo(() => {
+    if (options.icon) return options.icon;
+    if (slots?.Icon) {
+      const SlotIcon = slots.Icon;
+      return <SlotIcon phase={phase} color={colors.accent} size={18} />;
     }
+    return renderPhaseIcon(phase, colors.accent, 18);
+  }, [options.icon, slots, phase, colors.accent]);
 
-    const IconComponent = PHASE_ICON_MAP[phase];
-    return <IconComponent size={18} color={iconColor} />;
-  };
+  const progressNode = useMemo(() => {
+    if (!showProgress) return null;
+    if (slots?.Progress) {
+      const SlotProgress = slots.Progress;
+      return (
+        <SlotProgress duration={progressDuration} color={PHASE_PROGRESS_MAP[phase]} phase={phase} />
+      );
+    }
+    return (
+      <ProgressBar
+        duration={progressDuration}
+        color={PHASE_PROGRESS_MAP[phase]}
+        style={[defaultToastStyles.progressBar, styleOverrides?.progressBar]}
+      />
+    );
+  }, [showProgress, slots, progressDuration, phase, styleOverrides?.progressBar]);
+
+  const accessibilityRole: 'alert' | 'text' =
+    phase === 'error' || phase === 'warning' ? 'alert' : 'text';
+
+  // Headless: caller owns the inner card
+  if (renderToast) {
+    const renderProps: ToastRenderProps = {
+      toast,
+      id: toast.id,
+      phase,
+      title,
+      description,
+      action,
+      theme: isDark ? 'dark' : 'light',
+      isDark,
+      colors,
+      timestamp: timestampStr,
+      isExpanded: shouldExpand,
+      icon: iconNode,
+      progressBar: progressNode,
+      dismiss: handleDismiss,
+      runAction: handleActionPress,
+    };
+
+    return (
+      <Animated.View
+        style={{
+          opacity: fadeAnim,
+          transform: [{ scale: scaleAnim }, { translateX: shakeAnim }],
+        }}
+        accessible={true}
+        accessibilityRole={accessibilityRole}
+      >
+        {renderToast(renderProps)}
+      </Animated.View>
+    );
+  }
+
+  // Built-in layout
+  const SlotActionButton = slots?.ActionButton;
 
   return (
     <Animated.View
       style={[
-        styles.wrapper,
+        defaultToastStyles.wrapper,
         {
           opacity: fadeAnim,
           transform: [{ scale: scaleAnim }, { translateX: shakeAnim }],
-          backgroundColor: fillColor,
+          backgroundColor: colors.background,
           borderColor: options.borderColor || 'transparent',
           borderWidth: options.borderWidth || 0,
         },
+        styleOverrides?.wrapper,
       ]}
       accessible={true}
-      accessibilityRole={phase === 'error' || phase === 'warning' ? 'alert' : 'text'}
+      accessibilityRole={accessibilityRole}
     >
-      <View style={[styles.content, { backgroundColor: bgColor, borderRadius: 20 }]}>
-        <View style={styles.header}>
-          <View style={styles.iconWrapper}>{renderIcon()}</View>
-          <Text style={[styles.title, { color: iconColor }]} numberOfLines={1}>
+      <View
+        style={[
+          defaultToastStyles.content,
+          { backgroundColor: colors.surface, borderRadius: 20 },
+          styleOverrides?.content,
+        ]}
+      >
+        <View style={[defaultToastStyles.header, styleOverrides?.header]}>
+          <View style={[defaultToastStyles.iconWrapper, styleOverrides?.iconWrapper]}>
+            {iconNode}
+          </View>
+          <Text
+            style={[defaultToastStyles.title, { color: colors.accent }, styleOverrides?.title]}
+            numberOfLines={1}
+          >
             {title}
           </Text>
-          {options.showTimestamp !== false && <Text style={styles.timestamp}>{timestampStr}</Text>}
+          {options.showTimestamp !== false && (
+            <Text style={[defaultToastStyles.timestamp, styleOverrides?.timestamp]}>
+              {timestampStr}
+            </Text>
+          )}
         </View>
 
         {shouldExpand && (
           <Animated.View
-            style={[
-              styles.body,
-              {
-                opacity: expandAnim,
-              },
-            ]}
+            style={[defaultToastStyles.body, { opacity: expandAnim }, styleOverrides?.body]}
           >
-            {description && <Text style={styles.description}>{description}</Text>}
-            {action && (
-              <TouchableOpacity
-                style={[styles.actionButton, { backgroundColor: `${iconColor}20` }]}
-                onPress={handleActionPress}
-              >
-                <Text style={[styles.actionText, { color: iconColor }]}>{action.label}</Text>
-              </TouchableOpacity>
+            {description && (
+              <Text style={[defaultToastStyles.description, styleOverrides?.description]}>
+                {description}
+              </Text>
             )}
+            {action &&
+              (SlotActionButton ? (
+                <SlotActionButton
+                  label={action.label}
+                  onPress={handleActionPress}
+                  color={colors.accent}
+                  phase={phase}
+                />
+              ) : (
+                <TouchableOpacity
+                  style={[
+                    defaultToastStyles.actionButton,
+                    { backgroundColor: `${colors.accent}20` },
+                    styleOverrides?.actionButton,
+                  ]}
+                  onPress={handleActionPress}
+                >
+                  <Text
+                    style={[
+                      defaultToastStyles.actionText,
+                      { color: colors.accent },
+                      styleOverrides?.actionText,
+                    ]}
+                  >
+                    {action.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
           </Animated.View>
         )}
 
-        {options.showProgress === true && (
-          <ProgressBar
-            duration={
-              options.timing?.displayDuration ?? options.duration ?? DEFAULT_DISPLAY_DURATION
-            }
-            color={PHASE_PROGRESS_MAP[phase]}
-            style={styles.progressBar}
-          />
-        )}
+        {progressNode}
       </View>
     </Animated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    borderRadius: 24,
-    overflow: 'hidden',
-    maxWidth: MAX_TOAST_WIDTH,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 6,
-  },
-  content: {
-    padding: 12,
-    paddingHorizontal: 16,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  iconWrapper: {
-    width: 18,
-    height: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: '700',
-    flex: 1,
-  },
-  timestamp: {
-    fontSize: 11,
-    color: '#999',
-    marginLeft: 'auto',
-  },
-  body: {
-    marginTop: 8,
-  },
-  description: {
-    fontSize: 13,
-    color: '#444',
-    lineHeight: 18,
-  },
-  actionButton: {
-    marginTop: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 999,
-    alignItems: 'center',
-  },
-  actionText: {
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  progressBar: {
-    marginTop: 8,
-  },
-});

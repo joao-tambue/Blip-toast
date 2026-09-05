@@ -138,6 +138,40 @@ t.dismiss(); // Dismiss specific toast
 toast.dismissAll(); // Dismiss all toasts
 ```
 
+### Custom Layout
+
+Reshape the toast UI for your project while keeping every behaviour (animations,
+timing, promise morphing, swipe, accessibility). Three composable tiers, on
+`<ToastContainer>` or app-wide via `<ToastConfigProvider>` (container props win):
+
+```tsx
+import { ToastContainer, ToastConfigProvider } from 'blip-toast';
+
+// styles — re-skin slots
+<ToastContainer styles={{ content: { borderRadius: 12 } }} />;
+
+// slots — swap a piece
+<ToastContainer slots={{ Icon: MyIcon, ActionButton: MyButton }} />;
+
+// renderToast — own the inner card; helpers keep the essence one call away
+<ToastContainer
+  renderToast={({ title, colors, icon, progressBar, runAction, action }) => (
+    <View style={{ backgroundColor: colors.background, padding: 14, borderRadius: 16 }}>
+      {icon}
+      <Text style={{ color: colors.accent }}>{title}</Text>
+      {action && <Pressable onPress={runAction}><Text>{action.label}</Text></Pressable>}
+      {progressBar}
+    </View>
+  )}
+/>;
+
+// configure once at the root
+<ToastConfigProvider config={{ renderToast: MyToast }}>
+  <App />
+  <ToastContainer />
+</ToastConfigProvider>;
+```
+
 ## Props
 
 | Prop             | Type                                                                                | Default     | Description                |
@@ -201,7 +235,7 @@ Blip Toast is built with a modular architecture:
 - [ ] React Native Reanimated support
 - [ ] React Native Gesture Handler integration
 - [ ] Queue management system
-- [ ] Headless API
+- [x] Headless API (`renderToast` / `slots` / `styles`)
 - [ ] Dynamic Island mode (iOS)
 - [ ] Custom themes
 - [ ] Stack traces

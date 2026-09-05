@@ -89,10 +89,16 @@
     "random": "Random",
     "position": "Position",
     "theme": "Theme",
+    "layout": "Layout",
+    "layoutHint": "Custom swaps the whole card for a renderToast layout.",
     "options": "Options",
     "duration": "Duration",
     "maxVisible": "Max visible",
     "toastDurationAria": "Toast duration",
+    "layouts": {
+      "default": "Default",
+      "custom": "Custom"
+    },
     "triggerLabels": {
       "default": "Default",
       "success": "Success",
@@ -194,6 +200,10 @@
       "styleHooks": {
         "title": "Style hooks",
         "description": "Per-part classNames for wrapper, content, title, description and actions."
+      },
+      "customLayout": {
+        "title": "Custom layout",
+        "description": "Run this — the whole card is replaced by a renderToast layout, yet every behaviour stays. Switch back with the Layout control in the playground."
       },
       "theming": {
         "title": "Theming",

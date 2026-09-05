@@ -5,6 +5,7 @@ import i18n from '../i18n';
 
 export type DemoPosition = NonNullable<ToastContainerProps['position']>;
 export type DemoTheme = NonNullable<ToastContainerProps['theme']>;
+export type DemoLayout = 'default' | 'custom';
 
 export interface DemoConfig {
   position: DemoPosition;
@@ -14,6 +15,8 @@ export interface DemoConfig {
   showTimestamp: boolean;
   showProgress: boolean;
   maxVisible: number;
+  /** 'default' = the built-in card, 'custom' = the demo's `renderToast` layout. */
+  layout: DemoLayout;
 }
 
 export const DEFAULT_CONFIG: DemoConfig = {
@@ -24,6 +27,7 @@ export const DEFAULT_CONFIG: DemoConfig = {
   showTimestamp: true,
   showProgress: false,
   maxVisible: 3,
+  layout: 'default',
 };
 
 export type ToastKind =

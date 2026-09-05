@@ -72,12 +72,54 @@ notification.dismiss();
 toast.dismissAll();
 ```
 
+### Custom layout
+
+Adapt toasts to your design system without losing the animation, timing, promise
+morphing, gestures or accessibility — the library still owns all of that. Three
+opt-in tiers, composable, configurable per `<ToastContainer>` or once at the root
+through `<ToastConfigProvider>` (container props win).
+
+```tsx
+import { ToastContainer } from 'blip-toast';
+
+// 1. Re-skin a slot
+<ToastContainer styles={{ content: { borderRadius: 12 }, title: { fontSize: 15 } }} />;
+
+// 2. Swap a piece
+<ToastContainer slots={{ Icon: MyBrandIcon }} />;
+
+// 3. Full control of the inner card
+<ToastContainer
+  renderToast={({ title, description, colors, icon, progressBar, dismiss, runAction, action }) => (
+    <View style={{ backgroundColor: colors.background, borderRadius: 16, padding: 14 }}>
+      <View style={{ flexDirection: 'row', gap: 8 }}>
+        {icon}
+        <Text style={{ color: colors.accent, fontWeight: '700' }}>{title}</Text>
+      </View>
+      {description ? <Text style={{ color: colors.text }}>{description}</Text> : null}
+      {action ? <Button title={action.label} onPress={runAction} /> : null}
+      {progressBar}
+    </View>
+  )}
+/>;
+```
+
+```tsx
+import { ToastConfigProvider } from 'blip-toast';
+
+<ToastConfigProvider config={{ styles: myToastStyles, renderToast: MyToast }}>
+  <App />
+  <ToastContainer />
+</ToastConfigProvider>;
+```
+
 ## Features
 
 - Default, success, error, warning, info, and loading states
 - Top, bottom, and corner positioning
 - Auto-dismiss timers, progress indicators, timestamps, and action buttons
 - Custom icons, colors, borders, themes, and animation presets
+- Custom layout: `styles` / `slots` / `renderToast` and `<ToastConfigProvider>`
 - iOS, Android, and web support through React Native Web
 
 ## Documentation

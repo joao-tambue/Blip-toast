@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { ToastContainer } from 'blip-toast';
 import { DEFAULT_CONFIG, fireToast, type DemoConfig, type ToastKind } from '../../lib/demo-actions';
+import { DemoCustomToast } from '../../lib/custom-toast-layout';
 
 interface ToastDemoContextValue {
   config: DemoConfig;
@@ -42,6 +43,7 @@ export function ToastDemoProvider({ children }: { children: ReactNode }) {
         position={config.position}
         theme={config.theme}
         maxVisible={config.maxVisible}
+        renderToast={config.layout === 'custom' ? DemoCustomToast : undefined}
       />
     </ToastDemoContext.Provider>
   );
