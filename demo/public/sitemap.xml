@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blip-toast.vercel.app/</loc>
-    <lastmod>2026-08-01</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://blip-toast.vercel.app/?lang=en" />
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://blip-toast.vercel.app/?lang=en</loc>
-    <lastmod>2026-08-01</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://blip-toast.vercel.app/?lang=en" />
@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://blip-toast.vercel.app/?lang=pt</loc>
-    <lastmod>2026-08-01</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://blip-toast.vercel.app/?lang=en" />
