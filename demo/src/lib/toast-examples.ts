@@ -153,11 +153,6 @@ toast('Custom spring', {
 import { ToastContainer } from 'blip-toast';
 import type { ToastRenderProps } from 'blip-toast';
 
-// The built-in toast is a soft rounded card. This 'renderToast' swaps
-// it for a clean, focused card in the spirit of Sonner / React Hot Toast:
-// icon on the left, title + description, a subtle action and a progress
-// bar pinned to the bottom edge. Blip still owns the stack animation,
-// entrance/exit, auto-dismiss, promise morphing, swipe and accessibility.
 function SoftToast({
   toast, title, description, colors, isDark, icon,
   action, timestamp, progressBar, runAction, dismiss,
