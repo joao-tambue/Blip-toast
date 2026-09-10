@@ -14,4 +14,12 @@ export type {
   ToastUpdateOptions,
   AnimationPresetName,
   AnimationPreset,
+  ToastLayoutColors,
+  ToastStyleOverrides,
+  ToastSlots,
+  ToastIconSlotProps,
+  ToastActionSlotProps,
+  ToastProgressSlotProps,
+  ToastRenderProps,
+  ToastConfig,
 } from './types';

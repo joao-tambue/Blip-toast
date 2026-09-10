@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, ViewStyle } from 'react-native';
+import { Animated, Easing, StyleProp, ViewStyle } from 'react-native';
 
 interface ProgressBarProps {
   duration: number;
   color?: string;
   paused?: boolean;
   onComplete?: () => void;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({

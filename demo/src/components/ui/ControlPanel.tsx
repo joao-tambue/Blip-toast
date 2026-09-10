@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Dices } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useToastDemo } from '../demo/ToastDemoProvider';
-import type { DemoPosition, DemoTheme } from '../../lib/demo-actions';
+import type { DemoLayout, DemoPosition, DemoTheme } from '../../lib/demo-actions';
 import { cn } from '../../lib/cn';
 
 const POSITIONS: DemoPosition[] = [
@@ -118,6 +118,38 @@ export function ControlPanel() {
               );
             })}
           </div>
+        </div>
+
+        {/* Layout */}
+        <div>
+          <SectionLabel>{t('playground.layout')}</SectionLabel>
+          <div className="inline-flex rounded-lg border border-line bg-surface/40 p-1">
+            {(['default', 'custom'] as DemoLayout[]).map((l) => {
+              const active = config.layout === l;
+              return (
+                <button
+                  key={l}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => updateConfig({ layout: l })}
+                  className={cn(
+                    'relative rounded-md px-4 py-1.5 text-xs font-semibold capitalize transition-colors cursor-pointer',
+                    active ? 'text-white' : 'text-muted hover:text-ink'
+                  )}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="layout-active"
+                      className="absolute inset-0 rounded-md bg-brand shadow-glow-sm"
+                      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                    />
+                  )}
+                  <span className="relative z-10">{t(`playground.layouts.${l}`)}</span>
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-2 text-[11px] text-muted">{t('playground.layoutHint')}</p>
         </div>
 
         {/* Toggles */}

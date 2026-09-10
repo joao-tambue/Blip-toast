@@ -89,10 +89,16 @@
     "random": "Aleatório",
     "position": "Posição",
     "theme": "Tema",
+    "layout": "Layout",
+    "layoutHint": "Personalizado troca o card inteiro por um layout renderToast.",
     "options": "Opções",
     "duration": "Duração",
     "maxVisible": "Máx. visíveis",
     "toastDurationAria": "Duração do toast",
+    "layouts": {
+      "default": "Padrão",
+      "custom": "Personalizado"
+    },
     "triggerLabels": {
       "default": "Default",
       "success": "Success",
@@ -194,6 +200,10 @@
       "styleHooks": {
         "title": "Style hooks",
         "description": "ClassNames por parte para wrapper, conteúdo, título, descrição e ações."
+      },
+      "customLayout": {
+        "title": "Layout personalizado",
+        "description": "Clica em correr — o card inteiro é substituído por um layout renderToast, e todos os comportamentos mantêm-se. Volta ao padrão com o controlo Layout no playground."
       },
       "theming": {
         "title": "Temas",

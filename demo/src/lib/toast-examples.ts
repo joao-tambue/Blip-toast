@@ -1,6 +1,3 @@
-/* Code snippets and API reference data shown across the docs site.
-   Every snippet uses the real `blip-toast` API (v0.1.0). */
-
 import type en from '../i18n/locales/en.json';
 
 type ApiRows = (typeof en)['apiRows'];
@@ -147,6 +144,85 @@ toast('Custom spring', {
   bounce: 0.6,
   timing: { displayDuration: 6000 },
 });`,
+  },
+
+  customLayout: {
+    language: 'tsx',
+    filename: 'custom-layout.tsx',
+    code: `import { View, Text, Pressable } from 'react-native';
+import { ToastContainer } from 'blip-toast';
+import type { ToastRenderProps } from 'blip-toast';
+
+function SoftToast({
+  toast, title, description, colors, isDark, icon,
+  action, timestamp, progressBar, runAction, dismiss,
+}: ToastRenderProps) {
+  const showTimestamp = toast.options.showTimestamp !== false;
+  const hasRichBorder = colors.border && colors.border !== 'transparent';
+  const muted = isDark ? '#A1A1AA' : '#71717A';
+
+  return (
+    <View style={{ width: 356, maxWidth: '100%', borderRadius: 12,
+      backgroundColor: colors.background,
+      borderWidth: hasRichBorder ? 1.5 : 1,
+      borderColor: hasRichBorder ? colors.border
+        : isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+      overflow: 'hidden', shadowColor: '#000',
+      shadowOpacity: isDark ? 0.45 : 0.18,
+      shadowRadius: isDark ? 32 : 20, shadowOffset: { width: 0, height: 12 } }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12,
+        paddingTop: 13, paddingLeft: 14, paddingRight: 10,
+        paddingBottom: progressBar ? 0 : 13 }}>
+        <View style={{ width: 24, height: 24, alignItems: 'center',
+          justifyContent: 'center' }}>
+          {icon}
+        </View>
+
+        <View style={{ flex: 1, gap: 3, minWidth: 0 }}>
+          <Text numberOfLines={1} style={{ fontSize: 14, fontWeight: '600',
+            color: isDark ? '#F4F4F5' : '#18181B' }}>
+            {title}
+            {showTimestamp ? (
+              <Text style={{ fontSize: 11, fontWeight: '400', color: muted }}>
+                {'  ·  '}{timestamp}
+              </Text>
+            ) : null}
+          </Text>
+          {description ? (
+            <Text style={{ fontSize: 13, lineHeight: 18,
+              color: isDark ? '#A1A1AA' : '#52525B' }}>
+              {description}
+            </Text>
+          ) : null}
+        </View>
+
+        {action ? (
+          <Pressable onPress={runAction} hitSlop={6}
+            style={{ paddingVertical: 6, paddingHorizontal: 12, borderRadius: 6,
+              backgroundColor: isDark ? 'rgba(255,255,255,0.08)'
+                : 'rgba(0,0,0,0.05)' }}>
+            <Text style={{ fontSize: 12.5, fontWeight: '600',
+              color: isDark ? '#E4E4E7' : '#18181B' }}>
+              {action.label}
+            </Text>
+          </Pressable>
+        ) : null}
+
+        <Pressable onPress={dismiss} hitSlop={10} accessibilityRole="button"
+          accessibilityLabel="Dismiss"
+          style={{ width: 26, height: 26, borderRadius: 13, alignItems: 'center',
+            justifyContent: 'center' }}>
+          <Text style={{ fontSize: 12, color: colors.accent }}>✕</Text>
+        </Pressable>
+      </View>
+
+      {progressBar ? <View>{progressBar}</View> : null}
+    </View>
+  );
+}
+
+// Pass it to the container (or app-wide via <ToastConfigProvider>).
+<ToastContainer renderToast={SoftToast} />;`,
   },
 
   theme: {

@@ -10,26 +10,36 @@ const pairs = [
     key: 'richColors',
     snippet: SNIPPETS.richColors,
     run: 'custom' as const,
+    layout: 'default' as const,
   },
   {
     key: 'presets',
     snippet: SNIPPETS.presets,
     run: 'custom' as const,
+    layout: 'default' as const,
   },
   {
     key: 'styleHooks',
     snippet: SNIPPETS.classNames,
     run: 'default' as const,
+    layout: 'default' as const,
+  },
+  {
+    key: 'customLayout',
+    snippet: SNIPPETS.customLayout,
+    run: 'custom' as const,
+    layout: 'custom' as const,
   },
   {
     key: 'theming',
     snippet: SNIPPETS.theme,
     run: 'default' as const,
+    layout: 'default' as const,
   },
 ] as const;
 
 export function Customization() {
-  const { fire } = useToastDemo();
+  const { fire, updateConfig } = useToastDemo();
   const { t } = useTranslation();
 
   return (
@@ -70,7 +80,10 @@ export function Customization() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => fire(pair.run)}
+                  onClick={() => {
+                    updateConfig({ layout: pair.layout });
+                    fire(pair.run);
+                  }}
                   className="mt-0.5 shrink-0 rounded-full border border-line bg-surface/60 px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-violet/50 hover:text-violet cursor-pointer"
                 >
                   {t('customization.runDemo')}

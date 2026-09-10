@@ -3,6 +3,8 @@ import { View, StyleSheet, Platform, useColorScheme, Animated } from 'react-nati
 import { useToasts } from '../hooks/use-toasts';
 import { ToastItem } from './ToastItem';
 import { toastManager } from '../core/toast-manager';
+import { useToastConfig } from '../config/toast-config';
+import type { ToastRenderProps, ToastSlots, ToastStyleOverrides } from '../core/types';
 
 export interface ToastContainerProps {
   position?: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
@@ -10,6 +12,12 @@ export interface ToastContainerProps {
   gap?: number;
   offset?: number;
   maxVisible?: number;
+  /** Per-slot style overrides for every toast. Overrides `<ToastConfigProvider>`. */
+  styles?: ToastStyleOverrides;
+  /** Component overrides for individual toast pieces. Overrides `<ToastConfigProvider>`. */
+  slots?: ToastSlots;
+  /** Full control over the inner card. Overrides `<ToastConfigProvider>`. */
+  renderToast?: (props: ToastRenderProps) => React.ReactNode;
 }
 
 interface StackAnimValues {
@@ -28,10 +36,18 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
   gap = 8,
   offset = 24,
   maxVisible = 3,
+  styles: styleOverrides,
+  slots,
+  renderToast,
 }) => {
   const toasts = useToasts();
   const systemColorScheme = useColorScheme();
   const animMap = useRef(new Map<string, StackAnimValues>());
+  const config = useToastConfig();
+
+  const resolvedStyles = styleOverrides ?? config.styles;
+  const resolvedSlots = slots ?? config.slots;
+  const resolvedRenderToast = renderToast ?? config.renderToast;
 
   const resolvedTheme =
     theme === 'system' ? (systemColorScheme === 'dark' ? 'dark' : 'light') : theme;
@@ -109,6 +125,9 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
               toast={toast}
               onDismiss={(id) => toastManager.dismiss(id)}
               theme={resolvedTheme}
+              styles={resolvedStyles}
+              slots={resolvedSlots}
+              renderToast={resolvedRenderToast}
             />
           </Animated.View>
         );
