@@ -1,0 +1,29 @@
+# Blip Toast
+
+> Blip Toast is a lightweight, MIT-licensed toast notification library for React Native. It delivers five variants, spring-driven animations, promise support, six screen positions and a tiny TypeScript-first API — zero providers, zero configuration required.
+
+Optional
+Blip Toast is an open-source project by João Tambue. Its official website is a single-page documentation site whose primary language is English, with a full Portuguese version. The page is also a live playground: every code sample can be executed on the page and fires a real toast. Agents should treat the GitHub repository as the source of truth for code, issues and releases, and the npm page for the published package. Quick facts: install with `npm install blip-toast` (also `pnpm add`, `yarn add`, `bun add`); requires `react` and `react-native` — `react-native-svg` is only needed when using the built-in icons; mount a single `<ToastContainer />` at the root, then call `toast()` from anywhere (no provider or context). Main API: `toast(message, options)`, `toast.success()`, `toast.error()`, `toast.warning()`, `toast.info()`, `toast.promise()`, `toast.update()`, `toast.dismiss()` and `toast.dismissAll()`. Container props: `position`, `theme`, `gap`, `offset`, `maxVisible`. Toast options: `title`, `description`, `variant`, `duration`, `position`, `dismissible`, `swipeToDismiss`, `onDismiss`, `onPress`, `icon`, `action`, `fillColor`, `borderColor`/`borderWidth`, `preset`, `spring`/`bounce`, `showTimestamp`, `showProgress`, `classNames`, `theme`.
+
+## Documentation
+- [Homepage & documentation](https://blip-toast.vercel.app/): Official landing page, documentation site and live playground for Blip Toast.
+- [Feature overview](https://blip-toast.vercel.app/#features): Five variants (default, success, error, warning, info); springy animation presets (smooth, bouncy, subtle, snappy); promise support; six positions; timestamps and progress bar; headless API; full customization; light/dark/system theming; TypeScript-first.
+- [Playground](https://blip-toast.vercel.app/#playground): Interactive demo firing real toasts; control position, theme, duration, max visible and default/custom layout.
+- [Installation guide](https://blip-toast.vercel.app/#docs): One-command install, peer dependencies and a single `<ToastContainer />` mount.
+- [Quick start](https://blip-toast.vercel.app/#quickstart): Runnable examples for basic toasts, variants, promise, action button, update/dismiss and custom icons.
+- [API reference](https://blip-toast.vercel.app/#api): Full documentation of `<ToastContainer />` props, `toast` options and `toast.*` methods with types and defaults.
+- [Customization](https://blip-toast.vercel.app/#customization): Rich colors, animation presets, per-part `classNames` style hooks, custom `renderToast` layouts and theming.
+- [Portuguese version](https://blip-toast.vercel.app/?lang=pt): The complete site in Portuguese (PT).
+
+## Repository & Resources
+- [GitHub repository](https://github.com/joao-tambue/Blip-toast): Source code, issues, pull requests and releases for Blip Toast.
+- [npm package](https://www.npmjs.com/package/blip-toast): Published `blip-toast` package page.
+- [Changelog](https://github.com/joao-tambue/Blip-toast/blob/main/packages/blip-toast/CHANGELOG.md): Release history for the library.
+- [Contributing guide](https://github.com/joao-tambue/Blip-toast/blob/main/CONTRIBUTING.md): Guidelines for contributing to the project.
+- [License (MIT)](https://github.com/joao-tambue/Blip-toast/blob/main/LICENSE): The project is released under the MIT license.
+- [Author](https://github.com/joao-tambue): João Tambue, author and maintainer.
+
+## Technical specifications
+- [Sitemap](https://blip-toast.vercel.app/sitemap.xml): All site URLs, including hreflang alternates for English and Portuguese.
+- [Web manifest](https://blip-toast.vercel.app/site.webmanifest): Site metadata for installable app experience.
+- [Package README](https://github.com/joao-tambue/Blip-toast/blob/main/packages/blip-toast/README.md): Full README with usage, hooks, animation presets and architecture notes.

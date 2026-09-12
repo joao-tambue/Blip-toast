@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.0 (2026-09-11)
+
 ### Features
 
 - **Custom layout** — three composable, opt-in tiers for adapting toasts to any design system without losing the built-in animation, timing, promise morphing, gestures or accessibility:
