@@ -1,176 +1,152 @@
 #!/usr/bin/env node
 /**
- * Generates public/og-image.png — a 1200x630 brand banner with the
- * violet→blue Blip gradient, a floating toast card and the wordmark dot.
- * Pure Node (zlib) — no external dependencies.
+ * Generates public/og-image.png (1200x630) by rendering og.html — built from
+ * the site's real fonts, tokens, Blip bot and a real ToastItem — and
+ * capturing it with a local Chromium browser (Chrome, Edge or Chromium)
+ * over the DevTools protocol. No extra dependencies.
  *
  * Run: pnpm og  (from the demo workspace)
+ * Set CHROME_PATH to point at a specific browser binary.
  */
-import { deflateSync } from 'node:zlib';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { spawn } from 'node:child_process';
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createServer } from 'vite';
 
 const W = 1200;
 const H = 630;
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const out = join(root, 'public', 'og-image.png');
 
-const hex = (h) => [
-  parseInt(h.slice(1, 3), 16),
-  parseInt(h.slice(3, 5), 16),
-  parseInt(h.slice(5, 7), 16),
-];
-const VIOLET = hex('#8B5CF6');
-const DEEP = hex('#7C3AED');
-const BLUE = hex('#3B82F6');
-const SKY = hex('#38BDF8');
+const CANDIDATES = [
+  process.env.CHROME_PATH,
+  'C:/Program Files/Google/Chrome/Application/chrome.exe',
+  'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+  process.env.LOCALAPPDATA && join(process.env.LOCALAPPDATA, 'Google/Chrome/Application/chrome.exe'),
+  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  '/Applications/Chromium.app/Contents/MacOS/Chromium',
+  '/usr/bin/google-chrome',
+  '/usr/bin/chromium',
+  '/usr/bin/chromium-browser',
+].filter(Boolean);
 
-/* ---------------- PNG encoding ---------------- */
-const crcTable = (() => {
-  const t = new Int32Array(256);
-  for (let n = 0; n < 256; n++) {
-    let c = n;
-    for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
-    t[n] = c;
+const browserPath = CANDIDATES.find((path) => existsSync(path));
+if (!browserPath) {
+  console.error('✗ No Chromium-based browser found. Set CHROME_PATH and run again.');
+  process.exit(1);
+}
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Minimal DevTools protocol client over Node's built-in WebSocket. */
+function connect(wsUrl) {
+  return new Promise((resolve, reject) => {
+    const socket = new WebSocket(wsUrl);
+    const pending = new Map();
+    let nextId = 0;
+    socket.addEventListener('message', (event) => {
+      const message = JSON.parse(event.data);
+      const entry = pending.get(message.id);
+      if (!entry) return;
+      pending.delete(message.id);
+      if (message.error) entry.reject(new Error(message.error.message));
+      else entry.resolve(message.result);
+    });
+    socket.addEventListener('error', reject);
+    socket.addEventListener('open', () =>
+      resolve({
+        send(method, params = {}) {
+          const id = ++nextId;
+          socket.send(JSON.stringify({ id, method, params }));
+          return new Promise((res, rej) => pending.set(id, { resolve: res, reject: rej }));
+        },
+        close: () => socket.close(),
+      })
+    );
+  });
+}
+
+function launchBrowser(profileDir) {
+  const child = spawn(
+    browserPath,
+    [
+      '--headless=new',
+      '--remote-debugging-port=0',
+      `--user-data-dir=${profileDir}`,
+      `--window-size=${W},${H}`,
+      '--hide-scrollbars',
+      '--no-first-run',
+      '--no-default-browser-check',
+      'about:blank',
+    ],
+    { stdio: ['ignore', 'ignore', 'pipe'] }
+  );
+  const endpoint = new Promise((resolve, reject) => {
+    let log = '';
+    child.stderr.on('data', (data) => {
+      log += data;
+      const match = /DevTools listening on (ws:\/\/\S+)/.exec(log);
+      if (match) resolve(match[1]);
+    });
+    child.on('exit', (code) => reject(new Error(`Browser exited early (${code}).\n${log}`)));
+  });
+  return { child, endpoint };
+}
+
+const server = await createServer({ root, logLevel: 'error', server: { port: 5198 } });
+const profileDir = mkdtempSync(join(tmpdir(), 'blip-og-'));
+let browser;
+
+try {
+  await server.listen();
+  const url = new URL('og.html', server.resolvedUrls.local[0]).href;
+
+  browser = launchBrowser(profileDir);
+  const wsUrl = await browser.endpoint;
+  const { port } = new URL(wsUrl);
+  const targets = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
+  const page = await connect(targets.find((t) => t.type === 'page').webSocketDebuggerUrl);
+
+  await page.send('Emulation.setDeviceMetricsOverride', {
+    width: W,
+    height: H,
+    deviceScaleFactor: 1,
+    mobile: false,
+  });
+  await page.send('Page.navigate', { url });
+
+  // Wait for fonts (data-ready) and a drawn bot canvas. The dev server may
+  // reload once while it optimizes dependencies, so keep polling.
+  const deadline = Date.now() + 60_000;
+  for (;;) {
+    const { result } = await page.send('Runtime.evaluate', {
+      expression: `document.body?.dataset.ready === 'true' &&
+        getComputedStyle(document.querySelector('canvas') ?? document.body).opacity === '1' &&
+        !!document.querySelector('canvas')`,
+      returnByValue: true,
+    });
+    if (result.value) break;
+    if (Date.now() > deadline) throw new Error('Timed out waiting for og.html to render.');
+    await sleep(250);
   }
-  return t;
-})();
+  // Let the bot's bake and the toast's entrance spring settle.
+  await sleep(2500);
 
-function crc32(buf) {
-  let c = 0xffffffff;
-  for (let i = 0; i < buf.length; i++) c = crcTable[(c ^ buf[i]) & 0xff] ^ (c >>> 8);
-  return (c ^ 0xffffffff) >>> 0;
+  const { data } = await page.send('Page.captureScreenshot', {
+    format: 'png',
+    clip: { x: 0, y: 0, width: W, height: H, scale: 1 },
+  });
+  writeFileSync(out, Buffer.from(data, 'base64'));
+  page.close();
+  console.log(`✓ wrote ${out}`);
+} finally {
+  browser?.child.kill();
+  await server.close();
+  // The browser can hold the profile for a moment after exit.
+  await sleep(500);
+  rmSync(profileDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
-
-function chunk(type, data) {
-  const len = Buffer.alloc(4);
-  len.writeUInt32BE(data.length);
-  const typeBuf = Buffer.from(type, 'ascii');
-  const crc = Buffer.alloc(4);
-  crc.writeUInt32BE(crc32(Buffer.concat([typeBuf, data])));
-  return Buffer.concat([len, typeBuf, data, crc]);
-}
-
-function encodePng(width, height, rgba) {
-  const sig = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
-  const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(width, 0);
-  ihdr.writeUInt32BE(height, 4);
-  ihdr[8] = 8; // bit depth
-  ihdr[9] = 6; // color type RGBA
-  const stride = width * 4;
-  const raw = Buffer.alloc((stride + 1) * height);
-  for (let y = 0; y < height; y++) {
-    raw[y * (stride + 1)] = 0; // filter: none
-    rgba.copy(raw, y * (stride + 1) + 1, y * stride, (y + 1) * stride);
-  }
-  return Buffer.concat([
-    sig,
-    chunk('IHDR', ihdr),
-    chunk('IDAT', deflateSync(raw, { level: 9 })),
-    chunk('IEND', Buffer.alloc(0)),
-  ]);
-}
-
-/* ---------------- drawing helpers ---------------- */
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
-function mixColor(c1, c2, t) {
-  return [
-    Math.round(lerp(c1[0], c2[0], t)),
-    Math.round(lerp(c1[1], c2[1], t)),
-    Math.round(lerp(c1[2], c2[2], t)),
-  ];
-}
-function blend(dst, i, color, alpha) {
-  const inv = 1 - alpha;
-  dst[i] = Math.round(color[0] * alpha + dst[i] * inv);
-  dst[i + 1] = Math.round(color[1] * alpha + dst[i + 1] * inv);
-  dst[i + 2] = Math.round(color[2] * alpha + dst[i + 2] * inv);
-  dst[i + 3] = Math.max(dst[i + 3], Math.round(alpha * 255));
-}
-function distToRoundedRect(x, y, cx, cy, halfW, halfH, r) {
-  const dx = Math.abs(x - cx) - (halfW - r);
-  const dy = Math.abs(y - cy) - (halfH - r);
-  const ox = Math.max(dx, 0);
-  const oy = Math.max(dy, 0);
-  const inside = dx < 0 && dy < 0;
-  const corner = Math.hypot(Math.max(dx, 0), Math.max(dy, 0)) - r;
-  return inside ? -Math.min(-dx, -dy) : corner;
-}
-function softStep(edge, width, d) {
-  const t = (d - edge) / width;
-  return 1 - Math.min(1, Math.max(0, t));
-}
-
-/* ---------------- render ---------------- */
-const px = Buffer.alloc(W * H * 4);
-for (let y = 0; y < H; y++) {
-  for (let x = 0; x < W; x++) {
-    const i = (y * W + x) * 4;
-    const t = (x / W + y / H) / 2; // diagonal gradient
-    const base = mixColor(VIOLET, BLUE, Math.min(1, t));
-    // radial glow toward the top-left (the "light" behind the icon)
-    const gx = W * 0.28;
-    const gy = H * 0.22;
-    const gd = Math.hypot(x - gx, y - gy) / (W * 0.55);
-    const glow = mixColor(SKY, VIOLET, Math.min(1, gd));
-    const glowA = 0.35 * Math.max(0, 1 - gd);
-    blend(px, i, glow, glowA);
-    px[i] = base[0];
-    px[i + 1] = base[1];
-    px[i + 2] = base[2];
-    px[i + 3] = 255;
-  }
-}
-
-// Toast card (center)
-const cardCX = W * 0.5;
-const cardCY = H * 0.5;
-const cardHalfW = 300;
-const cardHalfH = 96;
-const cardR = 44;
-for (let y = 0; y < H; y++) {
-  for (let x = 0; x < W; x++) {
-    const i = (y * W + x) * 4;
-    const d = distToRoundedRect(x, y, cardCX, cardCY, cardHalfW, cardHalfH, cardR);
-    const body = softStep(0, 2.5, d); // hard edge
-    const border = softStep(1.5, 2, d); // thin border band
-    if (body > 0) {
-      blend(px, i, [255, 255, 255], body * 0.14);
-    }
-    if (border > 0) {
-      blend(px, i, [255, 255, 255], border * 0.5);
-    }
-  }
-}
-
-// Wordmark dot (the "i" of Blip) + text bars inside the card
-const dotCX = cardCX - cardHalfW + 74;
-const dotCY = cardCY - 34;
-for (let y = 0; y < H; y++) {
-  for (let x = 0; x < W; x++) {
-    const i = (y * W + x) * 4;
-    // gradient dot
-    const dd = Math.hypot(x - dotCX, y - dotCY);
-    if (dd < 30) {
-      const t = (x - (dotCX - 30)) / 60;
-      blend(px, i, mixColor(SKY, VIOLET, t), softStep(30, 2, dd) * 0.95);
-    }
-    // title bar
-    const barY = cardCY + 6;
-    if (Math.abs(x - (dotCX + 60)) < 120 && Math.abs(y - barY) < 12) {
-      blend(px, i, [255, 255, 255], 0.75);
-    }
-    // sub bar
-    const subY = cardCY + 44;
-    if (Math.abs(x - (dotCX + 60)) < 80 && Math.abs(y - subY) < 9) {
-      blend(px, i, [255, 255, 255], 0.42);
-    }
-  }
-}
-
-const out = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'og-image.png');
-mkdirSync(dirname(out), { recursive: true });
-writeFileSync(out, encodePng(W, H, px));
-console.log(`✓ wrote ${out}`);
