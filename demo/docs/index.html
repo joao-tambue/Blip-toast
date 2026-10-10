@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#E8ECEF" />
+    <script>
+      // Apply the stored or system theme before first paint.
+      (function () {
+        try {
+          var stored = localStorage.getItem('blip-toast-theme');
+          var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          if (dark) {
+            document.documentElement.classList.add('dark');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0E1114');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <title>Docs — Blip Toast</title>
+    <meta
+      name="description"
+      content="Install Blip Toast, show your first toast and customize the card. Guides, live examples and the full API reference."
+    />
+    <meta name="author" content="João Tambue" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://blip-toast.vercel.app/docs/" />
+    <link rel="alternate" hreflang="en" href="https://blip-toast.vercel.app/docs/?lang=en" />
+    <link rel="alternate" hreflang="pt" href="https://blip-toast.vercel.app/docs/?lang=pt" />
+    <link rel="alternate" hreflang="x-default" href="https://blip-toast.vercel.app/docs/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Blip Toast" />
+    <meta property="og:title" content="Docs — Blip Toast" />
+    <meta
+      property="og:description"
+      content="Install Blip Toast, show your first toast and customize the card. Guides, live examples and the full API reference."
+    />
+    <meta property="og:url" content="https://blip-toast.vercel.app/docs/" />
+    <meta property="og:image" content="https://blip-toast.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="pt_PT" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Docs — Blip Toast" />
+    <meta
+      name="twitter:description"
+      content="Guides, live examples and the full API reference for Blip Toast."
+    />
+    <meta name="twitter:image" content="https://blip-toast.vercel.app/og-image.png" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Blip Toast documentation",
+        "url": "https://blip-toast.vercel.app/docs/",
+        "inLanguage": ["en", "pt"],
+        "about": { "@id": "https://blip-toast.vercel.app/#software" },
+        "isPartOf": { "@id": "https://blip-toast.vercel.app/#website" }
+      }
+    </script>
+  </head>
+  <body data-page="docs">
+    <div id="root"></div>
+    <script type="module" src="/src/entries/docs.tsx"></script>
+  </body>
+</html>
