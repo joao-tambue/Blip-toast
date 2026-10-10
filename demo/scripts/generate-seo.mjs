@@ -79,7 +79,11 @@ const manifest = {
   display: 'standalone',
   background_color: '#E8ECEF',
   theme_color: '#E8ECEF',
-  icons: [{ src: '/favicon.png', sizes: 'any', type: 'image/png' }],
+  icons: [
+    { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' },
+    { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+  ],
 };
 
 mkdirSync(dirname(out('robots.txt')), { recursive: true });

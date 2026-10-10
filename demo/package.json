@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "seo": "node scripts/generate-seo.mjs",
-    "og": "node scripts/generate-og.mjs"
+    "og": "node scripts/generate-og.mjs",
+    "icons": "node scripts/generate-icons.mjs"
   },
   "engines": {
     "node": ">=20.19.0"
