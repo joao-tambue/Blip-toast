@@ -1,11 +1,11 @@
 {
   "name": "Blip Toast",
   "short_name": "Blip Toast",
-  "description": "A lightweight, beautifully animated toast notification library for React Native. Five variants, promise support, six positions and a tiny TypeScript-first API.",
+  "description": "Toast notifications for React Native: five variants, promise states and custom layouts.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0B0C14",
-  "theme_color": "#0B0C14",
+  "background_color": "#E8ECEF",
+  "theme_color": "#E8ECEF",
   "icons": [
     {
       "src": "/favicon.png",

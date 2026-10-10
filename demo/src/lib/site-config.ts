@@ -1,30 +1,31 @@
+import pkg from 'blip-toast/package.json';
+
 export const site = {
   name: 'Blip Toast',
-  tagline: 'Toasts that don\u2019t interrupt \u2014 they delight.',
-  description:
-    'A lightweight, beautifully animated toast notification library for React Native. Five variants, promise support, six positions and a tiny TypeScript-first API.',
   url: 'https://blip-toast.vercel.app',
   repository: 'https://github.com/joao-tambue/Blip-toast',
+  changelog:
+    'https://github.com/joao-tambue/Blip-toast/blob/main/packages/blip-toast/CHANGELOG.md',
   npm: 'https://www.npmjs.com/package/blip-toast',
   license: 'MIT',
   author: {
-    name: 'Jo\u00e3o Tambue',
+    name: 'João Tambue',
     github: 'https://github.com/joao-tambue',
   },
-  version: '0.1.0',
+  /** Read from the library itself so the site never drifts from the package. */
+  version: pkg.version,
 } as const;
 
-export const navLinks = [
-  { key: 'features', href: '#features' },
-  { key: 'playground', href: '#playground' },
-  { key: 'docs', href: '#docs' },
-  { key: 'quickstart', href: '#quickstart' },
-  { key: 'api', href: '#api' },
-] as const;
+export const routes = {
+  home: '/',
+  docs: '/docs/',
+} as const;
 
-export const installCommands: Record<'npm' | 'pnpm' | 'yarn' | 'bun', string> = {
-  npm: 'npm install blip-toast',
-  pnpm: 'pnpm add blip-toast',
-  yarn: 'yarn add blip-toast',
-  bun: 'bun add blip-toast',
+export type PackageManager = 'npm' | 'pnpm' | 'yarn' | 'bun';
+
+export const installCommands: Record<PackageManager, string> = {
+  npm: 'npm install blip-toast react-native-svg',
+  pnpm: 'pnpm add blip-toast react-native-svg',
+  yarn: 'yarn add blip-toast react-native-svg',
+  bun: 'bun add blip-toast react-native-svg',
 };
