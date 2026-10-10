@@ -4,6 +4,7 @@ import { ToastContainer } from 'blip-toast';
 import { useTranslation } from 'react-i18next';
 import { BlipBot, BlipStatus, useBlipMood } from '../components/Blip';
 import { Footer, Header } from '../components/Chrome';
+import { Cursor } from '../components/Cursor';
 import { DemoCustomToast } from '../lib/custom-toast-layout';
 import { cn } from '../lib/cn';
 import { site } from '../lib/site-config';
@@ -465,6 +466,7 @@ export function Docs() {
         theme={theme}
         renderToast={layout === 'custom' ? DemoCustomToast : undefined}
       />
+      <Cursor />
     </DocsContext.Provider>
   );
 }

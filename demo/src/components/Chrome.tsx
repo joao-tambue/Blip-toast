@@ -7,9 +7,6 @@ import { routes, site } from '../lib/site-config';
 import { toggleTheme, useSiteTheme } from '../lib/theme-store';
 import { GithubIcon } from './icons';
 
-/* Site chrome shared by both pages: wordmark, header, theme and language
- * controls, footer. */
-
 export function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn('inline-flex items-baseline font-display font-semibold tracking-tight', className)}>
@@ -103,9 +100,7 @@ export function LanguageSwitcher() {
 
 interface HeaderProps {
   page: 'home' | 'docs';
-  /** Rendered before the wordmark (docs menu button). */
   start?: ReactNode;
-  /** Rendered at the start of the nav (docs search). */
   actions?: ReactNode;
   className?: string;
 }

@@ -3,11 +3,6 @@
 @import "@fontsource-variable/jetbrains-mono";
 @import "tailwindcss";
 
-/* ------------------------------------------------------------------ */
-/* Tokens. Light is "fog & signal": a cool grey page, ink type and one  */
-/* orange signal used for the blip dot, focus and live states only.    */
-/* `.dark` on <html> flips the variables.                              */
-/* ------------------------------------------------------------------ */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -95,7 +90,11 @@
   }
 }
 
-/* The blip: the brand's one recurring mark (wordmark dot, active nav). */
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
+}
+
 @utility blip-dot {
   display: inline-block;
   width: 0.42em;

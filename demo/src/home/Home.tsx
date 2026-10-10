@@ -3,6 +3,7 @@ import toast, { ToastContainer } from 'blip-toast';
 import { useTranslation } from 'react-i18next';
 import { BlipBot, BlipStatus, useBlipMood } from '../components/Blip';
 import { Footer, Header } from '../components/Chrome';
+import { Cursor } from '../components/Cursor';
 import { InstallCommand } from '../components/Code';
 import i18n from '../i18n';
 import { inline } from '../lib/md';
@@ -194,6 +195,7 @@ export function Home() {
       </main>
       <Footer />
       <ToastContainer position="top" theme={theme} />
+      <Cursor />
     </div>
   );
 }
