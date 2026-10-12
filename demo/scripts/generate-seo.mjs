@@ -5,7 +5,7 @@
  *   - public/sitemap.xml   (with en/pt hreflang alternates)
  *   - public/site.webmanifest
  *
- * The single-page demo lives at one URL; the locale variants are served
+ * The site has two pages (home and docs); the locale variants are served
  * through the `?lang=` querystring, so each gets its own sitemap entry.
  *
  * Run: pnpm seo  (from the demo workspace) — also runs on `pnpm build`.
@@ -20,7 +20,12 @@ const LAST_MOD = new Date().toISOString().slice(0, 10);
 
 const out = (name) => join(dirname(fileURLToPath(import.meta.url)), '..', 'public', name);
 
-const langUrl = (lang) => `${SITE_URL}/?lang=${lang}`;
+const PAGES = [
+  { path: '/', priority: '1.0' },
+  { path: '/docs/', priority: '0.9' },
+];
+
+const langUrl = (path, lang) => `${SITE_URL}${path}?lang=${lang}`;
 
 /* ---------------- robots.txt ---------------- */
 const robots = ['User-agent: *', 'Allow: /', '', `Sitemap: ${SITE_URL}/sitemap.xml`].join('\n');
@@ -49,33 +54,18 @@ const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
   '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
-  urlEntry(
-    `${SITE_URL}/`,
-    [
-      ['en', langUrl('en')],
-      ['pt', langUrl('pt')],
-      ['x-default', `${SITE_URL}/`],
-    ],
-    '1.0'
-  ),
-  urlEntry(
-    langUrl('en'),
-    [
-      ['en', langUrl('en')],
-      ['pt', langUrl('pt')],
-      ['x-default', `${SITE_URL}/`],
-    ],
-    '0.9'
-  ),
-  urlEntry(
-    langUrl('pt'),
-    [
-      ['en', langUrl('en')],
-      ['pt', langUrl('pt')],
-      ['x-default', `${SITE_URL}/`],
-    ],
-    '0.9'
-  ),
+  ...PAGES.flatMap(({ path, priority }) => {
+    const alternates = [
+      ['en', langUrl(path, 'en')],
+      ['pt', langUrl(path, 'pt')],
+      ['x-default', `${SITE_URL}${path}`],
+    ];
+    return [
+      urlEntry(`${SITE_URL}${path}`, alternates, priority),
+      urlEntry(langUrl(path, 'en'), alternates, priority),
+      urlEntry(langUrl(path, 'pt'), alternates, priority),
+    ];
+  }),
   '</urlset>',
   '',
 ].join('\n');
@@ -84,13 +74,16 @@ const sitemap = [
 const manifest = {
   name: 'Blip Toast',
   short_name: 'Blip Toast',
-  description:
-    'A lightweight, beautifully animated toast notification library for React Native. Five variants, promise support, six positions and a tiny TypeScript-first API.',
+  description: 'Toast notifications for React Native: five variants, promise states and custom layouts.',
   start_url: '/',
   display: 'standalone',
-  background_color: '#0B0C14',
-  theme_color: '#0B0C14',
-  icons: [{ src: '/favicon.png', sizes: 'any', type: 'image/png' }],
+  background_color: '#E8ECEF',
+  theme_color: '#E8ECEF',
+  icons: [
+    { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' },
+    { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+  ],
 };
 
 mkdirSync(dirname(out('robots.txt')), { recursive: true });

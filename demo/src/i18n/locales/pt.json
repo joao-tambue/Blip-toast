@@ -1,309 +1,346 @@
 {
   "meta": {
-    "title": "Blip Toast — Notificações modernas para React Native",
-    "description": "Blip Toast é uma biblioteca de notificações (toasts) leve e bonita para React Native. Cinco variantes, animações com física, suporte a promessas e uma API pequena com TypeScript em primeiro lugar."
+    "home": {
+      "title": "Blip Toast — notificações toast para React Native",
+      "description": "Notificações toast para React Native: cinco variantes, estados de promise e layouts personalizados. Monta um container e chama toast() de qualquer lado."
+    },
+    "docs": {
+      "title": "Documentação — Blip Toast",
+      "description": "Instala o Blip Toast, mostra o primeiro toast e personaliza o cartão. Guias, exemplos ao vivo e a referência completa da API."
+    }
   },
   "nav": {
-    "features": "Funcionalidades",
-    "playground": "Playground",
+    "home": "Início",
     "docs": "Docs",
-    "quickstart": "Início rápido",
-    "api": "API",
-    "getStarted": "Começar",
-    "mainAria": "Principal",
+    "github": "GitHub",
+    "npm": "npm",
+    "changelog": "Changelog",
     "homeAria": "Página inicial do Blip Toast",
-    "npmAria": "Ver no npm",
-    "githubAria": "Ver no GitHub",
-    "lightAria": "Mudar para o modo claro",
-    "darkAria": "Mudar para o modo escuro",
-    "closeMenuAria": "Fechar menu",
-    "openMenuAria": "Abrir menu",
-    "languageAria": "Mudar de idioma"
+    "mainAria": "Principal",
+    "toLight": "Mudar para tema claro",
+    "toDark": "Mudar para tema escuro",
+    "language": "Idioma",
+    "openMenu": "Abrir navegação",
+    "closeMenu": "Fechar navegação",
+    "skip": "Saltar para o conteúdo"
   },
-  "hero": {
-    "badge": "v{{version}} · React Native & <0>MIT</0>",
-    "title1": "Toasts que não",
-    "interrupt": "interrompem",
-    "title2": "— eles",
-    "delight": "encantam.",
-    "description": "Uma biblioteca de notificações leve e com animações bonitas para React Native. Cinco variantes, suporte a promessas, seis posições e uma API pequena com TypeScript em primeiro lugar.",
-    "getStarted": "Começar",
-    "tryPlayground": "Experimentar o playground",
-    "clickCard": "Clica num card para lançar um toast",
-    "clickCardAria": "Lançar toast de {{title}}"
-  },
-  "features": {
-    "eyebrow": "Funcionalidades",
-    "title": "API pequena,",
-    "titleAccent": "grande impacto",
-    "description": "Tudo o que precisas para notificações encantadoras — e nada do que não precisas. Zero providers, zero configuração, só toasts.",
-    "items": {
-      "variants": {
-        "title": "Cinco variantes",
-        "description": "Default, success, error, warning e info — cada uma com o seu ícone, cor e personalidade."
-      },
-      "animations": {
-        "title": "Animações com física",
-        "description": "Entradas e saídas suaves, impulsionadas por física. Escolhe um preset — smooth, bouncy, subtle, snappy — ou afina a mola tu mesmo."
-      },
-      "promise": {
-        "title": "Suporte a promessas",
-        "description": "toast.promise() transforma um toast de loading em success ou error no momento em que o teu trabalho assíncrono termina."
-      },
-      "positions": {
-        "title": "Seis posições",
-        "description": "Ancorado em qualquer lado: topo, fundo, ou qualquer um dos quatro cantos. Até por toast com sobreposições de posição."
-      },
-      "rich": {
-        "title": "Rico por predefinição",
-        "description": "Carimbos de tempo e uma barra de progresso animada opcional mantêm os toasts informativos sem roubar o foco."
-      },
-      "headless": {
-        "title": "API headless",
-        "description": "Preferes a tua própria UI? useToasts() expõe a lista em direto para renderizares tudo à tua maneira."
-      },
-      "customizable": {
-        "title": "Totalmente personalizável",
-        "description": "Class names, fills personalizados, bordas, ícones, botões de ação — cada pixel é teu para estilizar."
-      },
-      "themeAware": {
-        "title": "Consciente do tema",
-        "description": "Temas claro, escuro e sistema, com sobreposições por toast. Segue o dispositivo, segue-te."
-      },
-      "typescript": {
-        "title": "TypeScript em primeiro lugar",
-        "description": "API pequena e totalmente tipada com autocompletar para cada opção. Sem configuração, sem providers, sem cerimónia."
-      }
+  "blip": {
+    "name": "Blip",
+    "poke": "Toca no Blip para enviar um toast",
+    "pokeToast": "Olá, sou o Blip",
+    "pokeToastDesc": "Sou eu que entrego cada toast desta página.",
+    "status": {
+      "idle": "parado · à espera de um toast",
+      "delivering_one": "a entregar {{count}} toast",
+      "delivering_other": "a entregar {{count}} toasts",
+      "waiting": "à espera de uma promise",
+      "sleeping": "a dormir · qualquer toast o acorda"
     }
   },
-  "playground": {
-    "eyebrow": "Playground",
-    "title": "Conduz com",
-    "titleAccent": "controlos ao vivo",
-    "description": "Cada botão abaixo dispara uma notificação real do blip-toast. Afina posição, tema, duração e mais — o contentor atualiza instantaneamente.",
-    "triggers": "Triggers",
-    "triggersHintStart": "Os toasts aparecem na",
-    "configuredPosition": "posição configurada",
-    "triggersHintEnd": "— observa qualquer canto do ecrã.",
-    "controls": "Controlos",
-    "random": "Aleatório",
-    "position": "Posição",
-    "theme": "Tema",
-    "layout": "Layout",
-    "layoutHint": "Personalizado troca o card inteiro por um layout renderToast.",
-    "options": "Opções",
-    "duration": "Duração",
-    "maxVisible": "Máx. visíveis",
-    "toastDurationAria": "Duração do toast",
-    "layouts": {
-      "default": "Padrão",
-      "custom": "Personalizado"
+  "home": {
+    "title": "Toasts para React Native, entregues pelo Blip.",
+    "lede": "Cinco variantes, estados de promise e um cartão que podes reestilizar ou substituir. Monta um container e chama `toast()` de qualquer lado — sem provider, sem hook.",
+    "readDocs": "Ler a documentação",
+    "send": "Pede ao Blip um toast de",
+    "sendAria": "Enviar um toast de {{kind}}",
+    "kinds": {
+      "success": "sucesso",
+      "error": "erro",
+      "promise": "promise",
+      "action": "anular"
     },
-    "triggerLabels": {
-      "default": "Default",
-      "success": "Success",
-      "error": "Error",
-      "warning": "Warning",
-      "info": "Info",
-      "loading": "Promessa",
-      "action": "Botão de ação",
-      "description": "Descrição",
-      "icon": "Ícone personalizado",
-      "custom": "Estilo personalizado",
-      "update": "Atualizar / descartar"
-    },
-    "positions": {
-      "top": "Topo",
-      "top-left": "Topo esquerda",
-      "top-right": "Topo direita",
-      "bottom": "Fundo",
-      "bottom-left": "Fundo esquerda",
-      "bottom-right": "Fundo direita"
-    },
-    "toggles": {
-      "richColors": "Cores ricas",
-      "richColorsHint": "Preenchimento + borda",
-      "timestamp": "Carimbo de tempo",
-      "progressBar": "Barra de progresso"
-    }
-  },
-  "installation": {
-    "eyebrow": "Instalação",
-    "title": "A funcionar em",
-    "titleAccent": "segundos",
-    "description": "Um comando, zero configuração, TypeScript incluído.",
+    "stepsTitle": "A configuração toda",
     "steps": {
       "install": {
-        "title": "Instala o pacote",
-        "body": "Adiciona <0>blip-toast</0> ao teu projeto React Native com o teu gestor de pacotes favorito."
-      },
-      "peers": {
-        "title": "Adiciona dependências de pares",
-        "body": "A biblioteca não exige dependências de pares obrigatórias — só precisa de <0>react-native</0> e, se usares ícones embutidos, <1>react-native-svg</1>."
+        "title": "Instala",
+        "body": "A biblioteca e o renderizador SVG com que desenha os ícones."
       },
       "mount": {
-        "title": "Monta uma vez, toasts em qualquer lugar",
-        "body": "Renderiza um único <0>&lt;ToastContainer /&gt;</0> na raiz e depois chama <1>toast(...)</1> a partir de qualquer sítio. Sem provider, sem contexto."
+        "title": "Monta uma vez",
+        "body": "Último filho do componente raiz, para ficar por cima de todos os ecrãs."
+      },
+      "call": {
+        "title": "Chama em qualquer lado",
+        "body": "Ecrãs, hooks, clientes de API. Devolve um handle que podes atualizar."
       }
     },
-    "noteStart": "Requer",
-    "noteMid": "se importares de",
-    "noteDirect": "diretamente.",
-    "seeApi": "Ver a referência da API"
+    "stepsLink": "Guia de instalação completo",
+    "closingTitle": "O resto está na documentação.",
+    "closingBody": "Estados de promise, posições, temas, layouts personalizados e todas as opções da API — cada um com um exemplo que podes correr na página.",
+    "closingCta": "Abrir a documentação"
   },
-  "quickstart": {
-    "eyebrow": "Início rápido",
-    "title": "Copia, cola,",
-    "titleAccent": "corre",
-    "description": "Cada exemplo abaixo está ao vivo. Carrega em Run e vê o toast real aparecer no ecrã.",
-    "runThis": "Correr isto",
-    "examplesAria": "Exemplos",
-    "tabs": {
-      "basic": "Básico",
-      "variants": "Variantes",
-      "promise": "Promessa",
-      "action": "Ação",
-      "updateDismiss": "Atualizar / descartar",
-      "customIcon": "Ícone personalizado"
-    }
+  "footer": {
+    "madeBy": "Feito por {{name}}",
+    "license": "Licença MIT",
+    "version": "v{{version}}"
   },
-  "api": {
-    "eyebrow": "Referência da API",
-    "title": "Tudo,",
-    "titleAccent": "documentado",
-    "description": "Uma superfície pequena e previsível. Se conheces o sonner, já conheces o Blip Toast.",
-    "containerProps": "props",
-    "toastOptions": "opções",
-    "toastMethods": "métodos",
+  "copy": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "aria": "Copiar para a área de transferência"
+  },
+  "docs": {
+    "title": "Documentação",
+    "search": "Pesquisar",
+    "searchPlaceholder": "Pesquisar na documentação",
+    "searchEmpty": "Nada corresponde a “{{query}}”. Experimenta o nome de uma opção, como duration ou renderToast.",
+    "searchHint": "para navegar",
+    "run": "Correr",
+    "running": "Enviado",
+    "runAria": "Correr este exemplo na página",
+    "reserved": "Reservado",
+    "reservedNote": "Aceite pelos tipos, mas ainda não aplicado em runtime.",
+    "goodToKnow": "A saber",
+    "onPage": "Nesta página",
+    "previewTitle": "Pré-visualização",
+    "previewBody": "Os exemplos desta página disparam toasts reais. Estas definições controlam onde e como aparecem.",
+    "preview": {
+      "position": "Posição",
+      "layout": "Cartão",
+      "layouts": {
+        "default": "Nativo",
+        "custom": "renderToast"
+      }
+    },
+    "positions": {
+      "top-left": "Cima à esquerda",
+      "top": "Cima",
+      "top-right": "Cima à direita",
+      "bottom-left": "Baixo à esquerda",
+      "bottom": "Baixo",
+      "bottom-right": "Baixo à direita"
+    },
     "table": {
       "name": "Nome",
       "type": "Tipo",
       "default": "Predefinição",
       "description": "Descrição"
-    }
-  },
-  "customization": {
-    "eyebrow": "Personalização",
-    "title": "A tua marca,",
-    "titleAccent": "os teus toasts",
-    "description": "Estiliza cada parte sem lutar contra a biblioteca. Opções simples, sem abstrações.",
-    "runDemo": "Correr demo",
-    "items": {
-      "richColors": {
-        "title": "Cores ricas",
-        "description": "Preenchimento, borda e destaque — toasts que saltam à vista em qualquer fundo."
+    },
+    "groups": {
+      "start": "Primeiros passos",
+      "usage": "Mostrar toasts",
+      "container": "O container",
+      "custom": "Personalização",
+      "reference": "Referência da API"
+    },
+    "s": {
+      "introduction": {
+        "title": "Introdução",
+        "body": "O Blip Toast é uma biblioteca de toasts para React Native. Dá-te cinco variantes, toasts que acompanham uma promise do carregamento ao fim, e um cartão que podes reestilizar peça a peça ou substituir por completo.\n\nTem duas peças. O `toastManager` guarda a lista de toasts ativos fora do React, por isso `toast()` funciona em qualquer lado — um ecrã, um hook, um cliente de API. O `<ToastContainer />`, montado uma vez, subscreve essa lista e trata de tudo o que é visual: empilhamento, animações de entrada e saída, fecho automático e papéis de acessibilidade.\n\nNão há provider a envolver a app nem hook a chamar antes de mostrares um toast."
       },
-      "presets": {
-        "title": "Presets de animação",
-        "description": "Quatro sensações de entrada, ou uma mola afinada à mão quando precisas."
+      "installation": {
+        "title": "Instalação",
+        "body": "Instala o pacote juntamente com o `react-native-svg`, que desenha os ícones incluídos.",
+        "after": "Em projetos Expo, usa `npx expo install blip-toast react-native-svg` para obteres a versão do `react-native-svg` que corresponde ao teu SDK.\n\n**Requisitos:** `react` 18 ou superior, `react-native` 0.72 ou superior e `react-native-svg` 13 ou superior. Não precisas de Reanimated nem de Gesture Handler — as animações usam a API `Animated` do React Native com o driver nativo."
       },
-      "styleHooks": {
-        "title": "Style hooks",
-        "description": "ClassNames por parte para wrapper, conteúdo, título, descrição e ações."
+      "quick-start": {
+        "title": "Início rápido",
+        "body": "Monta o `<ToastContainer />` uma vez, como último filho do componente raiz, para que fique por cima de tudo o resto.",
+        "after": "Depois importa `toast` onde quer que algo aconteça:"
       },
-      "customLayout": {
-        "title": "Layout personalizado",
-        "description": "Clica em correr — o card inteiro é substituído por um layout renderToast, e todos os comportamentos mantêm-se. Volta ao padrão com o controlo Layout no playground."
+      "variants": {
+        "title": "Variantes",
+        "body": "Cinco variantes, cada uma com o seu ícone e cor de destaque. O `toast()` simples usa `default`.",
+        "after": "Há uma sexta fase, `loading`, desenhada com um spinner. Raramente a defines à mão: o `toast.promise()` usa-a enquanto espera. Os toasts de erro abanam uma vez ao aparecer, e os de erro e aviso são anunciados com o papel de acessibilidade `alert`."
+      },
+      "description-and-actions": {
+        "title": "Descrições e ações",
+        "body": "Um toast ganha uma segunda linha quando lhe dás uma `description`, e um botão quando lhe dás uma `action`.",
+        "after": "Com `successLabel` definido, tocar no botão corre o `onPress` e transforma o mesmo toast num estado de sucesso com esse texto. Usa-o em fluxos de anular, onde a confirmação deve substituir a oferta em vez de empilhar um segundo toast."
+      },
+      "promise": {
+        "title": "Promises",
+        "body": "O `toast.promise()` mostra um toast de carregamento e transforma-o em sucesso ou erro quando a promise termina. Títulos e descrições podem ser texto ou funções do resultado.",
+        "after": "O toast de carregamento fica até a promise terminar; o resultado fica depois 4 segundos. O `toast.promise()` devolve o handle do toast, não a promise — guarda a tua própria referência se precisares do resultado.\n\n`description` e `action` aceitam as chaves `success` e `error`, e as opções de estilo (`fillColor`, `borderColor`, `preset`, `showProgress`…) aplicam-se a todas as fases."
+      },
+      "update-and-dismiss": {
+        "title": "Atualizar e fechar",
+        "body": "Cada chamada devolve um handle com o `id` do toast, um `update()` e um `dismiss()`.",
+        "after": "O `toast.update()` junta novas opções a um toast ativo — título, descrição, variante, ação — e o cartão anima até ao novo estado.",
+        "note": "Fechar por código remove o toast de imediato, sem a animação de saída. O `toast.dismiss()` precisa de um `id`; sem ele não faz nada, por isso usa `toast.dismissAll()` para limpar tudo."
+      },
+      "custom-icons": {
+        "title": "Ícones personalizados",
+        "body": "Passa qualquer elemento React como `icon` para substituir o ícone da variante. A variante continua a decidir a cor do título e o papel de acessibilidade."
+      },
+      "headless": {
+        "title": "Ler a lista de toasts",
+        "body": "O `useToasts()` subscreve a lista ativa, do mais antigo para o mais recente. Usa-o para mostrar uma contagem noutro sítio da interface, ou para desenhar os toasts com um componente teu.",
+        "after": "Cada item é um `Toast`: `{ id, options, dismiss, update }`. Fora do React, `toastManager.subscribe(listener)` dá-te a mesma lista."
+      },
+      "positions": {
+        "title": "Posições",
+        "body": "Define `position` no container. `top` e `bottom` centram a pilha; os quatro cantos prendem-na às margens. Escolhe uma abaixo para mover os toasts desta página.",
+        "after": "A pilha afasta-se da barra de estado e do indicador inicial por ti: 60 e 40 pontos no iOS, 40 e 20 no Android. O `offset` soma-se a isso, e define também a distância às margens laterais nas posições de canto.",
+        "note": "O `position` num toast individual existe nos tipos mas ainda não é aplicado — é o container que decide onde os toasts aparecem."
       },
       "theming": {
         "title": "Temas",
-        "description": "Claro, escuro ou sistema — no contentor ou por toast."
+        "body": "O `theme` aceita `light`, `dark` ou `system`. Com `system`, o container segue o dispositivo através do `useColorScheme()` e atualiza quando o utilizador muda.",
+        "after": "Os toasts desta página seguem o tema do site. Muda-o no cabeçalho para veres os dois."
+      },
+      "stacking": {
+        "title": "Empilhamento",
+        "body": "Os toasts novos aparecem por cima. Cada toast mais antigo fica `gap` pontos mais atrás, encolhe 5% e perde 20% de opacidade. Para lá de `maxVisible`, os mais antigos desaparecem por completo mas continuam montados até expirarem.",
+        "after": "São guardados no máximo cinco toasts de cada vez; um sexto empurra o mais antigo para fora."
+      },
+      "rich-colors": {
+        "title": "Cores e bordas",
+        "body": "`fillColor`, `borderColor` e `borderWidth` reestilizam o cartão de um toast sem mexer no layout. Junta `showProgress` para uma barra que esvazia ao longo da duração do toast."
+      },
+      "animation-presets": {
+        "title": "Presets de movimento",
+        "body": "Quatro presets afinam a mola por trás do impacto de entrada e da expansão. Sem nenhum, os toasts usam uma mola com `bounce: 0.4`.",
+        "after": "Para algo intermédio, define tu `spring` e `bounce` (de 0 a 1). O `timing.displayDuration` sobrepõe-se ao `duration` no fecho automático."
+      },
+      "style-overrides": {
+        "title": "Estilos",
+        "body": "O `styles` junta estilos React Native a cada parte do cartão incluído. Define-o no container — ou para toda a app com `<ToastConfigProvider>` — e todos os toasts o aplicam.",
+        "after": "Partes que podes estilizar: `wrapper`, `content`, `header`, `iconWrapper`, `title`, `timestamp`, `body`, `description`, `actionButton`, `actionText` e `progressBar`."
+      },
+      "slots": {
+        "title": "Slots",
+        "body": "Os slots substituem uma peça do cartão incluído e mantêm o resto: `Icon`, `ActionButton` e `Progress`. Cada um recebe a `phase` atual e a `color` de destaque já resolvida.",
+        "after": "A opção `icon` de um toast continua a ter prioridade sobre `slots.Icon`."
+      },
+      "custom-layout": {
+        "title": "Layout personalizado",
+        "body": "O `renderToast` substitui o cartão interior por completo. O Blip Toast mantém as partes difíceis de acertar — empilhamento, entrada, abanão de erro, fecho automático, transição da promise e papéis de acessibilidade — e entrega-te tudo o que precisas para desenhar o cartão.",
+        "toggle": "Usar este layout na página",
+        "after": "As props estão listadas em [ToastRenderProps](#api-render-props). Chama `dismiss()` para um fecho animado e `runAction()` para disparar a ação com a transição do `successLabel`."
+      },
+      "config-provider": {
+        "title": "Configuração global",
+        "body": "Envolve a app em `<ToastConfigProvider>` para partilhar `styles`, `slots` e `renderToast` com todos os containers abaixo. As props definidas diretamente num container ganham, campo a campo."
+      },
+      "api-toast": {
+        "title": "toast()",
+        "body": "A exportação por omissão. Todos os métodos devolvem um handle `Toast`, exceto `update`, `dismiss` e `dismissAll`."
+      },
+      "api-options": {
+        "title": "ToastOptions",
+        "body": "O segundo argumento de `toast()` e dos métodos de variante, e aquilo que o `toast.update()` junta."
+      },
+      "api-promise": {
+        "title": "PromiseToastData",
+        "body": "O segundo argumento de `toast.promise()`."
+      },
+      "api-container": {
+        "title": "ToastContainer",
+        "body": "Monta uma vez. `styles`, `slots` e `renderToast` sobrepõem-se ao `<ToastConfigProvider>` campo a campo."
+      },
+      "api-render-props": {
+        "title": "ToastRenderProps",
+        "body": "O que o `renderToast` recebe."
+      },
+      "api-exports": {
+        "title": "Exportações",
+        "body": "Tudo o que o pacote exporta, além dos tipos acima."
+      }
+    },
+    "presetRun": "Correr {{name}}",
+    "presetTable": {
+      "preset": "Preset",
+      "bounce": "Bounce",
+      "feel": "Sensação"
+    },
+    "presetFeel": {
+      "smooth": "Calmo, quase não oscila",
+      "bouncy": "Aterra a abanar",
+      "subtle": "Quase sem ressalto",
+      "snappy": "Rápido, com um pequeno impulso"
+    },
+    "exportGroups": {
+      "core": "Núcleo",
+      "components": "Componentes",
+      "config": "Configuração e hooks",
+      "motion": "Movimento",
+      "icons": "Ícones",
+      "utils": "Utilitários"
+    },
+    "api": {
+      "methods": {
+        "toast": "Mostra um toast simples.",
+        "success": "Mostra um toast de sucesso.",
+        "error": "Mostra um toast de erro. Abana uma vez ao entrar.",
+        "warning": "Mostra um toast de aviso.",
+        "info": "Mostra um toast informativo.",
+        "promise": "Mostra um toast de carregamento que passa a sucesso ou erro quando a promise termina.",
+        "update": "Junta novas opções a um toast ativo.",
+        "dismiss": "Remove o toast com este id. Sem id não faz nada.",
+        "dismissAll": "Remove todos os toasts."
+      },
+      "options": {
+        "title": "O título. Definido pelo primeiro argumento de toast().",
+        "description": "Segunda linha por baixo do título. Expande o cartão.",
+        "variant": "Ícone, cor de destaque e papel de acessibilidade.",
+        "duration": "Milissegundos até fechar sozinho. Infinity mantém-no até ser fechado.",
+        "icon": "Substitui o ícone da variante.",
+        "action": "Um botão no cartão. O successLabel passa o toast a sucesso depois do toque.",
+        "onDismiss": "Chamado quando o toast é removido, por qualquer motivo.",
+        "fillColor": "Fundo do cartão.",
+        "border": "Cor e largura da borda do cartão.",
+        "preset": "Preset de mola para a entrada e a expansão.",
+        "spring": "Liga ou desliga a mola e define o bounce (0–1).",
+        "timing": "displayDuration sobrepõe-se ao duration no fecho automático.",
+        "showTimestamp": "Mostra a hora a que o toast foi criado.",
+        "showProgress": "Mostra uma barra que esvazia ao longo da duração.",
+        "id": "Um id teu. Reutilizar um id cria um segundo toast com o mesmo id.",
+        "position": "Posição por toast.",
+        "dismissible": "Se o utilizador pode fechar o toast.",
+        "swipeToDismiss": "Gesto de deslizar para fechar.",
+        "onPress": "Handler de toque para o cartão inteiro.",
+        "classNames": "Ganchos de className para estilos na web.",
+        "theme": "Esquema de cores por toast."
+      },
+      "promise": {
+        "loading": "Título enquanto a promise está pendente.",
+        "success": "Título quando resolve. Uma função recebe o valor resolvido.",
+        "error": "Título quando rejeita. Uma função recebe o erro.",
+        "description": "Descrições para as fases de sucesso e erro. A chave loading existe nos tipos mas ainda não é mostrada.",
+        "action": "Ações para as fases de sucesso e erro.",
+        "style": "Aplicadas a todas as fases, como em ToastOptions.",
+        "onDismiss": "Chamado quando o toast é removido.",
+        "onAutoClose": "Chamado quando o toast fecha sozinho."
+      },
+      "container": {
+        "position": "Onde a pilha fica ancorada.",
+        "theme": "Esquema de cores dos cartões. system segue o dispositivo.",
+        "gap": "Distância entre toasts empilhados.",
+        "offset": "Distância extra às margens do ecrã, para além da área segura.",
+        "maxVisible": "Toasts visíveis ao mesmo tempo; os mais antigos desvanecem na pilha.",
+        "styles": "Estilos para cada parte do cartão incluído.",
+        "slots": "Componentes de substituição para o ícone, o botão de ação e a barra de progresso.",
+        "renderToast": "Substitui o cartão interior por completo."
+      },
+      "render": {
+        "toast": "O handle do toast, incluindo as opções originais.",
+        "phase": "Fase atual, incluindo loading.",
+        "title": "Título e descrição atuais.",
+        "action": "A ação atual, se existir.",
+        "theme": "Tema resolvido; system já vem convertido.",
+        "colors": "accent, background, surface, text e border, resolvidos para este toast.",
+        "timestamp": "Hora de criação localizada, como 15:45.",
+        "isExpanded": "True quando há descrição ou ação.",
+        "icon": "O ícone da fase, ou o do próprio toast.",
+        "progressBar": "Uma barra de progresso pronta, ou null quando showProgress está desligado.",
+        "dismiss": "Fecho animado, o mesmo caminho do fecho automático.",
+        "runAction": "Dispara action.onPress e corre a transição do successLabel."
       }
     }
   },
-  "footer": {
-    "resources": "Recursos",
-    "sections": "Secções",
-    "github": "GitHub",
-    "npm": "npm",
-    "license": "Licença (MIT)",
-    "changelog": "Changelog",
-    "copyright": "© {{year}} Blip Toast · Lançado sob a licença {{license}}.",
-    "crafted": "Feito com <heart></heart> por <author></author>"
-  },
-  "copy": {
-    "toClipboard": "Copiar para a área de transferência",
-    "copied": "Copiado"
-  },
-  "installTabs": {
-    "packageManagerAria": "Gestor de pacotes",
-    "copy": "Copiar"
-  },
-  "apiRows": {
-    "container": {
-      "position": "Onde os toasts ficam ancorados no ecrã.",
-      "theme": "Esquema de cores dos cards de toast. Segue o dispositivo quando \"system\".",
-      "gap": "Espaçamento vertical entre toasts empilhados.",
-      "offset": "Distância ao rebordo do ecrã (e à barra de estado no iOS).",
-      "maxVisible": "Quantos toasts estão visíveis antes de os mais antigos desaparecerem na pilha."
-    },
-    "options": {
-      "title": "A mensagem do toast. Também passada como primeiro argumento de toast().",
-      "description": "Linha secundária de texto abaixo do título.",
-      "variant": "Estilo visual e ícone. \"loading\" é definido automaticamente por toast.promise().",
-      "duration": "Tempo (ms) antes de o toast desaparecer sozinho. Usa Infinity para o fixar.",
-      "position": "Ancoragem por toast. Substitui a posição do contentor.",
-      "dismissible": "Se o toast pode ser descartado pelo utilizador.",
-      "swipeToDismiss": "Se um gesto de arrastar descarta o toast.",
-      "onDismiss": "Chamado quando o toast é descartado (por qualquer motivo).",
-      "onPress": "Chamado quando o card do toast é premido.",
-      "icon": "Ícone personalizado. Substitui o ícone da variante.",
-      "action": "Botão de ação dentro do toast. successLabel troca-o após um toque.",
-      "fillColor": "Cor de fundo personalizada do card.",
-      "border": "Borda personalizada para fazer os toasts saltar à vista (cores ricas).",
-      "preset": "Preset de animação para a entrada.",
-      "spring": "Controlo manual da mola quando precisas de afinar.",
-      "showTimestamp": "Mostra a hora em que o toast foi criado.",
-      "showProgress": "Mostra uma barra de progresso animada durante a duração.",
-      "classNames": "Style hooks para wrapper, conteúdo, título, descrição, ação…",
-      "theme": "Esquema de cores por toast."
-    },
-    "methods": {
-      "toast": "Mostra um toast default e devolve um handle com .dismiss() e .update().",
-      "success": "Mostra um toast de sucesso.",
-      "error": "Mostra um toast de erro.",
-      "warning": "Mostra um toast de aviso.",
-      "info": "Mostra um toast de informação.",
-      "promise": "Mostra loading → success/error automaticamente à medida que a promessa se resolve.",
-      "update": "Atualiza um toast ao vivo.",
-      "dismiss": "Descarta um toast específico, ou todos quando chamado sem id.",
-      "dismissAll": "Descarta todos os toasts de uma vez."
-    }
-  },
   "toast": {
-    "hello": "Olá do Blip Toast",
-    "success": "Guardado com sucesso",
-    "error": "Algo correu mal",
-    "errorDesc": "O pedido falhou com o estado 500.",
-    "warning": "Atenção",
-    "warningDesc": "A tua avaliação gratuita termina dentro de 3 dias.",
-    "info": "Nova versão disponível",
-    "infoDesc": "Acabou de sair o Blip Toast 0.1.0.",
-    "welcomeBack": "Bem-vindo de volta",
-    "welcomeBackDesc": "Os toasts podem ter uma descrição e um botão de ação ao mesmo tempo.",
-    "open": "Abrir",
-    "opened": "Aberto",
-    "welcomeBackToast": "Bem-vindo de volta!",
-    "fileDeleted": "Ficheiro eliminado",
-    "fileDeletedDesc": "Podes anular isto nos próximos segundos.",
+    "saved": "Alterações guardadas",
+    "savedDesc": "O teu perfil está atualizado.",
+    "failed": "Não foi possível contactar o servidor",
+    "failedDesc": "Verifica a ligação e tenta outra vez.",
+    "loading": "A publicar…",
+        "done": "Publicação feita",
+    "doneDesc": "Já está visível no teu perfil.",
+    "rejected": "A publicação falhou",
+    "deleted": "Mensagem apagada",
+    "deletedDesc": "Saiu desta conversa.",
     "undo": "Anular",
-    "restored": "Reposto",
-    "fileRestored": "Ficheiro reposto",
-    "buildDeployed": "Build implementada",
-    "loadingWorkspace": "A carregar o teu espaço de trabalho…",
-    "workspaceReady": "Espaço de trabalho pronto",
-    "failedToLoad": "Falha ao carregar",
-    "loadingDesc": "A buscar projetos e tarefas.",
-    "readyDesc": "Está tudo atualizado.",
-    "retryDesc": "Verifica a tua ligação e tenta novamente.",
-    "fullyCustomized": "Totalmente personalizado",
-    "customizedDesc": "Preenchimento, borda, preset, carimbo de tempo e progresso personalizados.",
-    "uploading": "A carregar imagem…",
-    "uploaded": "Imagem carregada",
-    "uploadedDesc": "Pronta a partilhar.",
-    "paymentReceived": "Pagamento recebido",
-    "cardPayment": "$128.00 · Visa terminada em 4242",
-    "savingChanges": "A guardar alterações…",
-    "filesSync": "Os ficheiros sincronizam-se automaticamente."
+    "restored": "Mensagem recuperada"
   }
 }

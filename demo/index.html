@@ -1,16 +1,29 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0B0C14" />
-    <title>Blip Toast — Modern Toast Notifications for React Native</title>
+    <meta name="theme-color" content="#E8ECEF" />
+    <script>
+      // Apply the stored or system theme before first paint.
+      (function () {
+        try {
+          var stored = localStorage.getItem('blip-toast-theme');
+          var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          if (dark) {
+            document.documentElement.classList.add('dark');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0E1114');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <title>Blip Toast — toast notifications for React Native</title>
     <meta
       name="description"
-      content="Blip Toast is a lightweight, beautiful toast notification library for React Native. Five variants, spring animations, promise support and a tiny TypeScript-first API."
+      content="Toast notifications for React Native: five variants, promise states and custom layouts. Mount one container, call toast() from anywhere."
     />
     <meta name="author" content="João Tambue" />
-    <meta name="keywords" content="react native, toast, notifications, snackbar, ui, animations" />
+    <meta name="keywords" content="react native, toast, notifications, snackbar, expo, ui, animations" />
     <meta name="robots" content="index, follow" />
 
     <link rel="canonical" href="https://blip-toast.vercel.app/" />
@@ -21,10 +34,10 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Blip Toast" />
-    <meta property="og:title" content="Blip Toast — Modern Toast Notifications for React Native" />
+    <meta property="og:title" content="Blip Toast — toast notifications for React Native" />
     <meta
       property="og:description"
-      content="Lightweight, beautiful toasts for React Native. Promise support, spring animations, six positions, fully typed."
+      content="Toast notifications for React Native: five variants, promise states and custom layouts. Mount one container, call toast() from anywhere."
     />
     <meta property="og:url" content="https://blip-toast.vercel.app/" />
     <meta property="og:image" content="https://blip-toast.vercel.app/og-image.png" />
@@ -36,19 +49,17 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Blip Toast — Modern Toast Notifications for React Native" />
+    <meta name="twitter:title" content="Blip Toast — toast notifications for React Native" />
     <meta
       name="twitter:description"
-      content="Lightweight, beautiful toasts for React Native. Promise support, spring animations, six positions, fully typed."
+      content="Toast notifications for React Native: five variants, promise states and custom layouts."
     />
     <meta name="twitter:image" content="https://blip-toast.vercel.app/og-image.png" />
-    <meta
-      name="twitter:image:alt"
-      content="Blip Toast — a violet-to-blue gradient banner with a floating toast card"
-    />
+    <meta name="twitter:image:alt" content="Blip Toast — toast notifications for React Native" />
 
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Structured data -->
@@ -61,7 +72,7 @@
             "@id": "https://blip-toast.vercel.app/#website",
             "url": "https://blip-toast.vercel.app/",
             "name": "Blip Toast",
-            "description": "A lightweight, beautifully animated toast notification library for React Native.",
+            "description": "Toast notifications for React Native.",
             "publisher": { "@id": "https://blip-toast.vercel.app/#organization" },
             "inLanguage": ["en", "pt"]
           },
@@ -72,7 +83,7 @@
             "url": "https://blip-toast.vercel.app/",
             "applicationCategory": "DeveloperApplication",
             "operatingSystem": "React Native",
-            "softwareVersion": "0.1.0",
+            "softwareVersion": "0.2.0",
             "offers": {
               "@type": "Offer",
               "price": "0",
@@ -94,8 +105,8 @@
       }
     </script>
   </head>
-  <body>
+  <body data-page="home">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/entries/home.tsx"></script>
   </body>
 </html>

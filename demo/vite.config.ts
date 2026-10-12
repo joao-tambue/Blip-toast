@@ -38,16 +38,22 @@ export default defineConfig({
     target: 'es2020',
     sourcemap: false,
     rollupOptions: {
+      // Two static pages: the landing page at `/` and the docs at `/docs/`.
+      input: {
+        home: fileURLToPath(new URL('./index.html', import.meta.url)),
+        docs: fileURLToPath(new URL('./docs/index.html', import.meta.url)),
+      },
       output: {
         manualChunks(id) {
           if (
             id.includes('node_modules/react') ||
-            id.includes('node_modules/framer-motion') ||
-            id.includes('node_modules/lucide-react') ||
             id.includes('node_modules/blip-toast') ||
             id.includes('node_modules/react-native')
           ) {
             return 'react-vendor';
+          }
+          if (id.includes('node_modules/bot-avatars')) {
+            return 'bot';
           }
           if (id.includes('node_modules/shiki') || id.includes('node_modules/@shikijs')) {
             return 'shiki';

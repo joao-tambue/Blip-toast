@@ -1,148 +1,185 @@
-@import "@fontsource-variable/inter";
-@import "@fontsource-variable/plus-jakarta-sans";
+@import "@fontsource-variable/unbounded";
+@import "@fontsource-variable/onest";
 @import "@fontsource-variable/jetbrains-mono";
 @import "tailwindcss";
 
-@config "../../tailwind.config.js";
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* ------------------------------------------------------------------ */
-/* Design tokens — single source of truth for the whole site.          */
-/* Dark is the default; `.light` on <html> flips the CSS variables.    */
-/* ------------------------------------------------------------------ */
 :root {
-  --color-night: #0b0c14;
-  --color-night-soft: #0f1020;
-  --color-surface: #15162a;
-  --color-surface-hover: #1c1e3a;
-  --color-line: #2a2b45;
-  --color-ink: #e9eaf6;
-  --color-muted: #9aa1c0;
+  --fog: #e8ecef;
+  --chalk: #f4f6f8;
+  --paper: #ffffff;
+  --line: #d2d8de;
+  --line-soft: #dfe4e8;
+  --ink: #101418;
+  --slate: #56606b;
+  --signal: #ff5a1f;
+  --signal-text: #b93d0c;
+  --code: #101418;
+  --code-line: #252c33;
+  --code-ink: #d7dde3;
 }
 
-.light {
-  --color-night: #fafafa;
-  --color-night-soft: #f3f4fa;
-  --color-surface: #ffffff;
-  --color-surface-hover: #f7f7fc;
-  --color-line: #e4e6f5;
-  --color-ink: #12132a;
-  --color-muted: #5a6078;
+.dark {
+  --fog: #0e1114;
+  --chalk: #13171b;
+  --paper: #191e23;
+  --line: #2a3139;
+  --line-soft: #20262c;
+  --ink: #e8ecef;
+  --slate: #8e98a4;
+  --signal: #ff6a33;
+  --signal-text: #ff8a5c;
+  --code: #0a0d10;
+  --code-line: #1f262d;
+  --code-ink: #d7dde3;
+}
+
+@theme inline {
+  --color-fog: var(--fog);
+  --color-chalk: var(--chalk);
+  --color-paper: var(--paper);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-ink: var(--ink);
+  --color-slate: var(--slate);
+  --color-signal: var(--signal);
+  --color-signal-text: var(--signal-text);
+  --color-code: var(--code);
+  --color-code-line: var(--code-line);
+  --color-code-ink: var(--code-ink);
+
+  --font-display: "Unbounded Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Onest Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html.dark {
     color-scheme: dark;
   }
 
-  html.light {
-    color-scheme: light;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
-    @apply bg-night text-ink font-sans antialiased;
-    text-rendering: optimizeLegibility;
+    @apply bg-fog font-sans text-ink antialiased;
+    font-feature-settings: "ss01", "cv11";
   }
 
   ::selection {
-    background: rgba(139, 92, 246, 0.35);
-    color: inherit;
+    background: color-mix(in srgb, var(--signal) 30%, transparent);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-violet);
+    outline: 2px solid var(--signal);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
-  /* Scrollbar */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(139, 92, 246, 0.35) transparent;
-  }
-  *::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  *::-webkit-scrollbar-thumb {
-    background: rgba(139, 92, 246, 0.35);
-    border-radius: 999px;
-    border: 3px solid transparent;
-    background-clip: content-box;
+  button {
+    cursor: pointer;
   }
 }
 
-/* ------------------------------------------------------------------ */
-/* Brand helpers                                                       */
-/* ------------------------------------------------------------------ */
-@utility text-gradient {
-  background-image: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
 }
 
-@utility text-gradient-animated {
-  background-image: linear-gradient(120deg, #8b5cf6, #3b82f6, #38bdf8, #8b5cf6);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: gradient-shift 8s ease infinite;
+@utility blip-dot {
+  display: inline-block;
+  width: 0.42em;
+  height: 0.42em;
+  border-radius: 999px;
+  background: var(--signal);
 }
 
-@utility bg-brand {
-  background-image: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+@keyframes blip-ping {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--signal) 0%, transparent);
+  }
 }
 
-@utility glass {
-  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
-  backdrop-filter: blur(16px);
-  border: 1px solid color-mix(in srgb, var(--color-line) 70%, transparent);
+@utility animate-blip {
+  animation: blip-ping 0.9s ease-out 1;
 }
 
-@utility ring-glow {
-  box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.45),
-    0 0 32px rgba(139, 92, 246, 0.35);
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-@utility grid-bg {
-  background-image:
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-line) 40%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-line) 40%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 56px 56px;
+@utility animate-rise {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@utility mask-fade-y {
-  mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-blip {
+    animation: none;
+  }
 }
 
-/* Shiki code blocks */
+/* Shiki output: let the code panel own background and spacing. */
 .shiki {
-  font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+  background: transparent !important;
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.7;
-  background: transparent !important;
-  tab-size: 2;
+  min-width: max-content;
 }
 
 .shiki code {
-  display: block;
-  padding: 1.25rem 1.5rem;
-  overflow-x: auto;
+  font-family: inherit;
+}
+
+/* Docs prose. */
+.prose-doc p {
+  @apply text-[15.5px] leading-[1.75] text-ink/85;
+}
+
+.prose-doc p + p {
+  @apply mt-4;
+}
+
+.prose-doc ul {
+  @apply mt-3 space-y-1.5 text-[15.5px] leading-[1.7] text-ink/85;
+}
+
+.prose-doc li {
+  @apply relative pl-5;
+}
+
+.prose-doc li::before {
+  content: "";
+  @apply absolute left-1 top-[0.72em] size-1.5 rounded-full bg-slate/60;
+}
+
+.prose-doc a {
+  @apply font-medium text-signal-text underline decoration-signal/40 underline-offset-[3px] hover:decoration-signal;
+}
+
+.prose-doc :not(pre) > code,
+.has-code code {
+  @apply rounded-[5px] border border-line-soft bg-chalk px-[0.35em] py-[0.1em] font-mono text-[0.86em] text-ink;
 }
